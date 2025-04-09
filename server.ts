@@ -3,6 +3,7 @@ import { createServer } from 'http';
 import { Server as SocketIOServer, type Socket } from 'socket.io';
 
 import GameStore from './lib/GameStore';
+import type { ClientUpdate } from './types';
 
 const dev = process.env.NODE_ENV !== 'production';
 const hostname = 'localhost';
@@ -24,17 +25,19 @@ app.prepare().then(() => {
 
     socket.on('join', (gameID) => {
       socket.join(gameID);
-      const game = gameStore.joinGame(gameID, socket.id);
+      const gameUpdate = gameStore.joinGame(gameID, socket.id);
 
       console.log(`Socket ${socket.id} joined game ${gameID}`)
 
-      socket.emit('init', { cards: game.cards });
+      socket.emit('init', gameUpdate);
     })
 
-    socket.on('flip-card', ({ gameID, cardID }) => {
+    socket.on('flip-card', ({ gameID, cardID }: ClientUpdate) => {
       console.log('Card flipped:', { gameID, cardID });
-      const game = gameStore.flipCard(gameID, cardID);
-      io.to(gameID).emit('card-flipped', { gameID, cards: game.cards });
+
+      const gameUpdate = gameStore.flipCard(gameID, cardID);
+
+      io.to(gameID).emit('card-flipped', gameUpdate);
     });
 
     socket.on('disconnect', () => {

@@ -1,6 +1,6 @@
 import Cards from './Cards'
 
-import { GameState } from '../types'
+import { GameState, GameUpdate } from '../types'
 
 const deck = new Cards();
 
@@ -26,13 +26,13 @@ export default class GameStore {
     return newGame;
   }
 
-  joinGame(gameID: string, playerID: string): GameState {
+  joinGame(gameID: string, playerID: string): GameUpdate {
     const game = this.games.get(gameID) || this.createGame(gameID);
 
     game.players.add(playerID);
     game.lastUpdated = Date.now();
 
-    return game;
+    return this.gameUpdate(game);
   }
 
   leaveGame(gameID: string, playerID: string): GameState {
@@ -44,7 +44,7 @@ export default class GameStore {
     return game;
   }
 
-  flipCard(gameID: string, cardID: string): GameState {
+  flipCard(gameID: string, cardID: string): GameUpdate {
     const game = this.getGame(gameID);
     const card = game.cards.find(c => c.id === cardID);
 
@@ -53,7 +53,7 @@ export default class GameStore {
     card.flipped = !card.flipped;
     game.lastUpdated = Date.now();
 
-    return game;
+    return this.gameUpdate(game);
   }
 
   getGame(gameID: string): GameState {
@@ -62,6 +62,11 @@ export default class GameStore {
     if (!game) throw new Error(`Game ${gameID} not found`);
 
     return game;
+  }
+
+  gameUpdate(game: GameState): GameUpdate {
+    const { id, cards } = game;
+    return { id, cards };
   }
 
   deleteGame(gameID: string): void {

@@ -17,3 +17,13 @@ export interface GameState {
   cards: GameCard[];
   lastUpdated: number;
 }
+
+export interface GameUpdate {
+  id: string;
+  cards: GameCard[];
+}
+
+export interface ClientUpdate {
+  gameID: string;
+  cardID: string;
+}

@@ -6,37 +6,48 @@ import { socket } from "@/socket";
 
 import Card from '@/components/Card';
 
-import type { GameCard } from '@/types';
+import type { GameCard, GameUpdate, ClientUpdate } from '@/types';
 
 export default function GamePage() {
-  const { gameID } = useParams();
+  const { gameID: gameIDParam } = useParams();
 
+  const [gameID, setGameID] = useState('');
   const [cards, setCards] = useState<GameCard[]>([]);
 
   useEffect(() => {
-    socket.emit('join', gameID);
+    if (gameIDParam) {
+      setGameID(Array.isArray(gameIDParam) ? gameIDParam[0] : gameIDParam);
+    }
+  }, [gameIDParam])
 
-    socket.on('init', data => {
-      console.log('init', data);
-      setCards(data.cards);
-    });
+  useEffect(() => {
+    if (gameID) {
+      socket.emit('join', gameID);
 
-    socket.on('card-flipped', (data) => {
-      console.log('>>>', data);
-      setCards(data.cards);
-    });
+      socket.on('init', (data: GameUpdate) => {
+        console.log('init', data);
+        setCards(data.cards);
+      });
 
-    return () => {
+      socket.on('card-flipped', (data: GameUpdate) => {
+        console.log('>>>', data);
+        setCards(data.cards);
+      });
+    }
+
+    return gameID ? () => {
       socket.off('init');
       socket.off('card-flipped');
-    };
-  }, []);
+    } : undefined;
+  }, [gameID]);
 
   const flipCard = (cardID: string) => {
-    socket.emit('flip-card', {
-      cardID,
+    const flip: ClientUpdate = {
       gameID,
-    });
+      cardID,
+    };
+
+    socket.emit('flip-card', flip);
   };
 
   return cards.length ? (
