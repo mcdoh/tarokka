@@ -2,40 +2,12 @@
 
 import { useEffect, useState } from "react";
 import { useParams } from 'next/navigation';
-import { socket } from "../../socket";
+import { socket } from "@/socket";
 
-//import Card from '@/components/Card';
+import Card from '@/components/Card';
 
-//import type { GameCard } from '@/types';
+import type { GameCard } from '@/types';
 
-export default function GamePage() {
-  const { gameID } = useParams();
-
-  const [cards, setCards] = useState();
-
-  useEffect(() => {
-    socket.emit('join', gameID);
-
-    socket.on('init', data => {
-      console.log('init', data);
-      setCards(data.id);
-    });
-
-    socket.on('card-flipped', (data) => {
-      console.log('>>>', data);
-      setCards(data.id);
-    });
-
-    return () => {
-      socket.off('init');
-      socket.off('card-flipped');
-    };
-  }, []);
-
-  return <h1>A Page! {cards}</h1>
-}
-
-/*
 export default function GamePage() {
   const { gameID } = useParams();
 
@@ -91,4 +63,3 @@ export default function GamePage() {
     </main>
   ) : null;
 }
-*/

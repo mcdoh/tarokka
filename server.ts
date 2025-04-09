@@ -2,7 +2,7 @@ import next from 'next';
 import { createServer } from 'http';
 import { Server as SocketIOServer, type Socket } from 'socket.io';
 
-//import GameStore from '@/lib/GameStore';
+import GameStore from './lib/GameStore';
 
 const dev = process.env.NODE_ENV !== 'production';
 const hostname = 'localhost';
@@ -12,7 +12,7 @@ const port = 3000;
 const app = next({ dev, hostname, port });
 const handler = app.getRequestHandler();
 
-//const gameStore = new GameStore();
+const gameStore = new GameStore();
 
 app.prepare().then(() => {
   const httpServer = createServer(handler);
@@ -24,22 +24,20 @@ app.prepare().then(() => {
 
     socket.on('join', (gameID) => {
       socket.join(gameID);
-      //const game = gameStore.joinGame(gameID, socket.id);
+      const game = gameStore.joinGame(gameID, socket.id);
 
       console.log(`Socket ${socket.id} joined game ${gameID}`)
 
-      //socket.emit('init', { cards: game.cards });
-      socket.emit('init', { id: socket.id });
+      socket.emit('init', { cards: game.cards });
     })
 
     socket.on('flip-card', ({ gameID, cardID }) => {
       console.log('Card flipped:', { gameID, cardID });
-      //const game = gameStore.flipCard(gameID, cardID);
-      //io.to(gameID).emit('card-flipped', { gameID, cards: game.cards });
-      io.to(gameID).emit('card-flipped', { id: socket.id });
+      const game = gameStore.flipCard(gameID, cardID);
+      io.to(gameID).emit('card-flipped', { gameID, cards: game.cards });
     });
 
-    socket.on('disconnect', (obj) => {
+    socket.on('disconnect', () => {
       console.log(`Client disconnected: ${socket.id}`);
     });
   });
