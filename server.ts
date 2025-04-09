@@ -41,8 +41,6 @@ app.prepare().then(() => {
 
     socket.on('disconnect', (obj) => {
       console.log(`Client disconnected: ${socket.id}`);
-      console.log(obj);
-      console.log(socket);
     });
   });
 
