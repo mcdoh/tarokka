@@ -1,12 +1,12 @@
 'use client';
 import { useRouter } from 'next/navigation';
-//import generateID from '@/tools/simpleID';
+import generateID from '@/tools/simpleID';
 
 export default function Home() {
   const router = useRouter();
 
   const handleCreateGame = () => {
-    const id = 'abc123'; //generateID();
+    const id = generateID();
     router.push(`/${id}`);
   };
 
