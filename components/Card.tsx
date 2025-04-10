@@ -10,10 +10,11 @@ type CardProps = {
 export default function Card({ card: { aria, url }, flipAction }: CardProps) {
   return (
     <div
-      className={`w-24 h-32 flex items-center justify-center cursor-pointer`}
+      className="h-[21vh] w-[15vh] flex items-center justify-center cursor-pointer"
       onClick={flipAction}
     >
       <img
+        className="rounded-xl"
         src={url}
         alt={aria}
       />

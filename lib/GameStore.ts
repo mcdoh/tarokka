@@ -1,6 +1,6 @@
 import Deck from './TarokkaDeck'
 
-import { GameState, GameUpdate } from '../types'
+import { GameState, GameUpdate, TarokkaGameCard } from '../types'
 
 const deck = new Deck();
 
@@ -66,7 +66,7 @@ export default class GameStore {
 
   gameUpdate(game: GameState): GameUpdate {
     const { id, cards } = game;
-    return { id, cards: cards.map(card => card.flipped ? card : deck.getBack()) };
+    return { id, cards: (cards as TarokkaGameCard[]).map((card: TarokkaGameCard) => card.flipped ? card : { ...deck.getBack(), flipped: false }) };
   }
 
   deleteGame(gameID: string): void {
