@@ -52,8 +52,6 @@ export default function GamePage() {
 
   return cards.length ? (
     <main className="min-h-screen flex flex-col items-center justify-center gap-4 bg-[url('/img/table3.png')] bg-cover bg-center">
-      <h1 className="text-2xl font-bold">Game ID: {gameID}</h1>
-
       <div className="grid grid-cols-3 grid-rows-3 gap-8 w-fit mx-auto">
         {Array.from({ length: 9 }).map((_, i) => {
           const cardIndex = [1, 3, 4, 5, 7].indexOf(i);

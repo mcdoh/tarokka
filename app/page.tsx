@@ -11,7 +11,7 @@ export default function Home() {
   };
 
   return (
-    <main className="min-h-screen flex items-center justify-center">
+    <main className="min-h-screen flex items-center justify-center bg-[url('/img/table3.png')] bg-cover bg-center">
       <button
         onClick={handleCreateGame}
         className="bg-blue-600 text-white text-lg px-6 py-3 rounded-xl shadow hover:bg-blue-700 transition"
