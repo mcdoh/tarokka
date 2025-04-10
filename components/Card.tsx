@@ -1,27 +1,22 @@
 'use client';
 
+import { StandardGameCard, TarokkaGameCard } from "@/types";
+
 type CardProps = {
-  id: string;
-  flipped: boolean;
-  onFlip: (id: string) => void;
+  card: StandardGameCard | TarokkaGameCard;
+  flipAction: () => void;
 };
 
-export default function Card({ id, flipped, onFlip }: CardProps) {
+export default function Card({ card: { aria, url }, flipAction }: CardProps) {
   return (
     <div
       className={`w-24 h-32 flex items-center justify-center cursor-pointer`}
-      onClick={() => onFlip(id)}
+      onClick={flipAction}
     >
-      {flipped ? (
-        <img
-          src={`/cards/${id}.svg`}
-        />
-      ) : (
-        <img
-          src="/cards/1B.svg"
-        />
-      )
-      }
+      <img
+        src={url}
+        alt={aria}
+      />
     </div>
   );
 }

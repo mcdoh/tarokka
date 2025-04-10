@@ -1,5 +1,6 @@
-export interface CardImage {
+export interface StandardCard {
   id: string;
+  aria: string;
   back: boolean;
   face: boolean;
   joker: boolean;
@@ -7,23 +8,38 @@ export interface CardImage {
   url: string;
 }
 
-export interface GameCard extends CardImage {
+export interface StandardGameCard extends StandardCard {
+  flipped: boolean;
+}
+
+export interface TarokkaCard {
+  id: string;
+  name: string;
+  card: string;
+  description: string;
+  aria: string;
+  back: boolean;
+  suit: 'Coins' | 'Glyphs' | 'High Deck' | 'Stars' | 'Swords' | null;
+  url: string;
+}
+
+export interface TarokkaGameCard extends TarokkaCard {
   flipped: boolean;
 }
 
 export interface GameState {
   id: string;
   players: Set<string>;
-  cards: GameCard[];
+  cards: StandardGameCard[] | TarokkaGameCard[];
   lastUpdated: number;
 }
 
 export interface GameUpdate {
   id: string;
-  cards: GameCard[];
+  cards: StandardGameCard[] | TarokkaGameCard[];
 }
 
 export interface ClientUpdate {
   gameID: string;
-  cardID: string;
+  cardIndex: number;
 }

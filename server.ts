@@ -32,10 +32,10 @@ app.prepare().then(() => {
       socket.emit('init', gameUpdate);
     })
 
-    socket.on('flip-card', ({ gameID, cardID }: ClientUpdate) => {
-      console.log('Card flipped:', { gameID, cardID });
+    socket.on('flip-card', ({ gameID, cardIndex }: ClientUpdate) => {
+      console.log('Card flipped:', { gameID, cardIndex });
 
-      const gameUpdate = gameStore.flipCard(gameID, cardID);
+      const gameUpdate = gameStore.flipCard(gameID, cardIndex);
 
       io.to(gameID).emit('card-flipped', gameUpdate);
     });

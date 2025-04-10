@@ -1,8 +1,8 @@
-import Cards from './Cards'
+import Deck from './TarokkaDeck'
 
 import { GameState, GameUpdate } from '../types'
 
-const deck = new Cards();
+const deck = new Deck();
 
 export default class GameStore {
   private games: Map<string, GameState>;
@@ -44,11 +44,11 @@ export default class GameStore {
     return game;
   }
 
-  flipCard(gameID: string, cardID: string): GameUpdate {
+  flipCard(gameID: string, cardIndex: number): GameUpdate {
     const game = this.getGame(gameID);
-    const card = game.cards.find(c => c.id === cardID);
+    const card = game.cards[cardIndex];
 
-    if (!card) throw new Error(`Card ${cardID} not found`);
+    if (!card) throw new Error(`Card ${cardIndex} not found`);
 
     card.flipped = !card.flipped;
     game.lastUpdated = Date.now();
@@ -66,7 +66,7 @@ export default class GameStore {
 
   gameUpdate(game: GameState): GameUpdate {
     const { id, cards } = game;
-    return { id, cards };
+    return { id, cards: cards.map(card => card.flipped ? card : deck.getBack()) };
   }
 
   deleteGame(gameID: string): void {

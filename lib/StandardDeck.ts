@@ -1,6 +1,6 @@
 import getRandomItems from '../tools/getRandomItems';
-import cards from '../const/cards';
-import type { CardImage } from '@/types';
+import cards from '../constants/standardCards';
+import type { StandardCard } from '../types';
 
 export interface Options {
   back: number;
@@ -20,10 +20,9 @@ const DEFAULT_OPTIONS = {
 export default class Cards {
   private options: Options;
 
-  private deck: CardImage[] = [];
-  private backs: CardImage[] = [];
-  private jokers: CardImage[] = [];
-
+  private deck: StandardCard[] = [];
+  private backs: StandardCard[] = [];
+  private jokers: StandardCard[] = [];
 
   constructor(options: OptionProps = {}) {
     this.options = { ...DEFAULT_OPTIONS, ...options };
@@ -33,16 +32,16 @@ export default class Cards {
     this.jokers = cards.filter(card => card.joker);
   }
 
-  select(count: number): CardImage[] {
+  select(count: number): StandardCard[] {
     return getRandomItems(this.deck, count);
   }
 
-  getBack(style: number): CardImage {
+  getBack(style: number): StandardCard {
     style = style || this.options.back;
     return this.backs.find(card => card.id.startsWith(String(style))) || this.backs[0];
   }
 
-  getJokers(): CardImage[] {
+  getJokers(): StandardCard[] {
     return this.jokers;
   }
 }
