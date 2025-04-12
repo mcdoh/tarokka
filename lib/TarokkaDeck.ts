@@ -3,19 +3,19 @@ import cards from '../constants/tarokkaCards';
 import type { TarokkaCard } from '../types';
 
 export default class TarokkaDeck {
-  private deck: TarokkaCard[] = [];
-  private backs: TarokkaCard[] = [];
+	private deck: TarokkaCard[] = [];
+	private backs: TarokkaCard[] = [];
 
-  constructor() {
-    this.deck = cards.filter(card => !card.back);
-    this.backs = cards.filter(card => card.back);
-  }
+	constructor() {
+		this.deck = cards.filter((card) => !card.back);
+		this.backs = cards.filter((card) => card.back);
+	}
 
-  select(count: number): TarokkaCard[] {
-    return getRandomItems(this.deck, count);
-  }
+	select(count: number): TarokkaCard[] {
+		return getRandomItems(this.deck, count);
+	}
 
-  getBack(): TarokkaCard {
-    return this.backs[0];
-  }
+	getBack(): TarokkaCard {
+		return this.backs[0];
+	}
 }

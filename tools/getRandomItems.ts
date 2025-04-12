@@ -1,11 +1,11 @@
 export default function getRandomItems<T>(items: T[], count: number): T[] {
-  const shuffled = [...items];
+	const shuffled = [...items];
 
-  // Fisher-Yates shuffle
-  for (let i = shuffled.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
-  }
+	// Fisher-Yates shuffle
+	for (let i = shuffled.length - 1; i > 0; i--) {
+		const j = Math.floor(Math.random() * (i + 1));
+		[shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+	}
 
-  return count > shuffled.length ? shuffled : shuffled.slice(0, count);
-} 
+	return count > shuffled.length ? shuffled : shuffled.slice(0, count);
+}

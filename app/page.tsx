@@ -3,22 +3,21 @@ import { useRouter } from 'next/navigation';
 import generateID from '@/tools/simpleID';
 
 export default function Home() {
-  const router = useRouter();
+	const router = useRouter();
 
-  const handleCreateGame = () => {
-    const id = generateID();
-    router.push(`/${id}`);
-  };
+	const handleCreateGame = () => {
+		const id = generateID();
+		router.push(`/${id}`);
+	};
 
-  return (
-    <main className="min-h-screen flex items-center justify-center bg-[url('/img/table3.png')] bg-cover bg-center">
-      <button
-        onClick={handleCreateGame}
-        className="bg-blue-600 text-white text-lg px-6 py-3 rounded-xl shadow hover:bg-blue-700 transition"
-      >
-        Create New Game
-      </button>
-    </main>
-  );
+	return (
+		<main className="min-h-screen flex items-center justify-center bg-[url('/img/table3.png')] bg-cover bg-center">
+			<button
+				onClick={handleCreateGame}
+				className="bg-blue-600 text-white text-lg px-6 py-3 rounded-xl shadow hover:bg-blue-700 transition"
+			>
+				Create New Game
+			</button>
+		</main>
+	);
 }
-
