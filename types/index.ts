@@ -30,13 +30,13 @@ export interface TarokkaGameCard extends TarokkaCard {
 export interface GameState {
 	id: string;
 	players: Set<string>;
-	cards: StandardGameCard[] | TarokkaGameCard[];
+	cards: TarokkaGameCard[];
 	lastUpdated: number;
 }
 
 export interface GameUpdate {
 	id: string;
-	cards: StandardGameCard[] | TarokkaGameCard[];
+	cards: TarokkaGameCard[];
 }
 
 export interface ClientUpdate {

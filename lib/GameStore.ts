@@ -17,7 +17,7 @@ export default class GameStore {
 		const newGame: GameState = {
 			id,
 			players: new Set(),
-			cards: deck.select(5).map((card) => ({ ...card, flipped: false })),
+			cards: deck.getHand(),
 			lastUpdated: Date.now(),
 		};
 

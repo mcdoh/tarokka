@@ -8,6 +8,19 @@ import Card from '@/components/Card';
 
 import type { GameUpdate, ClientUpdate, StandardGameCard, TarokkaGameCard } from '@/types';
 
+// map our five cards to their appropriate
+// locations in a 3x3 grid
+// █1█
+// 042
+// █3█
+const cardMap = {
+	3: 0,
+	1: 1,
+	5: 2,
+	7: 3,
+	4: 4,
+};
+
 export default function GamePage() {
 	const { gameID: gameIDParam } = useParams();
 
@@ -52,20 +65,21 @@ export default function GamePage() {
 		socket.emit('flip-card', flip);
 	};
 
+	// map our five Tarokka cards to their proper locations in a 3x3 grid
+	// common deck cards: left, top, and right
+	// high deck cards: bottom and center
+	const arrangeCards = (_cell: any, index: number) => cards[cardMap[index]];
+
 	return cards.length ? (
 		<main className="min-h-screen flex flex-col items-center justify-center gap-4 bg-[url('/img/table3.png')] bg-cover bg-center">
 			<div className="grid grid-cols-3 grid-rows-3 gap-8 w-fit mx-auto">
-				{Array.from({ length: 9 }).map((_, i) => {
-					const cardIndex = [1, 3, 4, 5, 7].indexOf(i);
-
-					return (
-						<div key={i} className="aspect-[2/3]}">
-							{cardIndex !== -1 && (
-								<Card card={cards[cardIndex]} flipAction={() => flipCard(cardIndex)} />
-							)}
+				{Array.from({ length: 9 })
+					.map(arrangeCards)
+					.map((card, index) => (
+						<div key={index} className="aspect-[2/3]}">
+							{card && <Card card={card} flipAction={() => flipCard(cardMap[index])} />}
 						</div>
-					);
-				})}
+					))}
 			</div>
 		</main>
 	) : null;
