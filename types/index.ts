@@ -12,7 +12,7 @@ export interface StandardGameCard extends StandardCard {
 	flipped: boolean;
 }
 
-export interface TarokkaCard {
+export interface TarokkaBase {
 	id: string;
 	name: string;
 	card: string;
@@ -23,9 +23,44 @@ export interface TarokkaCard {
 	url: string;
 }
 
-export interface TarokkaGameCard extends TarokkaCard {
+export interface TarokkaGameBase extends TarokkaBase {
 	flipped: boolean;
 }
+
+export interface TarokkaHigh extends TarokkaBase {
+	prophecy: {
+		allies: {
+			ally: string;
+			dmText: string;
+			playerText: string;
+		}[];
+		strahd: {
+			dmText: string;
+			playerText: string;
+		};
+	};
+}
+
+export interface TarokkaGameHigh extends TarokkaHigh {
+	flipped: boolean;
+}
+
+export interface TarokkaLow extends TarokkaBase {
+	value: number;
+	prophecy: {
+		dmText: string;
+		location: string;
+		playerText: string;
+	};
+}
+
+export interface TarokkaGameLow extends TarokkaLow {
+	flipped: boolean;
+}
+
+export type TarokkaCard = TarokkaBase | TarokkaHigh | TarokkaLow;
+
+export type TarokkaGameCard = TarokkaGameBase | TarokkaGameHigh | TarokkaGameLow;
 
 export interface GameState {
 	id: string;
