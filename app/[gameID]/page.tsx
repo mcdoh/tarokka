@@ -5,21 +5,9 @@ import { useParams } from 'next/navigation';
 import { socket } from '@/socket';
 
 import Card from '@/components/Card';
+import { cardMap, layout } from '@/constants/tarokka';
 
 import type { GameUpdate, ClientUpdate, StandardGameCard, TarokkaGameCard } from '@/types';
-
-// map our five cards to their appropriate
-// locations in a 3x3 grid
-// █1█
-// 042
-// █3█
-const cardMap = {
-	3: 0,
-	1: 1,
-	5: 2,
-	7: 3,
-	4: 4,
-};
 
 export default function GamePage() {
 	const { gameID: gameIDParam } = useParams();
@@ -77,7 +65,13 @@ export default function GamePage() {
 					.map(arrangeCards)
 					.map((card, index) => (
 						<div key={index} className="aspect-[2/3]}">
-							{card && <Card card={card} flipAction={() => flipCard(cardMap[index])} />}
+							{card && (
+								<Card
+									card={card}
+									position={layout[cardMap[index]]}
+									flipAction={() => flipCard(cardMap[index])}
+								/>
+							)}
 						</div>
 					))}
 			</div>

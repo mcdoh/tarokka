@@ -78,3 +78,10 @@ export interface ClientUpdate {
 	gameID: string;
 	cardIndex: number;
 }
+
+export interface Layout {
+	id: string;
+	deck: string;
+	name: string;
+	text: string;
+}
