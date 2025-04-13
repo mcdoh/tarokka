@@ -66,12 +66,8 @@ export default class GameStore {
 
 	gameUpdate(game: GameState): GameUpdate {
 		const { id, cards } = game;
-		return {
-			id,
-			cards: (cards as TarokkaGameCard[]).map((card: TarokkaGameCard) =>
-				card.flipped ? card : { ...deck.getBack(), flipped: false },
-			),
-		};
+
+		return { id, cards };
 	}
 
 	deleteGame(gameID: string): void {
