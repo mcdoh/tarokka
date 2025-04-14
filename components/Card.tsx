@@ -1,18 +1,22 @@
 'use client';
-import { useState, useEffect, useRef } from 'react';
+import { useState, useRef } from 'react';
 
-import { StandardGameCard, TarokkaGameCard } from '@/types';
+import { TarokkaGameCard } from '@/types';
 import tarokkaCards from '@/constants/tarokkaCards';
 
 const cardBack = tarokkaCards.find((card) => card.back)!;
 
 type CardProps = {
-	card: StandardGameCard | TarokkaGameCard;
+	card: TarokkaGameCard;
 	position: { text: string };
 	flipAction: () => void;
 };
 
-export default function Card({ card: { aria, flipped, url }, position, flipAction }: CardProps) {
+export default function Card({
+	card: { aria, description, flipped, url },
+	position,
+	flipAction,
+}: CardProps) {
 	const [showTooltip, setShowTooltip] = useState(false);
 	const [tooltipPos, setTooltipPos] = useState({ x: 0, y: 0 });
 	const longPressTimeout = useRef<NodeJS.Timeout | null>(null);
@@ -71,13 +75,14 @@ export default function Card({ card: { aria, flipped, url }, position, flipActio
 				</div>
 			</div>
 			<div
-				className={`fixed w-[20vh] pointer-events-none duration-300 ease-in z-50 text-xs bg-black text-white rounded border border-gray-300 px-2 py-1 rounded transition-opacity ${showTooltip ? 'opacity-100' : 'opacity-0'}`}
+				className={`fixed w-[25vh] pointer-events-none duration-300 ease-in z-50 text-xs bg-black text-white rounded border border-gray-300 px-2 py-1 rounded transition-opacity ${showTooltip ? 'opacity-100' : 'opacity-0'}`}
 				style={{
 					top: `${tooltipPos.y + 20}px`,
 					left: `${tooltipPos.x + 20}px`,
 				}}
 			>
-				{position.text}
+				{!flipped && position.text}
+				{flipped && description}
 			</div>
 		</>
 	);

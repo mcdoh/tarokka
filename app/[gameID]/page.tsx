@@ -7,13 +7,13 @@ import { socket } from '@/socket';
 import Card from '@/components/Card';
 import { cardMap, layout } from '@/constants/tarokka';
 
-import type { GameUpdate, ClientUpdate, StandardGameCard, TarokkaGameCard } from '@/types';
+import type { GameUpdate, ClientUpdate, TarokkaGameCard } from '@/types';
 
 export default function GamePage() {
 	const { gameID: gameIDParam } = useParams();
 
 	const [gameID, setGameID] = useState('');
-	const [cards, setCards] = useState<StandardGameCard[] | TarokkaGameCard[]>([]);
+	const [cards, setCards] = useState<TarokkaGameCard[]>([]);
 
 	useEffect(() => {
 		if (gameIDParam) {
