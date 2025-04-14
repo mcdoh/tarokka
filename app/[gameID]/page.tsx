@@ -5,15 +5,20 @@ import { useParams } from 'next/navigation';
 import { socket } from '@/socket';
 
 import Card from '@/components/Card';
+import CopyButton from '@/components/CopyButton';
 import { cardMap, layout } from '@/constants/tarokka';
 
-import type { GameUpdate, ClientUpdate, TarokkaGameCard } from '@/types';
+import type { GameUpdate, ClientUpdate } from '@/types';
 
 export default function GamePage() {
 	const { gameID: gameIDParam } = useParams();
 
 	const [gameID, setGameID] = useState('');
-	const [cards, setCards] = useState<TarokkaGameCard[]>([]);
+	const [{ dmID, spectatorID, cards }, setGameData] = useState<GameUpdate>({
+		dmID: '',
+		spectatorID: '',
+		cards: [],
+	});
 
 	useEffect(() => {
 		if (gameIDParam) {
@@ -27,12 +32,12 @@ export default function GamePage() {
 
 			socket.on('init', (data: GameUpdate) => {
 				console.log('init', data);
-				setCards(data.cards);
+				setGameData(data);
 			});
 
 			socket.on('card-flipped', (data: GameUpdate) => {
 				console.log('>>>', data);
-				setCards(data.cards);
+				setGameData(data);
 			});
 		}
 
@@ -58,8 +63,14 @@ export default function GamePage() {
 	// high deck cards: bottom and center
 	const arrangeCards = (_cell: any, index: number) => cards[cardMap[index]];
 
-	return cards.length ? (
+	return cards ? (
 		<main className="min-h-screen flex flex-col items-center justify-center gap-4 bg-[url('/img/table3.png')] bg-cover bg-center">
+			<div className="absolute top-4 left-4 flex flex-col gap-2">
+				{dmID && <CopyButton title="DM link" copy={`${location.origin}/${dmID}`} />}
+				{spectatorID && (
+					<CopyButton title="Spectator link" copy={`${location.origin}/${spectatorID}`} />
+				)}
+			</div>
 			<div className="grid grid-cols-3 grid-rows-3 gap-8 w-fit mx-auto">
 				{Array.from({ length: 9 })
 					.map(arrangeCards)
