@@ -1,33 +1,56 @@
-import Deck from './TarokkaDeck';
-
-import { GameState, GameUpdate, TarokkaGameCard } from '../types';
+import Deck from '@/lib/TarokkaDeck';
+import generateID from '@/tools/simpleID';
+import { GameState, GameUpdate } from '@/types';
 
 const deck = new Deck();
 
 export default class GameStore {
-	private games: Map<string, GameState>;
+	private dms: Map<string, GameState>;
+	private spectators: Map<string, GameState>;
 
 	constructor() {
-		this.games = new Map();
+		this.dms = new Map();
+		this.spectators = new Map();
 	}
 
-	createGame(id: string): GameState {
-		if (this.games.has(id)) throw new Error(`Game ${id} already exists`);
+	createGameIDs() {
+		const dmID = generateID();
+		const spectatorID = generateID();
+
+		if (
+			this.dms.has(dmID) ||
+			this.dms.has(spectatorID) ||
+			this.spectators.has(dmID) ||
+			this.spectators.has(spectatorID)
+		) {
+			return this.createGameIDs();
+		}
+
+		return {
+			dmID,
+			spectatorID,
+		};
+	}
+
+	createGame(): GameState {
+		const { dmID, spectatorID } = this.createGameIDs();
 
 		const newGame: GameState = {
-			id,
+			dmID,
+			spectatorID,
 			players: new Set(),
 			cards: deck.getHand(),
 			lastUpdated: Date.now(),
 		};
 
-		this.games.set(id, newGame);
+		this.dms.set(dmID, newGame);
+		this.spectators.set(spectatorID, newGame);
 
 		return newGame;
 	}
 
 	joinGame(gameID: string, playerID: string): GameUpdate {
-		const game = this.games.get(gameID) || this.createGame(gameID);
+		const game = this.getGame(gameID) || this.createGame();
 
 		game.players.add(playerID);
 		game.lastUpdated = Date.now();
@@ -57,7 +80,7 @@ export default class GameStore {
 	}
 
 	getGame(gameID: string): GameState {
-		const game = this.games.get(gameID);
+		const game = this.dms.get(gameID) || this.spectators.get(gameID);
 
 		if (!game) throw new Error(`Game ${gameID} not found`);
 
@@ -65,12 +88,13 @@ export default class GameStore {
 	}
 
 	gameUpdate(game: GameState): GameUpdate {
-		const { id, cards } = game;
+		const { dmID, spectatorID, cards } = game;
 
-		return { id, cards };
+		return { dmID, spectatorID, cards };
 	}
 
 	deleteGame(gameID: string): void {
-		this.games.delete(gameID);
+		this.dms.delete(gameID);
+		this.spectators.delete(gameID);
 	}
 }

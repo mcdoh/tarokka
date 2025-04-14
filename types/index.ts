@@ -63,14 +63,16 @@ export type TarokkaCard = TarokkaBase | TarokkaHigh | TarokkaLow;
 export type TarokkaGameCard = TarokkaGameBase | TarokkaGameHigh | TarokkaGameLow;
 
 export interface GameState {
-	id: string;
+	dmID: string;
+	spectatorID: string;
 	players: Set<string>;
 	cards: TarokkaGameCard[];
 	lastUpdated: number;
 }
 
 export interface GameUpdate {
-	id: string;
+	dmID: string;
+	spectatorID: string;
 	cards: TarokkaGameCard[];
 }
 

@@ -2,8 +2,8 @@ import next from 'next';
 import { createServer } from 'http';
 import { Server as SocketIOServer, type Socket } from 'socket.io';
 
-import GameStore from './lib/GameStore';
-import type { ClientUpdate } from './types';
+import GameStore from '@/lib/GameStore';
+import type { ClientUpdate } from '@/types';
 
 const dev = process.env.NODE_ENV !== 'production';
 const hostname = '0.0.0.0';
@@ -21,6 +21,14 @@ app.prepare().then(() => {
 
 	io.on('connection', (socket: Socket) => {
 		console.log(`Client connected: ${socket.id}`);
+
+		socket.on('start', () => {
+			const gameUpdate = gameStore.createGame();
+
+			console.log(`Socket ${socket.id} started game ${gameUpdate.dmID}`);
+
+			socket.emit('new-game', gameUpdate);
+		});
 
 		socket.on('join', (gameID) => {
 			socket.join(gameID);

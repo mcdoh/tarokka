@@ -1,13 +1,17 @@
 'use client';
 import { useRouter } from 'next/navigation';
-import generateID from '@/tools/simpleID';
+import { socket } from '@/socket';
+import { GameUpdate } from '@/types';
 
 export default function Home() {
 	const router = useRouter();
 
 	const handleCreateGame = () => {
-		const id = generateID();
-		router.push(`/${id}`);
+		socket.emit('start');
+
+		socket.on('new-game', (game: GameUpdate) => {
+			router.push(`/${game.dmID}`);
+		});
 	};
 
 	return (
