@@ -1,6 +1,6 @@
-import getRandomItems from '../tools/getRandomItems';
-import cards from '../constants/tarokkaCards';
-import type { TarokkaCard, TarokkaGameCard } from '../types';
+import getRandomItems from '@/tools/getRandomItems';
+import cards from '@/constants/tarokkaCards';
+import type { TarokkaCard, TarokkaGameCard } from '@/types';
 
 export default class TarokkaDeck {
 	private highDeck: TarokkaCard[] = [];

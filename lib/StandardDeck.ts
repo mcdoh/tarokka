@@ -1,6 +1,6 @@
-import getRandomItems from '../tools/getRandomItems';
-import cards from '../constants/standardCards';
-import type { StandardCard } from '../types';
+import getRandomItems from '@/tools/getRandomItems';
+import cards from '@/constants/standardCards';
+import type { StandardCard } from '@/types';
 
 export interface Options {
 	back: number;
