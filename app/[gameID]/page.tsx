@@ -22,6 +22,8 @@ export default function GamePage() {
 		cards: [],
 	});
 
+	const isDM = !!dmID;
+
 	useEffect(() => {
 		if (gameIDParam) {
 			setGameID(Array.isArray(gameIDParam) ? gameIDParam[0] : gameIDParam);
