@@ -1,6 +1,7 @@
 'use client';
 import { useRef, useState } from 'react';
 
+import ToolTip from '@/components/ToolTip';
 import tarokkaCards from '@/constants/tarokkaCards';
 import getCardInfo from '@/tools/getCardInfo';
 
@@ -17,37 +18,6 @@ type CardProps = {
 
 export default function Card({ dm, card, position, flipAction }: CardProps) {
 	const { aria, card: cardName, description, flipped, url } = card;
-
-	const [showTooltip, setShowTooltip] = useState(false);
-	const [tooltipPos, setTooltipPos] = useState({ x: 0, y: 0 });
-	const longPressTimeout = useRef<NodeJS.Timeout | null>(null);
-	const delayTimeout = useRef<NodeJS.Timeout | null>(null);
-
-	const handleMouseMove = (e: React.MouseEvent) => {
-		setTooltipPos({ x: e.clientX, y: e.clientY });
-	};
-
-	const handleMouseEnter = () => {
-		delayTimeout.current = setTimeout(() => {
-			setShowTooltip(true);
-		}, 1000);
-	};
-
-	const handleMouseLeave = () => {
-		clearTimeout(delayTimeout.current!);
-		setShowTooltip(false);
-	};
-
-	const handleTouchStart = () => {
-		longPressTimeout.current = setTimeout(() => {
-			setShowTooltip(true);
-		}, 1000);
-	};
-
-	const handleTouchEnd = () => {
-		clearTimeout(longPressTimeout.current!);
-		setShowTooltip(false);
-	};
 
 	const handleClick = () => {
 		if (dm) {
@@ -71,15 +41,10 @@ export default function Card({ dm, card, position, flipAction }: CardProps) {
 	};
 
 	return (
-		<>
+		<ToolTip content={getTooltip()}>
 			<div
 				className={`relative h-[21vh] w-[15vh] perspective transition-transform duration-200 hover:scale-150 z-0 hover:z-10 ${dm ? 'cursor-pointer' : ''} `}
 				onClick={handleClick}
-				onMouseEnter={handleMouseEnter}
-				onMouseLeave={handleMouseLeave}
-				onMouseMove={handleMouseMove}
-				onTouchStart={handleTouchStart}
-				onTouchEnd={handleTouchEnd}
 			>
 				<div
 					className={`transition-transform duration-500 transform-style-preserve-3d ${flipped ? 'rotate-y-180' : ''}`}
@@ -96,15 +61,6 @@ export default function Card({ dm, card, position, flipAction }: CardProps) {
 					</div>
 				</div>
 			</div>
-			<div
-				className={`fixed w-[25vh] pointer-events-none duration-300 ease-in z-50 text-xs bg-black text-white rounded border border-gray-300 px-2 py-1 rounded transition-opacity ${showTooltip ? 'opacity-100' : 'opacity-0'}`}
-				style={{
-					top: `${tooltipPos.y + 20}px`,
-					left: `${tooltipPos.x + 20}px`,
-				}}
-			>
-				{getTooltip()}
-			</div>
-		</>
+		</ToolTip>
 	);
 }

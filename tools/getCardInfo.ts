@@ -24,7 +24,7 @@ export default function getTooltip(card: TarokkaGameCard, position: Layout, dm: 
 			}
 		}
 
-		// Low deck Tome, Ravenkind, or Sunsword
+		// Low deck: Tome, Ravenkind, or Sunsword
 		if (isLowCard(card)) {
 			if (dm) text.push(card.prophecy.dmText);
 			text.push(card.prophecy.playerText);
