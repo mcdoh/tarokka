@@ -1,11 +1,14 @@
 'use client';
-import React, { useRef, useState } from 'react';
+import { useRef, useState, ReactNode } from 'react';
 
 type TooltipProps = {
 	children: React.ReactNode;
 	content: React.ReactNode;
 	delay?: number;
 	mobileDelay?: number;
+	offsetX?: number;
+	offsetY?: number;
+	edgeBuffer?: number;
 };
 
 export default function Tooltip({
@@ -13,7 +16,11 @@ export default function Tooltip({
 	content,
 	delay = 500,
 	mobileDelay = 500,
+	offsetX = 20,
+	offsetY = 20,
+	edgeBuffer = 10,
 }: TooltipProps) {
+	const ttRef = useRef<HTMLDivElement | null>(null);
 	const [show, setShow] = useState(false);
 	const [pos, setPos] = useState({ x: 0, y: 0 });
 	const delayTimeout = useRef<NodeJS.Timeout | null>(null);
@@ -29,7 +36,14 @@ export default function Tooltip({
 	};
 
 	const handleMouseMove = (e: React.MouseEvent) => {
-		setPos({ x: e.clientX, y: e.clientY });
+		const { clientX: x, clientY: y } = e;
+		const ttHeight = ttRef.current?.offsetHeight || 0;
+		const viewportHeight = window.innerHeight - edgeBuffer;
+		const ttBottom = ttHeight + offsetY + y;
+
+		const adjustment = ttBottom > viewportHeight ? ttBottom - viewportHeight : 0;
+
+		setPos({ x, y: y - adjustment });
 	};
 
 	const handleTouchStart = () => {
@@ -53,10 +67,11 @@ export default function Tooltip({
 				{children}
 			</div>
 			<div
+				ref={ttRef}
 				className={`fixed w-[25vh] pointer-events-none z-50 text-xs bg-black text-white rounded border border-gray-300 px-2 py-1 transition-opacity duration-250 ${show ? 'opacity-100' : 'opacity-0'}`}
 				style={{
-					top: `${pos.y + 20}px`,
-					left: `${pos.x + 20}px`,
+					top: `${pos.y + offsetY}px`,
+					left: `${pos.x + offsetX}px`,
 				}}
 			>
 				{content}
