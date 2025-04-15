@@ -5,6 +5,7 @@ import { useParams } from 'next/navigation';
 import { socket } from '@/socket';
 
 import Card from '@/components/Card';
+import NotFound from '@/components/NotFound';
 import CopyButton from '@/components/CopyButton';
 import { cardMap, layout } from '@/constants/tarokka';
 
@@ -14,6 +15,7 @@ export default function GamePage() {
 	const { gameID: gameIDParam } = useParams();
 
 	const [gameID, setGameID] = useState('');
+	const [noGame, setNoGame] = useState(false);
 	const [{ dmID, spectatorID, cards }, setGameData] = useState<GameUpdate>({
 		dmID: '',
 		spectatorID: '',
@@ -39,14 +41,20 @@ export default function GamePage() {
 				console.log('>>>', data);
 				setGameData(data);
 			});
+
+			socket.on('join-error', (error) => {
+				console.error('Error:', error);
+				setNoGame(true);
+			});
+
+			socket.on('flip-error', (error) => {
+				console.error('Error:', error);
+			});
 		}
 
-		return gameID
-			? () => {
-					socket.off('init');
-					socket.off('card-flipped');
-				}
-			: undefined;
+		return () => {
+			socket.removeAllListeners();
+		};
 	}, [gameID]);
 
 	const flipCard = (cardIndex: number) => {
@@ -63,7 +71,9 @@ export default function GamePage() {
 	// high deck cards: bottom and center
 	const arrangeCards = (_cell: any, index: number) => cards[cardMap[index]];
 
-	return cards ? (
+	return noGame ? (
+		<NotFound />
+	) : cards ? (
 		<main className="min-h-screen flex flex-col items-center justify-center gap-4 bg-[url('/img/table3.png')] bg-cover bg-center">
 			<div className="absolute top-4 left-4 flex flex-col gap-2">
 				{dmID && <CopyButton title="DM link" copy={`${location.origin}/${dmID}`} />}

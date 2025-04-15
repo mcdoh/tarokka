@@ -1,6 +1,7 @@
 'use client';
-import { useRouter } from 'next/navigation';
 import { socket } from '@/socket';
+import { useRouter } from 'next/navigation';
+
 import { GameUpdate } from '@/types';
 
 export default function Home() {

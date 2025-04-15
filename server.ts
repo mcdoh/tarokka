@@ -31,20 +31,40 @@ app.prepare().then(() => {
 		});
 
 		socket.on('join', (gameID) => {
-			socket.join(gameID);
-			const gameUpdate = gameStore.joinGame(gameID, socket.id);
+			try {
+				const gameUpdate = gameStore.joinGame(gameID, socket.id);
 
-			console.log(`Socket ${socket.id} joined game ${gameID}`);
+				console.log(`Socket ${socket.id} joined game ${gameID}`);
 
-			socket.emit('init', gameUpdate);
+				socket.join(gameID);
+
+				if (gameID === gameUpdate.spectatorID) {
+					const { spectatorID, cards } = gameUpdate;
+					socket.emit('init', { spectatorID, cards });
+				} else {
+					socket.emit('init', gameUpdate);
+				}
+			} catch (e) {
+				const error = e instanceof Error ? e.message : e;
+
+				console.error('Error', error);
+				socket.emit('join-error', error);
+			}
 		});
 
 		socket.on('flip-card', ({ gameID, cardIndex }: ClientUpdate) => {
-			console.log('Card flipped:', { gameID, cardIndex });
+			try {
+				console.log('Card flipped:', { gameID, cardIndex });
 
-			const gameUpdate = gameStore.flipCard(gameID, cardIndex);
+				const gameUpdate = gameStore.flipCard(gameID, cardIndex);
 
-			io.to(gameID).emit('card-flipped', gameUpdate);
+				io.to(gameID).emit('card-flipped', gameUpdate);
+			} catch (e) {
+				const error = e instanceof Error ? e.message : e;
+
+				console.error('Error', error);
+				socket.emit('flip-error', error);
+			}
 		});
 
 		socket.on('disconnect', () => {

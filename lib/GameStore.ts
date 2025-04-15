@@ -50,7 +50,7 @@ export default class GameStore {
 	}
 
 	joinGame(gameID: string, playerID: string): GameUpdate {
-		const game = this.getGame(gameID) || this.createGame();
+		const game = this.getGame(gameID);
 
 		game.players.add(playerID);
 		game.lastUpdated = Date.now();
