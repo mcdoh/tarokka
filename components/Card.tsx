@@ -1,22 +1,23 @@
 'use client';
-import { useState, useRef } from 'react';
+import { useRef, useState } from 'react';
 
-import { TarokkaGameCard } from '@/types';
 import tarokkaCards from '@/constants/tarokkaCards';
+import getCardInfo from '@/tools/getCardInfo';
+
+import { Layout, TarokkaGameCard } from '@/types';
 
 const cardBack = tarokkaCards.find((card) => card.back)!;
 
 type CardProps = {
+	dm: boolean;
 	card: TarokkaGameCard;
-	position: { text: string };
+	position: Layout;
 	flipAction: () => void;
 };
 
-export default function Card({
-	card: { aria, description, flipped, url },
-	position,
-	flipAction,
-}: CardProps) {
+export default function Card({ dm, card, position, flipAction }: CardProps) {
+	const { aria, card: cardName, description, flipped, url } = card;
+
 	const [showTooltip, setShowTooltip] = useState(false);
 	const [tooltipPos, setTooltipPos] = useState({ x: 0, y: 0 });
 	const longPressTimeout = useRef<NodeJS.Timeout | null>(null);
@@ -48,11 +49,32 @@ export default function Card({
 		setShowTooltip(false);
 	};
 
+	const handleClick = () => {
+		if (dm) {
+			flipAction();
+		}
+	};
+
+	const getTooltip = () => {
+		const text = getCardInfo(card, position, dm);
+
+		return (
+			<>
+				{text.map((t, i) => (
+					<div key={i}>
+						<p>{t}</p>
+						{i < text.length - 1 && <hr className="my-2 border-gray-300" />}
+					</div>
+				))}
+			</>
+		);
+	};
+
 	return (
 		<>
 			<div
-				className="relative h-[21vh] w-[15vh] cursor-pointer perspective transition-transform duration-200 hover:scale-150 z-0 hover:z-10"
-				onClick={flipAction}
+				className={`relative h-[21vh] w-[15vh] perspective transition-transform duration-200 hover:scale-150 z-0 hover:z-10 ${dm ? 'cursor-pointer' : ''} `}
+				onClick={handleClick}
 				onMouseEnter={handleMouseEnter}
 				onMouseLeave={handleMouseLeave}
 				onMouseMove={handleMouseMove}
@@ -81,8 +103,7 @@ export default function Card({
 					left: `${tooltipPos.x + 20}px`,
 				}}
 			>
-				{!flipped && position.text}
-				{flipped && description}
+				{getTooltip()}
 			</div>
 		</>
 	);

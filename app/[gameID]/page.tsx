@@ -90,6 +90,7 @@ export default function GamePage() {
 						<div key={index} className="aspect-[2/3]}">
 							{card && (
 								<Card
+									dm={isDM}
 									card={card}
 									position={layout[cardMap[index]]}
 									flipAction={() => flipCard(cardMap[index])}
