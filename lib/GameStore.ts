@@ -1,6 +1,6 @@
 import Deck from '@/lib/TarokkaDeck';
 import generateID from '@/tools/simpleID';
-import { GameState, GameUpdate } from '@/types';
+import { GameState, GameUpdate, Settings } from '@/types';
 
 const deck = new Deck();
 
@@ -41,6 +41,12 @@ export default class GameStore {
 			players: new Set(),
 			cards: deck.getHand(),
 			lastUpdated: Date.now(),
+			settings: {
+				positionBack: true,
+				positionFront: true,
+				prophecy: true,
+				notes: true,
+			},
 		};
 
 		this.dms.set(dmID, newGame);
@@ -79,6 +85,14 @@ export default class GameStore {
 		return this.gameUpdate(game);
 	}
 
+	updateSettings(gameID: string, settings: Settings) {
+		const game = this.getGame(gameID);
+
+		Object.assign(game.settings, settings);
+
+		return this.gameUpdate(game);
+	}
+
 	getGame(gameID: string): GameState {
 		const game = this.dms.get(gameID) || this.spectators.get(gameID);
 
@@ -88,9 +102,9 @@ export default class GameStore {
 	}
 
 	gameUpdate(game: GameState): GameUpdate {
-		const { dmID, spectatorID, cards } = game;
+		const { dmID, spectatorID, cards, settings } = game;
 
-		return { dmID, spectatorID, cards };
+		return { dmID, spectatorID, cards, settings };
 	}
 
 	deleteGame(gameID: string): void {

@@ -1,3 +1,10 @@
+export interface Settings {
+	positionBack: boolean;
+	positionFront: boolean;
+	prophecy: boolean;
+	notes: boolean;
+}
+
 export interface StandardCard {
 	id: string;
 	aria: string;
@@ -68,12 +75,14 @@ export interface GameState {
 	players: Set<string>;
 	cards: TarokkaGameCard[];
 	lastUpdated: number;
+	settings: Settings;
 }
 
 export interface GameUpdate {
 	dmID: string;
 	spectatorID: string;
 	cards: TarokkaGameCard[];
+	settings: Settings;
 }
 
 export interface ClientUpdate {

@@ -3,7 +3,8 @@ import { createServer } from 'http';
 import { Server as SocketIOServer, type Socket } from 'socket.io';
 
 import GameStore from '@/lib/GameStore';
-import type { ClientUpdate } from '@/types';
+import omit from '@/tools/omit';
+import type { ClientUpdate, GameUpdate, Settings } from '@/types';
 
 const dev = process.env.NODE_ENV !== 'production';
 const hostname = '0.0.0.0';
@@ -18,6 +19,11 @@ app.prepare().then(() => {
 	const httpServer = createServer(handler);
 
 	const io = new SocketIOServer(httpServer);
+
+	const broadcast = (event: string, gameUpdate: GameUpdate) => {
+		io.to(gameUpdate.dmID).emit(event, gameUpdate);
+		io.to(gameUpdate.spectatorID).emit(event, omit(gameUpdate, 'dmID'));
+	};
 
 	io.on('connection', (socket: Socket) => {
 		console.log(`Client connected: ${socket.id}`);
@@ -39,8 +45,7 @@ app.prepare().then(() => {
 				socket.join(gameID);
 
 				if (gameID === gameUpdate.spectatorID) {
-					const { spectatorID, cards } = gameUpdate;
-					socket.emit('init', { spectatorID, cards });
+					socket.emit('init', omit(gameUpdate, 'dmID'));
 				} else {
 					socket.emit('init', gameUpdate);
 				}
@@ -58,12 +63,22 @@ app.prepare().then(() => {
 
 				const gameUpdate = gameStore.flipCard(gameID, cardIndex);
 
-				io.to(gameID).emit('card-flipped', gameUpdate);
+				broadcast('game-update', gameUpdate);
 			} catch (e) {
 				const error = e instanceof Error ? e.message : e;
 
 				console.error('Error', error);
 				socket.emit('flip-error', error);
+			}
+		});
+
+		socket.on('settings', ({ gameID, gameData }: { gameID: string; gameData: GameUpdate }) => {
+			try {
+				const gameUpdate = gameStore.updateSettings(gameID, gameData.settings);
+				broadcast('game-update', gameUpdate);
+			} catch (e) {
+				const error = e instanceof Error ? e.message : e;
+				console.error('Error', error);
 			}
 		});
 

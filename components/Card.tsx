@@ -1,11 +1,10 @@
 'use client';
-import { useRef, useState } from 'react';
 
 import ToolTip from '@/components/ToolTip';
 import tarokkaCards from '@/constants/tarokkaCards';
 import getCardInfo from '@/tools/getCardInfo';
 
-import { Layout, TarokkaGameCard } from '@/types';
+import { Layout, Settings, TarokkaGameCard } from '@/types';
 
 const cardBack = tarokkaCards.find((card) => card.back)!;
 
@@ -13,11 +12,12 @@ type CardProps = {
 	dm: boolean;
 	card: TarokkaGameCard;
 	position: Layout;
+	settings: Settings;
 	flipAction: () => void;
 };
 
-export default function Card({ dm, card, position, flipAction }: CardProps) {
-	const { aria, card: cardName, description, flipped, url } = card;
+export default function Card({ dm, card, position, settings, flipAction }: CardProps) {
+	const { aria, flipped, url } = card;
 
 	const handleClick = () => {
 		if (dm) {
@@ -26,9 +26,9 @@ export default function Card({ dm, card, position, flipAction }: CardProps) {
 	};
 
 	const getTooltip = () => {
-		const text = getCardInfo(card, position, dm);
+		const text = getCardInfo(card, position, dm, settings);
 
-		return (
+		return text.length ? (
 			<>
 				{text.map((t, i) => (
 					<div key={i}>
@@ -37,7 +37,7 @@ export default function Card({ dm, card, position, flipAction }: CardProps) {
 					</div>
 				))}
 			</>
-		);
+		) : null;
 	};
 
 	return (
@@ -50,11 +50,7 @@ export default function Card({ dm, card, position, flipAction }: CardProps) {
 					className={`transition-transform duration-500 transform-style-preserve-3d ${flipped ? 'rotate-y-180' : ''}`}
 				>
 					<div className="absolute group inset-0 backface-hidden">
-						<img
-							src={cardBack.url}
-							alt="Card Back"
-							className="rounded-xl rounded border border-gray-500 "
-						/>
+						<img src={cardBack.url} alt="Card Back" className="rounded-lg border border-gray-500" />
 					</div>
 					<div className="absolute group inset-0 backface-hidden rotate-y-180">
 						<img src={url} alt={aria} className="rounded-xl rounded border border-gray-500 " />

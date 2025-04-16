@@ -4,9 +4,9 @@ import { useEffect, useState } from 'react';
 import { useParams } from 'next/navigation';
 import { socket } from '@/socket';
 
+import Settings from '@/components/Settings';
 import Card from '@/components/Card';
 import NotFound from '@/components/NotFound';
-import CopyButton from '@/components/CopyButton';
 import { cardMap, layout } from '@/constants/tarokka';
 
 import type { GameUpdate, ClientUpdate } from '@/types';
@@ -16,12 +16,19 @@ export default function GamePage() {
 
 	const [gameID, setGameID] = useState('');
 	const [noGame, setNoGame] = useState(false);
-	const [{ dmID, spectatorID, cards }, setGameData] = useState<GameUpdate>({
+	const [gameData, setGameData] = useState<GameUpdate>({
 		dmID: '',
 		spectatorID: '',
 		cards: [],
+		settings: {
+			positionBack: false,
+			positionFront: false,
+			prophecy: false,
+			notes: false,
+		},
 	});
 
+	const { dmID, cards, settings } = gameData;
 	const isDM = !!dmID;
 
 	useEffect(() => {
@@ -39,7 +46,7 @@ export default function GamePage() {
 				setGameData(data);
 			});
 
-			socket.on('card-flipped', (data: GameUpdate) => {
+			socket.on('game-update', (data: GameUpdate) => {
 				console.log('>>>', data);
 				setGameData(data);
 			});
@@ -68,6 +75,10 @@ export default function GamePage() {
 		socket.emit('flip-card', flip);
 	};
 
+	const handleSettings = (gameData: GameUpdate) => {
+		socket.emit('settings', { gameID, gameData });
+	};
+
 	// map our five Tarokka cards to their proper locations in a 3x3 grid
 	// common deck cards: left, top, and right
 	// high deck cards: bottom and center
@@ -77,12 +88,7 @@ export default function GamePage() {
 		<NotFound />
 	) : cards ? (
 		<main className="min-h-screen flex flex-col items-center justify-center gap-4 bg-[url('/img/table3.png')] bg-cover bg-center">
-			<div className="absolute top-4 left-4 flex flex-col gap-2">
-				{dmID && <CopyButton title="DM link" copy={`${location.origin}/${dmID}`} />}
-				{spectatorID && (
-					<CopyButton title="Spectator link" copy={`${location.origin}/${spectatorID}`} />
-				)}
-			</div>
+			{isDM && <Settings gameData={gameData} changeAction={handleSettings} />}
 			<div className="grid grid-cols-3 grid-rows-3 gap-8 w-fit mx-auto">
 				{Array.from({ length: 9 })
 					.map(arrangeCards)
@@ -93,6 +99,7 @@ export default function GamePage() {
 									dm={isDM}
 									card={card}
 									position={layout[cardMap[index]]}
+									settings={settings}
 									flipAction={() => flipCard(cardMap[index])}
 								/>
 							)}
