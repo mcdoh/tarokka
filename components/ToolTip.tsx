@@ -37,13 +37,17 @@ export default function Tooltip({
 
 	const handleMouseMove = (e: React.MouseEvent) => {
 		const { clientX: x, clientY: y } = e;
+		const ttWidth = ttRef.current?.offsetWidth || 0;
 		const ttHeight = ttRef.current?.offsetHeight || 0;
+		const viewportWidth = window.innerWidth - edgeBuffer;
 		const viewportHeight = window.innerHeight - edgeBuffer;
+		const ttRight = ttWidth + offsetX + x;
 		const ttBottom = ttHeight + offsetY + y;
 
-		const adjustment = ttBottom > viewportHeight ? ttBottom - viewportHeight : 0;
+		const adjustX = ttRight > viewportWidth ? ttRight - viewportWidth : 0;
+		const adjustY = ttBottom > viewportHeight ? ttBottom - viewportHeight : 0;
 
-		setPos({ x, y: y - adjustment });
+		setPos({ x: x - adjustX, y: y - adjustY });
 	};
 
 	const handleTouchStart = () => {

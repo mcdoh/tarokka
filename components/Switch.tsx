@@ -17,9 +17,9 @@ export default function Switch({ label, value, toggleAction }: SwitchProps) {
 					}`}
 				/>
 				<div
-					className={`absolute top-[2px] left-[2px] w-3 h-3 rounded-full transition ${
-						value ? 'translate-x-4' : ''
-					} ${value ? 'bg-gray-100' : 'bg-gray-400'}`}
+					className={`absolute top-[2px] left-[2px] w-3 h-3 rounded-full transition-transform duration-200 ease-out transform
+            ${value ? 'translate-x-4 scale-110 shadow-[0_0_2px_2px_rgba(255,255,255,0.4)]' : 'scale-95'}
+            ${value ? 'bg-gray-100' : 'bg-gray-400'}`}
 				/>
 			</div>
 		</label>

@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { Copy as CopyIcon } from 'lucide-react';
+import { Copy as CopyIcon, Check as CheckIcon } from 'lucide-react';
 
 import ToolTip from '@/components/ToolTip';
 
@@ -30,8 +30,12 @@ export default function CopyButton({ title, copy }: CopyButtonProps) {
 				className="w-full py-1 px-2 bg-gray-700 hover:bg-gray-600 text-white rounded-lg flex flex-col items-start gap-1 shadow transition-all cursor-pointer"
 			>
 				<div className="flex items-center gap-2 w-full text-sm font-medium">
-					{`${copied ? 'Copied' : 'Copy'} ${title}`}
-					<CopyIcon className="ml-auto" size={16} />
+					{`Copy ${title}`}
+					{copied ? (
+						<CheckIcon className="ml-auto" size={16} />
+					) : (
+						<CopyIcon className="ml-auto" size={16} />
+					)}
 				</div>
 			</button>
 		</ToolTip>
