@@ -46,6 +46,7 @@ export default class GameStore {
 				positionFront: true,
 				prophecy: true,
 				notes: true,
+				cardStyle: 'standard',
 			},
 		};
 

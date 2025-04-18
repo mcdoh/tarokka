@@ -8,7 +8,6 @@ const tarokkaCards: TarokkaCard[] = [
 		suit: null,
 		aria: 'Back of card',
 		description: 'Back of card',
-		url: '/img/tarokka/Back.jpg',
 		back: true,
 	},
 	{
@@ -18,7 +17,6 @@ const tarokkaCards: TarokkaCard[] = [
 		suit: 'Coins',
 		aria: 'Coins 01 Swashbuckler',
 		description: 'Those who like money yet give it up freely; likable rogues and rapscallions',
-		url: '/img/tarokka/Coins_01_Swashbuckler.jpeg',
 		back: false,
 		value: 1,
 		prophecy: {
@@ -36,7 +34,6 @@ const tarokkaCards: TarokkaCard[] = [
 		aria: 'Coins 02 Philanthropist',
 		description:
 			'Charity and giving on a grand scale; those who use wealth to fight evil and sickness',
-		url: '/img/tarokka/Coins_02_Philanthropist.jpeg',
 		back: false,
 		value: 2,
 		prophecy: {
@@ -53,7 +50,6 @@ const tarokkaCards: TarokkaCard[] = [
 		suit: 'Coins',
 		aria: 'Coins 03 Trader',
 		description: 'Commerce; smuggling and black markets; fair and equitable trades',
-		url: '/img/tarokka/Coins_03_Trader.jpeg',
 		back: false,
 		value: 3,
 		prophecy: {
@@ -71,7 +67,6 @@ const tarokkaCards: TarokkaCard[] = [
 		aria: 'Coins 04 Merchant',
 		description:
 			'A rare commodity or business opportunity; deceitful or dangerous business transactions',
-		url: '/img/tarokka/Coins_04_Merchant.jpeg',
 		back: false,
 		value: 4,
 		prophecy: {
@@ -87,7 +82,6 @@ const tarokkaCards: TarokkaCard[] = [
 		suit: 'Coins',
 		aria: 'Coins 05 Guild Member',
 		description: "Like-minded individuals joined together in a common goal; pride in one's work",
-		url: '/img/tarokka/Coins_05_GuildMember.jpeg',
 		back: false,
 		value: 5,
 		prophecy: {
@@ -103,7 +97,6 @@ const tarokkaCards: TarokkaCard[] = [
 		suit: 'Coins',
 		aria: 'Coins 06 Beggar',
 		description: 'Sudden change in economic status or fortune',
-		url: '/img/tarokka/Coins_06_Beggar.jpeg',
 		back: false,
 		value: 6,
 		prophecy: {
@@ -121,7 +114,6 @@ const tarokkaCards: TarokkaCard[] = [
 		aria: 'Coins 07 Thief',
 		description:
 			'Those who steal or burgle; a loss of property, beauty, innocence, friendship, or reputation',
-		url: '/img/tarokka/Coins_07_Thief.jpeg',
 		back: false,
 		value: 7,
 		prophecy: {
@@ -138,7 +130,6 @@ const tarokkaCards: TarokkaCard[] = [
 		suit: 'Coins',
 		aria: 'Coins 08 Tax Collector',
 		description: 'Corruption; honesty in an otherwise corrupt government or organization',
-		url: '/img/tarokka/Coins_08_TaxCollector.png',
 		back: false,
 		value: 8,
 		prophecy: {
@@ -157,7 +148,6 @@ const tarokkaCards: TarokkaCard[] = [
 		aria: 'Coins 09 Miser',
 		description:
 			'Hoarded wealth; those who are irreversibly unhappy or who think money is meaningless',
-		url: '/img/tarokka/Coins_09_Miser.jpeg',
 		back: false,
 		value: 9,
 		prophecy: {
@@ -174,7 +164,6 @@ const tarokkaCards: TarokkaCard[] = [
 		aria: 'Coins 10 Rogue',
 		description:
 			'Anyone for whom money is important; those who believe money is the key to their success',
-		url: '/img/tarokka/Coins_10_Rogue.jpeg',
 		back: false,
 		value: 10,
 		prophecy: {
@@ -191,7 +180,6 @@ const tarokkaCards: TarokkaCard[] = [
 		aria: 'Glyphs 01 Monk',
 		description:
 			'Serenity; inner strength and self-reliance; supreme confidence bereft of arrogance',
-		url: '/img/tarokka/Glyphs_01_Monk.jpeg',
 		back: false,
 		value: 1,
 		prophecy: {
@@ -209,7 +197,6 @@ const tarokkaCards: TarokkaCard[] = [
 		aria: 'Glyphs 02 Missionary',
 		description:
 			'Those who spread wisdom and faith to others; warnings of the spread of fear and ignorance',
-		url: '/img/tarokka/Glyphs_02_Missionary.jpeg',
 		back: false,
 		value: 2,
 		prophecy: {
@@ -228,7 +215,6 @@ const tarokkaCards: TarokkaCard[] = [
 		aria: 'Glyphs 03 Healer',
 		description:
 			'Healing; a contagious illness, disease, or curse; those who practice the healing arts',
-		url: '/img/tarokka/Glyphs_03_Healer.jpeg',
 		back: false,
 		value: 3,
 		prophecy: {
@@ -246,7 +232,6 @@ const tarokkaCards: TarokkaCard[] = [
 		aria: 'Glyphs 04 Shepherd',
 		description:
 			'Those who protect others; one who bears a burden far too great to be shouldered alone',
-		url: '/img/tarokka/Glyphs_04_Shepherd.jpeg',
 		back: false,
 		value: 4,
 		prophecy: {
@@ -264,7 +249,6 @@ const tarokkaCards: TarokkaCard[] = [
 		aria: 'Glyphs 05 Druid',
 		description:
 			'The ambivalence and cruelty of nature and those who feel drawn to it; inner turmoil',
-		url: '/img/tarokka/Glyphs_05_Druid.jpeg',
 		back: false,
 		value: 5,
 		prophecy: {
@@ -282,7 +266,6 @@ const tarokkaCards: TarokkaCard[] = [
 		suit: 'Glyphs',
 		aria: 'Glyphs 06 Anarchist',
 		description: 'A fundamental change brought on by one whose beliefs are being put to the test',
-		url: '/img/tarokka/Glyphs_06_Anarchist.jpeg',
 		back: false,
 		value: 6,
 		prophecy: {
@@ -299,7 +282,6 @@ const tarokkaCards: TarokkaCard[] = [
 		suit: 'Glyphs',
 		aria: 'Glyphs 07 Charlatan',
 		description: 'Liars; those who profess to believe one thing but actually believe another',
-		url: '/img/tarokka/Glyphs_07_Charlatan.jpeg',
 		back: false,
 		value: 7,
 		prophecy: {
@@ -315,7 +297,6 @@ const tarokkaCards: TarokkaCard[] = [
 		suit: 'Glyphs',
 		aria: 'Glyphs 08 Bishop',
 		description: 'Strict adherence to a code or a belief; those who plot, plan, and scheme',
-		url: '/img/tarokka/Glyphs_08_Bishop.jpeg',
 		back: false,
 		value: 8,
 		prophecy: {
@@ -332,7 +313,6 @@ const tarokkaCards: TarokkaCard[] = [
 		suit: 'Glyphs',
 		aria: 'Glyphs 09 Traitor',
 		description: 'Betrayal by someone close and trusted; a weakening or loss of faith',
-		url: '/img/tarokka/Glyphs_09_Traitor.jpeg',
 		back: false,
 		value: 9,
 		prophecy: {
@@ -350,7 +330,6 @@ const tarokkaCards: TarokkaCard[] = [
 		suit: 'Glyphs',
 		aria: 'Glyphs 10 Priest',
 		description: 'Enlightenment; those who follow a deity, a system of values, or a higher purpose',
-		url: '/img/tarokka/Glyphs_10_Priest.jpeg',
 		back: false,
 		value: 10,
 		prophecy: {
@@ -368,7 +347,6 @@ const tarokkaCards: TarokkaCard[] = [
 		aria: 'Stars 01 Transmuter',
 		description:
 			'A new discovery; the coming of unexpected things; unforeseen consequences and chaos',
-		url: '/img/tarokka/Stars_01_Transmuter.jpeg',
 		back: false,
 		value: 1,
 		prophecy: {
@@ -385,7 +363,6 @@ const tarokkaCards: TarokkaCard[] = [
 		aria: 'Stars 02 Diviner',
 		description:
 			'The pursuit of knowledge tempered by wisdom; truth and honesty; sages and prophecy',
-		url: '/img/tarokka/Stars_02_Diviner.jpeg',
 		back: false,
 		value: 2,
 		prophecy: {
@@ -402,7 +379,6 @@ const tarokkaCards: TarokkaCard[] = [
 		suit: 'Stars',
 		aria: 'Stars 03 Enchanter',
 		description: 'Inner turmoil that comes from confusion, fear of failure, or false information',
-		url: '/img/tarokka/Stars_03_Enchanter.png',
 		back: false,
 		value: 3,
 		prophecy: {
@@ -421,7 +397,6 @@ const tarokkaCards: TarokkaCard[] = [
 		aria: 'Stars 04 Abjurer',
 		description:
 			'Those guided by logic and reasoning; warns of an overlooked clue or piece of information',
-		url: '/img/tarokka/Stars_04_Abjurer.jpeg',
 		back: false,
 		value: 4,
 		prophecy: {
@@ -439,7 +414,6 @@ const tarokkaCards: TarokkaCard[] = [
 		aria: 'Stars 05 Elementalist',
 		description:
 			'The triumph of nature over civilization; natural disasters and bountiful harvests',
-		url: '/img/tarokka/Stars_05_Elementalist.jpeg',
 		back: false,
 		value: 5,
 		prophecy: {
@@ -458,7 +432,6 @@ const tarokkaCards: TarokkaCard[] = [
 		aria: 'Stars 06 Evoker',
 		description:
 			"Magical or supernatural power that can't be controlled; magic for destructive ends",
-		url: '/img/tarokka/Stars_06_Evoker.jpeg',
 		back: false,
 		value: 6,
 		prophecy: {
@@ -476,7 +449,6 @@ const tarokkaCards: TarokkaCard[] = [
 		aria: 'Stars 07 Illusionist',
 		description:
 			'Lies and deceit; grand conspiracies; secret societies; the presence of a dupe or a saboteur',
-		url: '/img/tarokka/Stars_07_Illusionist.jpeg',
 		back: false,
 		value: 7,
 		prophecy: {
@@ -493,7 +465,6 @@ const tarokkaCards: TarokkaCard[] = [
 		suit: 'Stars',
 		aria: 'Stars 08 Necromancer',
 		description: 'Unnatural events and unhealthy obsessions; those who follow a destructive path',
-		url: '/img/tarokka/Stars_08_Necromancer.jpeg',
 		back: false,
 		value: 8,
 		prophecy: {
@@ -510,7 +481,6 @@ const tarokkaCards: TarokkaCard[] = [
 		aria: 'Stars 09 Conjurer',
 		description:
 			'The coming of an unexpected supernatural threat; those who think of themselves as gods',
-		url: '/img/tarokka/Stars_09_Conjurer.jpeg',
 		back: false,
 		value: 9,
 		prophecy: {
@@ -528,7 +498,6 @@ const tarokkaCards: TarokkaCard[] = [
 		aria: 'Stars 10 Wizard',
 		description:
 			'Mystery and riddles; the unknown; those who crave magical power and great knowledge',
-		url: '/img/tarokka/Stars_10_Wizard.jpeg',
 		back: false,
 		value: 10,
 		prophecy: {
@@ -546,7 +515,6 @@ const tarokkaCards: TarokkaCard[] = [
 		aria: 'Swords 01 Avenger',
 		description:
 			'Justice and revenge for great wrongs; those on a quest to rid the world of great evil',
-		url: '/img/tarokka/Swords_01_Avenger.jpeg',
 		back: false,
 		value: 1,
 		prophecy: {
@@ -563,7 +531,6 @@ const tarokkaCards: TarokkaCard[] = [
 		suit: 'Swords',
 		aria: 'Swords 02 Paladin',
 		description: 'Just and noble warriors; those who live by a code of honor and integrity',
-		url: '/img/tarokka/Swords_02_Paladin.jpeg',
 		back: false,
 		value: 2,
 		prophecy: {
@@ -580,7 +547,6 @@ const tarokkaCards: TarokkaCard[] = [
 		suit: 'Swords',
 		aria: 'Swords 03 Soldier',
 		description: 'War and sacrifice; the stamina to endure great hardship',
-		url: '/img/tarokka/Swords_03_Soldier.jpeg',
 		back: false,
 		value: 3,
 		prophecy: {
@@ -597,9 +563,8 @@ const tarokkaCards: TarokkaCard[] = [
 		suit: 'Swords',
 		aria: 'Swords 04 Mercenary',
 		description: 'Inner strength and fortitude; those who fight for power or wealth',
-		url: '/img/tarokka/Swords_04_Mercenary.jpeg',
 		back: false,
-		value: 1,
+		value: 4,
 		prophecy: {
 			dmText: 'The treasure lies in a crypt in Castle Ravenloft (chapter 4, area K84, crypt 31).',
 			location: 'Castle Ravenloft',
@@ -614,7 +579,6 @@ const tarokkaCards: TarokkaCard[] = [
 		aria: 'Swords 05 Myrmidon',
 		description:
 			'Great heroes; a sudden reversal of fate; the triumph of the underdog over a mighty enemy',
-		url: '/img/tarokka/Swords_05_Myrmidon.jpeg',
 		back: false,
 		value: 5,
 		prophecy: {
@@ -632,7 +596,6 @@ const tarokkaCards: TarokkaCard[] = [
 		suit: 'Swords',
 		aria: 'Swords 06 Berserker',
 		description: 'The brutal and barbaric side of warfare; bloodlust; those with a bestial nature',
-		url: '/img/tarokka/Swords_06_Berserker.jpeg',
 		back: false,
 		value: 6,
 		prophecy: {
@@ -650,7 +613,6 @@ const tarokkaCards: TarokkaCard[] = [
 		suit: 'Swords',
 		aria: 'Swords 07 Hooded One',
 		description: 'Bigotry, intolerance, and xenophobia; a mysterious presence or newcomer',
-		url: '/img/tarokka/Swords_07_HoodedOne.jpeg',
 		back: false,
 		value: 7,
 		prophecy: {
@@ -669,7 +631,6 @@ const tarokkaCards: TarokkaCard[] = [
 		aria: 'Swords 08 Dictator',
 		description:
 			'All that is wrong with government and leadership; those who rule through fear and violence',
-		url: '/img/tarokka/Swords_08_Dictator.jpeg',
 		back: false,
 		value: 8,
 		prophecy: {
@@ -686,7 +647,6 @@ const tarokkaCards: TarokkaCard[] = [
 		aria: 'Swords 09 Torturer',
 		description:
 			'The coming of suffering or merciless cruelty; one who is irredeemably evil or sadistic',
-		url: '/img/tarokka/Swords_09_Torturer.jpeg',
 		back: false,
 		value: 9,
 		prophecy: {
@@ -705,7 +665,6 @@ const tarokkaCards: TarokkaCard[] = [
 		aria: 'Swords 10 Warrior',
 		description:
 			'Strength and force personified; violence; those who use force to accomplish their goals',
-		url: '/img/tarokka/Swords_10_Warrior.jpeg',
 		back: false,
 		value: 10,
 		prophecy: {
@@ -723,7 +682,6 @@ const tarokkaCards: TarokkaCard[] = [
 		aria: 'High Deck Artifact',
 		description:
 			'The importance of some physical object that must be obtained, protected, or destroyed at all costs',
-		url: '/img/tarokka/Crowns_Artifact.jpeg',
 		back: false,
 		prophecy: {
 			allies: [
@@ -748,7 +706,6 @@ const tarokkaCards: TarokkaCard[] = [
 		aria: 'High Deck Beast',
 		description:
 			'Great rage or passion; something bestial or malevolent hiding in plain sight or lurking just below the surface',
-		url: '/img/tarokka/Crowns_Beast.jpeg',
 		back: false,
 		prophecy: {
 			allies: [
@@ -774,7 +731,6 @@ const tarokkaCards: TarokkaCard[] = [
 		aria: 'High Deck Broken One',
 		description:
 			'Defeat, failure, and despair; the loss of something or someone important, without which one feels incomplete',
-		url: '/img/tarokka/Crowns_BrokenOne.jpeg',
 		back: false,
 		prophecy: {
 			allies: [
@@ -806,7 +762,6 @@ const tarokkaCards: TarokkaCard[] = [
 		aria: 'High Deck Darklord',
 		description:
 			'A single, powerful individual of an evil nature, one whose goals have enormous and far-reaching consequences',
-		url: '/img/tarokka/Crowns_Darklord.jpeg',
 		back: false,
 		prophecy: {
 			allies: [
@@ -830,7 +785,6 @@ const tarokkaCards: TarokkaCard[] = [
 		aria: 'High Deck Donjon',
 		description:
 			"Isolation and imprisonment; being so conservative in thinking as to be a prisoner of one's own beliefs",
-		url: '/img/tarokka/Crowns_Donjon.jpeg',
 		back: false,
 		prophecy: {
 			allies: [
@@ -863,7 +817,6 @@ const tarokkaCards: TarokkaCard[] = [
 		aria: 'High Deck Executioner',
 		description:
 			'The imminent death of one rightly or wrongly convicted of a crime; false accusations and unjust prosecution',
-		url: '/img/tarokka/Crowns_Executioner.jpeg',
 		back: false,
 		prophecy: {
 			allies: [
@@ -890,7 +843,6 @@ const tarokkaCards: TarokkaCard[] = [
 		aria: 'High Deck Ghost',
 		description:
 			'The looming past; the return of an old enemy or the discovery of a secret buried long ago',
-		url: '/img/tarokka/Crowns_Ghost.jpeg',
 		back: false,
 		prophecy: {
 			allies: [
@@ -924,7 +876,6 @@ const tarokkaCards: TarokkaCard[] = [
 		aria: 'High Deck Horseman',
 		description:
 			'Death; disaster in the form of the loss of wealth or property, a horrible defeat, or the end of a bloodline',
-		url: '/img/tarokka/Crowns_Horseman.jpeg',
 		back: false,
 		prophecy: {
 			allies: [
@@ -957,7 +908,6 @@ const tarokkaCards: TarokkaCard[] = [
 		aria: 'High Deck Innocent',
 		description:
 			'A being of great importance whose life is in danger (who might be helpless or simply unaware of the peril)',
-		url: '/img/tarokka/Crowns_Innocent.jpeg',
 		back: false,
 		prophecy: {
 			allies: [
@@ -990,7 +940,6 @@ const tarokkaCards: TarokkaCard[] = [
 		aria: 'High Deck Marionette',
 		description:
 			'The presence of a spy or a minion of some greater power; an encounter with a puppet or an underling',
-		url: '/img/tarokka/Crowns_Marionette.jpeg',
 		back: false,
 		prophecy: {
 			allies: [
@@ -1022,7 +971,6 @@ const tarokkaCards: TarokkaCard[] = [
 		aria: 'High Deck Mists',
 		description:
 			"Something unexpected or mysterious that can't be avoided; a great quest or journey that will try one's spirit",
-		url: '/img/tarokka/Crowns_Mists.jpeg',
 		back: false,
 		prophecy: {
 			allies: [
@@ -1049,7 +997,6 @@ const tarokkaCards: TarokkaCard[] = [
 		aria: 'High Deck Raven',
 		description:
 			'A hidden source of information; a fortunate turn of events; a secret potential for good',
-		url: '/img/tarokka/Crowns_Raven.jpeg',
 		back: false,
 		prophecy: {
 			allies: [
@@ -1076,7 +1023,6 @@ const tarokkaCards: TarokkaCard[] = [
 		aria: 'High Deck Seer',
 		description:
 			'Inspiration and keen intellect; a future event, the outcome of which will hinge on a clever mind',
-		url: '/img/tarokka/Crowns_Seer.jpeg',
 		back: false,
 		prophecy: {
 			allies: [
@@ -1103,7 +1049,6 @@ const tarokkaCards: TarokkaCard[] = [
 		aria: 'High Deck Tempter',
 		description:
 			'One who has been compromised or led astray by temptation or foolishness; one who tempts others for evil ends',
-		url: '/img/tarokka/Crowns_Tempter.png',
 		back: false,
 		prophecy: {
 			allies: [

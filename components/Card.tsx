@@ -3,6 +3,7 @@
 import ToolTip from '@/components/ToolTip';
 import tarokkaCards from '@/constants/tarokkaCards';
 import getCardInfo from '@/tools/getCardInfo';
+import getURL from '@/tools/getURL';
 
 import { Layout, Settings, TarokkaGameCard } from '@/types';
 
@@ -17,7 +18,7 @@ type CardProps = {
 };
 
 export default function Card({ dm, card, position, settings, flipAction }: CardProps) {
-	const { aria, flipped, url } = card;
+	const { aria, flipped } = card;
 
 	const handleClick = () => {
 		if (dm) {
@@ -50,10 +51,18 @@ export default function Card({ dm, card, position, settings, flipAction }: CardP
 					className={`transition-transform duration-500 transform-style-preserve-3d ${flipped ? 'rotate-y-180' : ''}`}
 				>
 					<div className="absolute group inset-0 backface-hidden">
-						<img src={cardBack.url} alt="Card Back" className="rounded-lg border border-gray-500" />
+						<img
+							src={getURL(cardBack as TarokkaGameCard, settings)}
+							alt="Card Back"
+							className="rounded-lg border border-gray-600"
+						/>
 					</div>
 					<div className="absolute group inset-0 backface-hidden rotate-y-180">
-						<img src={url} alt={aria} className="rounded-xl rounded border border-gray-500 " />
+						<img
+							src={getURL(card, settings)}
+							alt={aria}
+							className="rounded-lg border border-gray-600 "
+						/>
 					</div>
 				</div>
 			</div>

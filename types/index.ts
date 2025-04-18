@@ -1,8 +1,11 @@
+export type CardStyle = 'standard' | 'color' | 'grayscale';
+
 export interface Settings {
 	positionBack: boolean;
 	positionFront: boolean;
 	prophecy: boolean;
 	notes: boolean;
+	cardStyle: CardStyle;
 }
 
 export interface StandardCard {
@@ -12,7 +15,6 @@ export interface StandardCard {
 	face: boolean;
 	joker: boolean;
 	suit: 'Clubs' | 'Diamonds' | 'Hearts' | 'Spades' | null;
-	url: string;
 }
 
 export interface StandardGameCard extends StandardCard {
@@ -27,7 +29,6 @@ export interface TarokkaBase {
 	aria: string;
 	back: boolean;
 	suit: 'Coins' | 'Glyphs' | 'High Deck' | 'Stars' | 'Swords' | null;
-	url: string;
 }
 
 export interface TarokkaGameBase extends TarokkaBase {
