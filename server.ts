@@ -4,7 +4,7 @@ import { Server as SocketIOServer, type Socket } from 'socket.io';
 
 import GameStore from '@/lib/GameStore';
 import omit from '@/tools/omit';
-import type { ClientUpdate, GameUpdate, Settings } from '@/types';
+import type { ClientUpdate, GameUpdate } from '@/types';
 
 const dev = process.env.NODE_ENV !== 'production';
 const hostname = '0.0.0.0';
@@ -26,12 +26,12 @@ app.prepare().then(() => {
 	};
 
 	io.on('connection', (socket: Socket) => {
-		console.log(`Client connected: ${socket.id}`);
+		console.log(Date.now(), `Client connected: ${socket.id}`);
 
 		socket.on('start', () => {
 			const gameUpdate = gameStore.createGame();
 
-			console.log(`Socket ${socket.id} started game ${gameUpdate.dmID}`);
+			console.log(Date.now(), `Socket ${socket.id} started game ${gameUpdate.dmID}`);
 
 			socket.emit('new-game', gameUpdate);
 		});
@@ -40,7 +40,7 @@ app.prepare().then(() => {
 			try {
 				const gameUpdate = gameStore.joinGame(gameID, socket.id);
 
-				console.log(`Socket ${socket.id} joined game ${gameID}`);
+				console.log(Date.now(), `Socket ${socket.id} joined game ${gameID}`);
 
 				socket.join(gameID);
 
@@ -52,14 +52,14 @@ app.prepare().then(() => {
 			} catch (e) {
 				const error = e instanceof Error ? e.message : e;
 
-				console.error('Error', error);
+				console.error(Date.now(), 'Error', error);
 				socket.emit('join-error', error);
 			}
 		});
 
 		socket.on('flip-card', ({ gameID, cardIndex }: ClientUpdate) => {
 			try {
-				console.log('Card flipped:', { gameID, cardIndex });
+				console.log(Date.now(), 'Card flipped:', { gameID, cardIndex });
 
 				const gameUpdate = gameStore.flipCard(gameID, cardIndex);
 
@@ -67,7 +67,7 @@ app.prepare().then(() => {
 			} catch (e) {
 				const error = e instanceof Error ? e.message : e;
 
-				console.error('Error', error);
+				console.error(Date.now(), 'Error', error);
 				socket.emit('flip-error', error);
 			}
 		});
@@ -78,21 +78,21 @@ app.prepare().then(() => {
 				broadcast('game-update', gameUpdate);
 			} catch (e) {
 				const error = e instanceof Error ? e.message : e;
-				console.error('Error', error);
+				console.error(Date.now(), 'Error', error);
 			}
 		});
 
 		socket.on('disconnect', () => {
-			console.log(`Client disconnected: ${socket.id}`);
+			console.log(Date.now(), `Client disconnected: ${socket.id}`);
 		});
 	});
 
 	httpServer
 		.once('error', (err) => {
-			console.error('Server error:', err);
+			console.error(Date.now(), 'Server error:', err);
 			process.exit(1);
 		})
 		.listen(port, () => {
-			console.log(`> Ready on http://${hostname}:${port}`);
+			console.log(Date.now(), `> Ready on http://${hostname}:${port}`);
 		});
 });

@@ -43,12 +43,10 @@ export default function GamePage() {
 			socket.emit('join', gameID);
 
 			socket.on('init', (data: GameUpdate) => {
-				console.log('init', data);
 				setGameData(data);
 			});
 
 			socket.on('game-update', (data: GameUpdate) => {
-				console.log('>>>', data);
 				setGameData(data);
 			});
 
