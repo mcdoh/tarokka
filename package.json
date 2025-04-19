@@ -6,6 +6,7 @@
 		"dev": "nodemon",
 		"build": "next build && tsc --project tsconfig.server.json",
 		"start": "cross-env NODE_ENV=production TS_NODE_BASEURL=./build node -r tsconfig-paths/register build/server.js"
+    "deploy": "docker buildx build --platform linux/amd64 -t nasty.mcmorgans:5000/tarokka:latest --push ."
 	},
 	"dependencies": {
 		"cross-env": "^7.0.3",
