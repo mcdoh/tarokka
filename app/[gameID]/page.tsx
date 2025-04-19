@@ -25,6 +25,7 @@ export default function GamePage() {
 			positionFront: false,
 			prophecy: false,
 			notes: false,
+			cardStyle: 'color',
 		},
 	});
 
@@ -82,7 +83,7 @@ export default function GamePage() {
 	// map our five Tarokka cards to their proper locations in a 3x3 grid
 	// common deck cards: left, top, and right
 	// high deck cards: bottom and center
-	const arrangeCards = (_cell: any, index: number) => cards[cardMap[index]];
+	const arrangeCards = (_cell: unknown, index: number) => cards[cardMap[index]];
 
 	return noGame ? (
 		<NotFound />

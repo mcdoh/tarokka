@@ -64,7 +64,12 @@ export default function PermissionTogglePanel({
 					{Object.entries(gameData.settings)
 						.filter(([_key, value]) => typeof value === 'boolean')
 						.map(([key, value]) => (
-							<Switch label={key} value={value} toggleAction={() => togglePermission(key)} />
+							<Switch
+								key={key}
+								label={key}
+								value={value}
+								toggleAction={() => togglePermission(key)}
+							/>
 						))}
 					<fieldset className="flex flex-col">
 						<div className="text-xs text-gray-400 mb-1">Card style:</div>

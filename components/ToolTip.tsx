@@ -2,8 +2,8 @@
 import { useRef, useState, ReactNode } from 'react';
 
 type TooltipProps = {
-	children: React.ReactNode;
-	content: React.ReactNode;
+	children: ReactNode;
+	content: ReactNode;
 	delay?: number;
 	mobileDelay?: number;
 	offsetX?: number;
