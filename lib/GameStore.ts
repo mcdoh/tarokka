@@ -5,6 +5,11 @@ import { GameState, GameUpdate, Settings } from '@/types';
 
 const deck = new Deck();
 
+const SECOND = 1000;
+const MINUTE = 60 * SECOND;
+const HOUR = 60 * MINUTE;
+const DAY = 24 * HOUR;
+
 export default class GameStore {
 	private startTime: number;
 	private dms: Map<string, GameState>;
@@ -18,7 +23,8 @@ export default class GameStore {
 		this.spectators = new Map();
 		this.players = new Map();
 
-		setInterval(() => this.log(), 15 * 60 * 1000);
+		setInterval(() => this.log(), 15 * MINUTE);
+		setInterval(() => this.cleanUp(), HOUR);
 	}
 
 	createGameIDs() {
@@ -145,8 +151,22 @@ export default class GameStore {
 		console.log('-'.repeat(uptimeLog.length));
 	}
 
-	deleteGame(gameID: string): void {
-		this.dms.delete(gameID);
-		this.spectators.delete(gameID);
+	cleanUp() {
+		const now = Date.now();
+
+		const expired = [...this.dms.values()].filter(({ lastUpdated }) => lastUpdated < now - DAY);
+		const unused = [...this.dms.values()].filter(
+			({ lastUpdated, players }) => players.size === 0 && lastUpdated < now - HOUR,
+		);
+
+		expired.forEach(this.deleteGame);
+		unused.forEach(this.deleteGame);
+	}
+
+	deleteGame(game: GameState): void {
+		console.log(Date.now(), 'DELETE', game);
+
+		this.dms.delete(game.dmID);
+		this.spectators.delete(game.spectatorID);
 	}
 }
