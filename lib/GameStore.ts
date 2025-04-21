@@ -1,18 +1,24 @@
 import Deck from '@/lib/TarokkaDeck';
 import generateID from '@/tools/simpleID';
+import parseMilliseconds from '@/tools/parseMilliseconds';
 import { GameState, GameUpdate, Settings } from '@/types';
 
 const deck = new Deck();
 
 export default class GameStore {
+	private startTime: number;
 	private dms: Map<string, GameState>;
 	private spectators: Map<string, GameState>;
 	private players: Map<string, string>;
 
 	constructor() {
+		this.startTime = Date.now();
+
 		this.dms = new Map();
 		this.spectators = new Map();
 		this.players = new Map();
+
+		setInterval(() => this.log(), 15 * 60 * 1000);
 	}
 
 	createGameIDs() {
@@ -118,6 +124,25 @@ export default class GameStore {
 
 		this.players.delete(playerID);
 		return this.leaveGame(gameID, playerID);
+	}
+
+	log() {
+		const now = Date.now();
+		const uptime = now - this.startTime;
+
+		const { days, hours, minutes, seconds } = parseMilliseconds(uptime);
+
+		const dayLog = days ? ` ${days} ${days > 1 ? 'days' : 'day'}` : '';
+		const hourLog = hours ? ` ${hours} ${hours > 1 ? 'hours' : 'hour'}` : '';
+		const minuteLog = minutes ? ` ${minutes} ${minutes > 1 ? 'minutes' : 'minute'}` : '';
+
+		const uptimeLog = `Up${dayLog}${hourLog}${minuteLog} ${seconds} seconds`;
+
+		console.log('-'.repeat(uptimeLog.length));
+		console.log(uptimeLog);
+		console.log(`Games: ${this.dms.size}`);
+		console.log(`Players: ${this.players.size}`);
+		console.log('-'.repeat(uptimeLog.length));
 	}
 
 	deleteGame(gameID: string): void {
