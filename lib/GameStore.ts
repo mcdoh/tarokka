@@ -10,14 +10,29 @@ const MINUTE = 60 * SECOND;
 const HOUR = 60 * MINUTE;
 const DAY = 24 * HOUR;
 
+const tilMidnight = () => {
+	const now = new Date();
+	const midnight = new Date(now);
+	midnight.setHours(24, 0, 0, 0);
+
+	return midnight.getTime() - now.getTime();
+};
+
 export default class GameStore {
 	private startTime: number;
+	private totalCreated: number;
+	private totalExpired: number;
+	private totalUnused: number;
+
 	private dms: Map<string, GameState>;
 	private spectators: Map<string, GameState>;
 	private players: Map<string, string>;
 
 	constructor() {
 		this.startTime = Date.now();
+		this.totalCreated = 0;
+		this.totalExpired = 0;
+		this.totalUnused = 0;
 
 		this.dms = new Map();
 		this.spectators = new Map();
@@ -25,6 +40,8 @@ export default class GameStore {
 
 		setInterval(() => this.log(), 15 * MINUTE);
 		setInterval(() => this.cleanUp(), HOUR);
+
+		setTimeout(() => this.wrapUp(), tilMidnight());
 	}
 
 	createGameIDs() {
@@ -64,6 +81,7 @@ export default class GameStore {
 			},
 		};
 
+		this.totalCreated++;
 		this.dms.set(dmID, newGame);
 		this.spectators.set(spectatorID, newGame);
 
@@ -151,6 +169,33 @@ export default class GameStore {
 		console.log('-'.repeat(uptimeLog.length));
 	}
 
+	wrapUp() {
+		const now = Date.now();
+		const uptime = now - this.startTime;
+
+		const { days, hours, minutes, seconds } = parseMilliseconds(uptime);
+
+		const dayLog = days ? ` ${days} ${days > 1 ? 'days' : 'day'}` : '';
+		const hourLog = hours ? ` ${hours} ${hours > 1 ? 'hours' : 'hour'}` : '';
+		const minuteLog = minutes ? ` ${minutes} ${minutes > 1 ? 'minutes' : 'minute'}` : '';
+
+		const uptimeLog = `Up${dayLog}${hourLog}${minuteLog} ${seconds} seconds`;
+
+		console.log('='.repeat(uptimeLog.length));
+		console.log(uptimeLog);
+		console.log('Now:', Date.now());
+		console.log(`Created: ${this.totalCreated}`);
+		console.log(`Expired: ${this.totalExpired}`);
+		console.log(`Unused: ${this.totalUnused}`);
+		console.log('='.repeat(uptimeLog.length));
+
+		this.totalCreated = 0;
+		this.totalExpired = 0;
+		this.totalUnused = 0;
+
+		setTimeout(() => this.wrapUp(), tilMidnight());
+	}
+
 	cleanUp() {
 		const now = Date.now();
 
@@ -158,6 +203,9 @@ export default class GameStore {
 		const unused = [...this.dms.values()].filter(
 			({ lastUpdated, players }) => players.size === 0 && lastUpdated < now - HOUR,
 		);
+
+		this.totalExpired += expired.length;
+		this.totalUnused += unused.length;
 
 		expired.forEach(this.deleteGame);
 		unused.forEach(this.deleteGame);
