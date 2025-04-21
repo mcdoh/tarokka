@@ -1,7 +1,7 @@
 FROM node:20-slim
 
 # Create app directory
-WORKDIR /app
+WORKDIR /tarokka
 
 # Copy and install dependencies
 COPY package*.json ./
