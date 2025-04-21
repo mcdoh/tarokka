@@ -52,7 +52,7 @@ app.prepare().then(() => {
 			} catch (e) {
 				const error = e instanceof Error ? e.message : e;
 
-				console.error(Date.now(), 'Error', error);
+				console.error(Date.now(), 'Error[join]', error);
 				socket.emit('join-error', error);
 			}
 		});
@@ -67,7 +67,7 @@ app.prepare().then(() => {
 			} catch (e) {
 				const error = e instanceof Error ? e.message : e;
 
-				console.error(Date.now(), 'Error', error);
+				console.error(Date.now(), 'Error[flip-card]', error);
 				socket.emit('flip-error', error);
 			}
 		});
@@ -78,12 +78,18 @@ app.prepare().then(() => {
 				broadcast('game-update', gameUpdate);
 			} catch (e) {
 				const error = e instanceof Error ? e.message : e;
-				console.error(Date.now(), 'Error', error);
+				console.error(Date.now(), 'Error[settings]', error);
 			}
 		});
 
 		socket.on('disconnect', () => {
-			console.log(Date.now(), `Client disconnected: ${socket.id}`);
+			try {
+				const { dmID } = gameStore.playerExit(socket.id);
+				console.log(Date.now(), `Client disconnected: ${socket.id} from ${dmID}`);
+			} catch (e) {
+				const error = e instanceof Error ? e.message : e;
+				console.error(Date.now(), 'Error[disconnect]', error);
+			}
 		});
 	});
 

@@ -7,10 +7,12 @@ const deck = new Deck();
 export default class GameStore {
 	private dms: Map<string, GameState>;
 	private spectators: Map<string, GameState>;
+	private players: Map<string, string>;
 
 	constructor() {
 		this.dms = new Map();
 		this.spectators = new Map();
+		this.players = new Map();
 	}
 
 	createGameIDs() {
@@ -61,6 +63,7 @@ export default class GameStore {
 
 		game.players.add(playerID);
 		game.lastUpdated = Date.now();
+		this.players.set(playerID, gameID);
 
 		return this.gameUpdate(game);
 	}
@@ -106,6 +109,15 @@ export default class GameStore {
 		const { dmID, spectatorID, cards, settings } = game;
 
 		return { dmID, spectatorID, cards, settings };
+	}
+
+	playerExit(playerID: string): GameState {
+		const gameID = this.players.get(playerID);
+
+		if (!gameID) throw new Error(`Player ${playerID} not found`);
+
+		this.players.delete(playerID);
+		return this.leaveGame(gameID, playerID);
 	}
 
 	deleteGame(gameID: string): void {
