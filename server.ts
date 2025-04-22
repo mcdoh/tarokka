@@ -40,7 +40,14 @@ app.prepare().then(() => {
 			try {
 				const gameUpdate = gameStore.joinGame(gameID, socket.id);
 
+				const ipAddress = Array.isArray(socket.handshake.headers['x-forwarded-for'])
+					? socket.handshake.headers['x-forwarded-for'][0]
+					: socket.handshake.headers['x-forwarded-for']?.split(',')[0];
+
 				console.log(Date.now(), `Socket ${socket.id} joined game ${gameID}`);
+				console.log('x-forwarded-for', socket.handshake.headers['x-forwarded-for']);
+				console.log('client IP', ipAddress);
+				console.log('proxy IP', socket.handshake.address);
 
 				socket.join(gameID);
 
