@@ -26,12 +26,15 @@ app.prepare().then(() => {
 	};
 
 	io.on('connection', (socket: Socket) => {
-		console.log(Date.now(), `Client connected: ${socket.id}`);
+		//console.log(Date.now(), `Client connected: ${socket.id}`);
 
 		socket.on('start', () => {
 			const gameUpdate = gameStore.createGame(socket.id);
 
-			console.log(Date.now(), `Socket ${socket.id} started game ${gameUpdate.dmID}`);
+			console.log(
+				Date.now(),
+				`Socket ${socket.id} started game ${gameUpdate.dmID}/${gameUpdate.spectatorID}`,
+			);
 
 			socket.emit('new-game', gameUpdate);
 		});
