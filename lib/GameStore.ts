@@ -1,14 +1,10 @@
 import Deck from '@/lib/TarokkaDeck';
 import generateID from '@/tools/simpleID';
 import parseMilliseconds from '@/tools/parseMilliseconds';
+import { MINUTE, HOUR, DAY } from '@/constants/time';
 import { GameState, GameUpdate, Settings } from '@/types';
 
 const deck = new Deck();
-
-const SECOND = 1000;
-const MINUTE = 60 * SECOND;
-const HOUR = 60 * MINUTE;
-const DAY = 24 * HOUR;
 
 const tilMidnight = () => {
 	const now = new Date();
@@ -16,6 +12,20 @@ const tilMidnight = () => {
 	midnight.setHours(24, 0, 0, 0);
 
 	return midnight.getTime() - now.getTime();
+};
+
+const uptime = (startTime: number) => {
+	const now = Date.now();
+	const uptime = now - startTime;
+
+	const { days, hours, minutes, seconds } = parseMilliseconds(uptime);
+
+	const dayLog = days ? ` ${days} ${days > 1 ? 'days' : 'day'}` : '';
+	const hourLog = hours ? ` ${hours} ${hours > 1 ? 'hours' : 'hour'}` : '';
+	const minuteLog = minutes ? ` ${minutes} ${minutes > 1 ? 'minutes' : 'minute'}` : '';
+	const secondLog = seconds ? ` ${seconds} ${seconds > 1 ? 'seconds' : 'second'}` : '';
+
+	return `Up${dayLog}${hourLog}${minuteLog}${secondLog}`;
 };
 
 export default class GameStore {
@@ -151,16 +161,7 @@ export default class GameStore {
 	}
 
 	log() {
-		const now = Date.now();
-		const uptime = now - this.startTime;
-
-		const { days, hours, minutes, seconds } = parseMilliseconds(uptime);
-
-		const dayLog = days ? ` ${days} ${days > 1 ? 'days' : 'day'}` : '';
-		const hourLog = hours ? ` ${hours} ${hours > 1 ? 'hours' : 'hour'}` : '';
-		const minuteLog = minutes ? ` ${minutes} ${minutes > 1 ? 'minutes' : 'minute'}` : '';
-
-		const uptimeLog = `Up${dayLog}${hourLog}${minuteLog} ${seconds} seconds`;
+		const uptimeLog = uptime(this.startTime);
 
 		console.log('-'.repeat(uptimeLog.length));
 		console.log(uptimeLog);
@@ -170,16 +171,7 @@ export default class GameStore {
 	}
 
 	wrapUp() {
-		const now = Date.now();
-		const uptime = now - this.startTime;
-
-		const { days, hours, minutes, seconds } = parseMilliseconds(uptime);
-
-		const dayLog = days ? ` ${days} ${days > 1 ? 'days' : 'day'}` : '';
-		const hourLog = hours ? ` ${hours} ${hours > 1 ? 'hours' : 'hour'}` : '';
-		const minuteLog = minutes ? ` ${minutes} ${minutes > 1 ? 'minutes' : 'minute'}` : '';
-
-		const uptimeLog = `Up${dayLog}${hourLog}${minuteLog} ${seconds} seconds`;
+		const uptimeLog = uptime(this.startTime);
 
 		console.log('='.repeat(uptimeLog.length));
 		console.log(uptimeLog);
@@ -207,8 +199,8 @@ export default class GameStore {
 		this.totalExpired += expired.length;
 		this.totalUnused += unused.length;
 
-		expired.forEach(this.deleteGame);
-		unused.forEach(this.deleteGame);
+		expired.forEach((game) => this.deleteGame(game));
+		unused.forEach((game) => this.deleteGame(game));
 	}
 
 	deleteGame(game: GameState): void {

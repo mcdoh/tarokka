@@ -1,3 +1,5 @@
+import { SECOND, MINUTE, HOUR, DAY } from '@/constants/time';
+
 export interface ParsedMilliseconds {
 	days: number;
 	hours: number;
@@ -6,11 +8,6 @@ export interface ParsedMilliseconds {
 }
 
 export default function parseMilliseconds(timestamp: number): ParsedMilliseconds {
-	const SECOND = 1000;
-	const MINUTE = 60 * SECOND;
-	const HOUR = 60 * MINUTE;
-	const DAY = 24 * HOUR;
-
 	const days = Math.floor(timestamp / DAY);
 	timestamp %= DAY;
 
