@@ -29,7 +29,7 @@ app.prepare().then(() => {
 		console.log(Date.now(), `Client connected: ${socket.id}`);
 
 		socket.on('start', () => {
-			const gameUpdate = gameStore.createGame();
+			const gameUpdate = gameStore.createGame(socket.id);
 
 			console.log(Date.now(), `Socket ${socket.id} started game ${gameUpdate.dmID}`);
 
@@ -44,10 +44,7 @@ app.prepare().then(() => {
 					? socket.handshake.headers['x-forwarded-for'][0]
 					: socket.handshake.headers['x-forwarded-for']?.split(',')[0];
 
-				console.log(Date.now(), `Socket ${socket.id} joined game ${gameID}`);
-				console.log('x-forwarded-for', socket.handshake.headers['x-forwarded-for']);
-				console.log('client IP', ipAddress);
-				console.log('proxy IP', socket.handshake.address);
+				console.log(Date.now(), `Socket ${socket.id}[${ipAddress}] joined game ${gameID}`);
 
 				socket.join(gameID);
 
@@ -66,7 +63,7 @@ app.prepare().then(() => {
 
 		socket.on('flip-card', ({ gameID, cardIndex }: ClientUpdate) => {
 			try {
-				console.log(Date.now(), 'Card flipped:', { gameID, cardIndex });
+				//console.log(Date.now(), 'Card flipped:', { gameID, cardIndex });
 
 				const gameUpdate = gameStore.flipCard(gameID, cardIndex);
 
@@ -91,8 +88,14 @@ app.prepare().then(() => {
 
 		socket.on('disconnect', () => {
 			try {
-				const { dmID } = gameStore.playerExit(socket.id);
-				console.log(Date.now(), `Client disconnected: ${socket.id} from ${dmID}`);
+				const game = gameStore.playerExit(socket.id);
+
+				if (game) {
+					console.log(
+						Date.now(),
+						`Client disconnected: ${socket.id} from ${game.dmID}/${game.spectatorID}`,
+					);
+				}
 			} catch (e) {
 				const error = e instanceof Error ? e.message : e;
 				console.error(Date.now(), 'Error[disconnect]', error);

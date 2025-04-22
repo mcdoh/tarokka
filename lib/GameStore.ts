@@ -34,6 +34,7 @@ export default class GameStore {
 	private totalExpired: number;
 	private totalUnused: number;
 
+	private startUps: Set<string>;
 	private dms: Map<string, GameState>;
 	private spectators: Map<string, GameState>;
 	private players: Map<string, string>;
@@ -44,6 +45,7 @@ export default class GameStore {
 		this.totalExpired = 0;
 		this.totalUnused = 0;
 
+		this.startUps = new Set();
 		this.dms = new Map();
 		this.spectators = new Map();
 		this.players = new Map();
@@ -73,7 +75,7 @@ export default class GameStore {
 		};
 	}
 
-	createGame(): GameState {
+	createGame(startUpID: string): GameState {
 		const { dmID, spectatorID } = this.createGameIDs();
 
 		const newGame: GameState = {
@@ -92,6 +94,7 @@ export default class GameStore {
 		};
 
 		this.totalCreated++;
+		this.startUps.add(startUpID);
 		this.dms.set(dmID, newGame);
 		this.spectators.set(spectatorID, newGame);
 
@@ -151,13 +154,19 @@ export default class GameStore {
 		return { dmID, spectatorID, cards, settings };
 	}
 
-	playerExit(playerID: string): GameState {
-		const gameID = this.players.get(playerID);
+	playerExit(playerID: string): GameState | null {
+		if (this.startUps.has(playerID)) {
+			this.startUps.delete(playerID);
 
-		if (!gameID) throw new Error(`Player ${playerID} not found`);
+			return null;
+		} else {
+			const gameID = this.players.get(playerID);
 
-		this.players.delete(playerID);
-		return this.leaveGame(gameID, playerID);
+			if (!gameID) throw new Error(`Player ${playerID} not found`);
+
+			this.players.delete(playerID);
+			return this.leaveGame(gameID, playerID);
+		}
 	}
 
 	log() {
