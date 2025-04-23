@@ -9,6 +9,7 @@ type TooltipProps = {
 	offsetX?: number;
 	offsetY?: number;
 	edgeBuffer?: number;
+	className?: string;
 };
 
 export default function Tooltip({
@@ -19,6 +20,7 @@ export default function Tooltip({
 	offsetX = 20,
 	offsetY = 20,
 	edgeBuffer = 10,
+	className,
 }: TooltipProps) {
 	const ttRef = useRef<HTMLDivElement | null>(null);
 	const [show, setShow] = useState(false);
@@ -67,6 +69,7 @@ export default function Tooltip({
 				onMouseMove={handleMouseMove}
 				onTouchStart={handleTouchStart}
 				onTouchEnd={handleTouchEnd}
+				className={className}
 			>
 				{children}
 			</div>
