@@ -6,6 +6,7 @@ import { socket } from '@/socket';
 
 import Settings from '@/components/Settings';
 import Card from '@/components/Card';
+import Notes from '@/components/Notes';
 import NotFound from '@/components/NotFound';
 import { cardMap, layout } from '@/constants/tarokka';
 
@@ -105,6 +106,7 @@ export default function GamePage() {
 						</div>
 					))}
 			</div>
+			{cards.every(({ flipped }) => flipped) && <Notes gameData={gameData} />}
 		</main>
 	) : null;
 }
