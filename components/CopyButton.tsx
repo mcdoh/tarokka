@@ -6,11 +6,18 @@ import { Copy as CopyIcon, Check as CheckIcon } from 'lucide-react';
 import ToolTip from '@/components/ToolTip';
 
 type CopyButtonProps = {
-	title: string;
+	title?: string;
 	copy: string;
+	tooltip?: string | string[];
+	className?: string;
 };
 
-export default function CopyButton({ title, copy }: CopyButtonProps) {
+export default function CopyButton({
+	title,
+	copy,
+	tooltip = ['Copy', 'Copied'],
+	className,
+}: CopyButtonProps) {
 	const [copied, setCopied] = useState(false);
 
 	const handleCopy = async () => {
@@ -23,21 +30,21 @@ export default function CopyButton({ title, copy }: CopyButtonProps) {
 		}
 	};
 
+	const ttContent =
+		Array.isArray(tooltip) && tooltip.length > 1 ? (copied ? tooltip[1] : tooltip[0]) : tooltip;
+
 	return (
-		<ToolTip content={copy}>
-			<button
-				onClick={handleCopy}
-				className="w-full py-1 px-2 bg-gray-700 hover:bg-gray-600 text-white rounded-lg flex flex-col items-start gap-1 shadow transition-all cursor-pointer"
-			>
+		<button onClick={handleCopy} className={`transition-all cursor-pointer ${className}`}>
+			<ToolTip content={ttContent} className="w-full">
 				<div className="flex items-center gap-2 w-full text-sm font-medium">
-					{`Copy ${title}`}
+					{title}
 					{copied ? (
 						<CheckIcon className="ml-auto" size={16} />
 					) : (
 						<CopyIcon className="ml-auto" size={16} />
 					)}
 				</div>
-			</button>
-		</ToolTip>
+			</ToolTip>
+		</button>
 	);
 }
