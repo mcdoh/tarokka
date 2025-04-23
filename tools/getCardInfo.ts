@@ -19,15 +19,15 @@ export default function getTooltip(
 		if (isHighCard(card)) {
 			// High deck ally
 			if (position.id === 'ally') {
-				if (dm) text.push(`Ally: ${card.prophecy.allies[0].ally}`);
-				if (dm) text.push(card.prophecy.allies[0].dmText);
 				if (dm || settings.prophecy) text.push(card.prophecy.allies[0].playerText);
+				if (dm) text.push(card.prophecy.allies[0].dmText);
+				if (dm) text.push(`Ally: ${card.prophecy.allies[0].ally}`);
 			}
 
 			// High deck Strahd
 			if (position.id === 'strahd') {
-				if (dm) text.push(card.prophecy.strahd.dmText);
 				if (dm || settings.prophecy) text.push(card.prophecy.strahd.playerText);
+				if (dm) text.push(card.prophecy.strahd.dmText);
 			}
 		}
 
