@@ -2,11 +2,18 @@
 
 import { useState } from 'react';
 import { Settings as Gear } from 'lucide-react';
+import { Cinzel_Decorative } from 'next/font/google';
 
 import CopyButton from '@/components/CopyButton';
 import Scrim from '@/components/Scrim';
 import Switch from '@/components/Switch';
 import { CardStyle, GameUpdate } from '@/types';
+
+const cinzel = Cinzel_Decorative({
+	variable: '--font-cinzel',
+	subsets: ['latin'],
+	weight: '400',
+});
 
 type SettingsProps = {
 	gameData: GameUpdate;
@@ -79,13 +86,13 @@ export default function Settings({ gameData, changeAction }: SettingsProps) {
 	);
 
 	return (
-		<div className={`fixed top-4 right-4 z-50`}>
+		<div className={`fixed top-4 right-4 z-50 ${cinzel.className}`}>
 			<Scrim
 				onClick={() => setOpen((prev) => !prev)}
 				className={`transition-all duration-250 ${open ? 'pointer-events-auto opacity-100' : 'pointer-events-none opacity-0'}`}
 			>
 				<div
-					className={`fixed top-4 right-4 flex flex-col items-center justify-center text-gray-100 bg-gray-800 shadow-lg rounded-lg border border-gray-500 p-6 space-y-2 transition-all duration-250 ${open ? 'opacity-100 w-[300px] h-[300px]' : 'opacity-0 w-0 h-0'}`}
+					className={`fixed top-4 right-4 flex flex-col items-center justify-center text-gray-100 bg-gray-800 shadow-lg rounded-lg border border-gray-500 p-6 space-y-2 transition-all duration-250 ${open ? 'opacity-100 w-[350px] h-[300px]' : 'opacity-0 w-0 h-0'}`}
 				>
 					<CopyButton
 						title="Copy DM link"

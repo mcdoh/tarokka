@@ -1,15 +1,23 @@
 import type { Metadata } from 'next';
-import { Geist, Geist_Mono } from 'next/font/google';
+import { Pirata_One, Eagle_Lake, Cinzel_Decorative } from 'next/font/google';
 import './globals.css';
 
-const geistSans = Geist({
-	variable: '--font-geist-sans',
+const pirataOne = Pirata_One({
+	variable: '--font-pirata',
 	subsets: ['latin'],
+	weight: '400',
 });
 
-const geistMono = Geist_Mono({
-	variable: '--font-geist-mono',
+const eagleLake = Eagle_Lake({
+	variable: '--font-eagle-lake',
 	subsets: ['latin'],
+	weight: '400',
+});
+
+const cinzel = Cinzel_Decorative({
+	variable: '--font-cinzel',
+	subsets: ['latin'],
+	weight: '400',
 });
 
 export const metadata: Metadata = {
@@ -23,8 +31,11 @@ export default function RootLayout({
 	children: React.ReactNode;
 }>) {
 	return (
-		<html lang="en">
-			<body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>{children}</body>
+		<html
+			lang="en"
+			className={`${pirataOne.variable} ${eagleLake.variable} ${cinzel.variable} antialiased`}
+		>
+			<body className={`${eagleLake.className} antialiased`}>{children}</body>
 		</html>
 	);
 }
