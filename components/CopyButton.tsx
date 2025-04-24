@@ -30,12 +30,15 @@ export default function CopyButton({
 		}
 	};
 
-	const ttContent =
-		Array.isArray(tooltip) && tooltip.length > 1 ? (copied ? tooltip[1] : tooltip[0]) : tooltip;
+	const ttContent = (
+		<span className="text-yellow-300">
+			{Array.isArray(tooltip) && tooltip.length > 1 ? (copied ? tooltip[1] : tooltip[0]) : tooltip}
+		</span>
+	);
 
 	return (
 		<button onClick={handleCopy} className={`cursor-pointer ${className}`}>
-			<ToolTip content={ttContent} className="w-full">
+			<ToolTip content={ttContent} className="w-full font-yellow-400">
 				<div className="flex items-center gap-2 w-full text-sm font-medium">
 					{title}
 					{copied ? (

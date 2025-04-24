@@ -75,7 +75,7 @@ export default function Tooltip({
 			</div>
 			<div
 				ref={ttRef}
-				className={`fixed max-w-[35vh] pointer-events-none z-50 text-xs bg-black text-white rounded-xl border border-gray-300 px-2 py-1 transition-opacity duration-250 ${content && show ? 'opacity-100' : 'opacity-0'}`}
+				className={`fixed max-w-[35vh] pointer-events-none z-50 text-xs bg-[#1e293b] rounded-lg border border-yellow-500 px-2 py-1 transition-opacity duration-250 ${content && show ? 'opacity-100' : 'opacity-0'}`}
 				style={{
 					top: `${pos.y + offsetY}px`,
 					left: `${pos.x + offsetX}px`,

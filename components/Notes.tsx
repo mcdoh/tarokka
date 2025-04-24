@@ -42,7 +42,7 @@ export default function Notes({ gameData: { dmID, cards, settings }, show }: Not
 			className={`fixed bottom-4 right-4 z-50 transition-all duration-250 ${show ? 'pointer-events-auto opacity-100' : 'pointer-events-none opacity-0'}`}
 		>
 			<button
-				className={`p-2 transition-all duration-250 text-gray-300 hover:text-white cursor-pointer ${showNotes ? 'pointer-events-none opacity-0' : 'pointer-events-auto opacity-100'}`}
+				className={`text-yellow-400 hover:text-yellow-300 p-2 transition-all duration-250 cursor-pointer ${showNotes ? 'pointer-events-none opacity-0' : 'pointer-events-auto opacity-100'}`}
 				onClick={() => setOpen((prev) => !prev)}
 			>
 				<ScrollText className="w-5 h-5" />
@@ -53,13 +53,13 @@ export default function Notes({ gameData: { dmID, cards, settings }, show }: Not
 				className={`transition-all duration-250 ${showNotes ? 'pointer-events-auto opacity-100' : 'pointer-events-none opacity-0'}`}
 			>
 				<div
-					className={`fixed bottom-4 right-4 transition-all duration-250 text-gray-100 bg-gray-800 shadow-lg rounded-lg border border-gray-500 space-y-2 ${showNotes ? 'w-[33vw] h-[67vh]' : 'w-0 h-0'}`}
+					className={`fixed bottom-4 right-4 transition-all duration-250 bg-slate-800 border border-yellow-400 rounded-lg space-y-2 ${showNotes ? 'w-[33vw] h-[67vh]' : 'w-0 h-0'}`}
 				>
 					<CopyButton
 						copy={notes.map((note) => note!.join('\n')).join('\n\n')}
-						className="absolute top-2 right-2 p-2 transition-all duration-250 bg-black/20 hover:bg-black/40 rounded-full text-gray-300 hover:text-white"
+						className="text-yellow-400 hover:drop-shadow-[0_0_1px_#ffd700] absolute top-2 right-2 p-2 transition-all duration-250 bg-black/20 hover:bg-black/40 rounded-full cursor-pointer"
 					/>
-					<div className="h-full overflow-scroll p-6 transition-all delay-200 duration-50 ${showNotes ? 'opacity-100' : 'opacity-0'}">
+					<div className="text-yellow-400 h-full overflow-scroll p-6 transition-all delay-200 duration-50 ${showNotes ? 'opacity-100' : 'opacity-0'}">
 						{notes.map((note, index) => (
 							<div key={index}>
 								<div className="flex flex-col gap-2">
@@ -67,7 +67,7 @@ export default function Notes({ gameData: { dmID, cards, settings }, show }: Not
 										<p key={index}>{blurb}</p>
 									))}
 								</div>
-								{index < notes.length - 1 && <hr className="my-3 border-gray-300" />}
+								{index < notes.length - 1 && <hr className="my-3 border-yellow-400" />}
 							</div>
 						))}
 					</div>

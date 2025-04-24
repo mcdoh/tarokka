@@ -33,8 +33,8 @@ export default function Card({ dm, card, position, settings, flipAction }: CardP
 			<>
 				{text.map((t, i) => (
 					<div key={i}>
-						<p>{t}</p>
-						{i < text.length - 1 && <hr className="my-2 border-gray-300" />}
+						<p className="text-yellow-400">{t}</p>
+						{i < text.length - 1 && <hr className="my-2 border-yellow-400" />}
 					</div>
 				))}
 			</>
@@ -54,14 +54,14 @@ export default function Card({ dm, card, position, settings, flipAction }: CardP
 						<img
 							src={getURL(cardBack as TarokkaGameCard, settings)}
 							alt="Card Back"
-							className="rounded-lg border border-gray-600"
+							className="rounded-lg border border-yellow-500"
 						/>
 					</div>
 					<div className="absolute group inset-0 backface-hidden rotate-y-180">
 						<img
 							src={getURL(card, settings)}
 							alt={aria}
-							className="rounded-lg border border-gray-600 "
+							className="rounded-lg border border-yellow-500 "
 						/>
 					</div>
 				</div>
