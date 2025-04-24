@@ -106,7 +106,7 @@ export default function GamePage() {
 						</div>
 					))}
 			</div>
-			{cards.every(({ flipped }) => flipped) && <Notes gameData={gameData} />}
+			<Notes gameData={gameData} show={cards.every(({ flipped }) => flipped)} />
 		</main>
 	) : null;
 }

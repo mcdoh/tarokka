@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { Settings as Gear, X } from 'lucide-react';
+import { Settings as Gear } from 'lucide-react';
 
 import CopyButton from '@/components/CopyButton';
 import Scrim from '@/components/Scrim';
@@ -78,29 +78,33 @@ export default function Settings({ gameData, changeAction }: SettingsProps) {
 		</fieldset>
 	);
 
-	return open ? (
-		<Scrim onClick={() => setOpen((prev) => !prev)}>
-			<div className="fixed top-4 right-4 text-gray-100 bg-gray-800 shadow-lg rounded-lg border border-gray-500 p-6 space-y-2">
-				<CopyButton
-					title="Copy DM link"
-					copy={`${location.origin}/${gameData.dmID}`}
-					tooltip={`${location.origin}/${gameData.dmID}`}
-					className="flex flex-row content-between w-full py-1 px-2 bg-gray-700 hover:bg-gray-600 text-gray-200 hover:text-white rounded-lg shadow"
-				/>
-				<CopyButton
-					title="Copy Spectator link"
-					copy={`${location.origin}/${gameData.spectatorID}`}
-					tooltip={`${location.origin}/${gameData.spectatorID}`}
-					className="flex flex-row content-between w-full py-1 px-2 bg-gray-700 hover:bg-gray-600 text-gray-200 hover:text-white rounded-lg shadow"
-				/>
-				<Permissions />
-				<CardStyle />
-			</div>
-		</Scrim>
-	) : (
-		<div className="fixed top-4 right-4 z-50">
+	return (
+		<div className={`fixed top-4 right-4 z-50`}>
+			<Scrim
+				onClick={() => setOpen((prev) => !prev)}
+				className={`transition-all duration-250 ${open ? 'pointer-events-auto opacity-100' : 'pointer-events-none opacity-0'}`}
+			>
+				<div
+					className={`fixed top-4 right-4 flex flex-col items-center justify-center text-gray-100 bg-gray-800 shadow-lg rounded-lg border border-gray-500 p-6 space-y-2 transition-all duration-250 ${open ? 'opacity-100 w-[300px] h-[300px]' : 'opacity-0 w-0 h-0'}`}
+				>
+					<CopyButton
+						title="Copy DM link"
+						copy={`${location.origin}/${gameData.dmID}`}
+						tooltip={`${location.origin}/${gameData.dmID}`}
+						className="flex flex-row content-between w-full py-1 px-2 transition-all duration-250 bg-gray-700 hover:bg-gray-600 text-gray-200 hover:text-white rounded-lg shadow"
+					/>
+					<CopyButton
+						title="Copy Spectator link"
+						copy={`${location.origin}/${gameData.spectatorID}`}
+						tooltip={`${location.origin}/${gameData.spectatorID}`}
+						className="flex flex-row content-between w-full py-1 px-2 transition-all duration-250 bg-gray-700 hover:bg-gray-600 text-gray-200 hover:text-white rounded-lg shadow"
+					/>
+					<Permissions />
+					<CardStyle />
+				</div>
+			</Scrim>
 			<button
-				className="p-2 text-gray-100 hover:text-gray-300 cursor-pointer"
+				className={`p-2 transition-all duration-250 text-gray-300 hover:text-white cursor-pointer ${open ? 'pointer-events-none opacity-0' : 'pointer-events-auto opacity-100'}`}
 				onClick={() => setOpen((prev) => !prev)}
 			>
 				<Gear className="w-5 h-5" />

@@ -34,7 +34,7 @@ export default function CopyButton({
 		Array.isArray(tooltip) && tooltip.length > 1 ? (copied ? tooltip[1] : tooltip[0]) : tooltip;
 
 	return (
-		<button onClick={handleCopy} className={`transition-all cursor-pointer ${className}`}>
+		<button onClick={handleCopy} className={`cursor-pointer ${className}`}>
 			<ToolTip content={ttContent} className="w-full">
 				<div className="flex items-center gap-2 w-full text-sm font-medium">
 					{title}

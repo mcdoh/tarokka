@@ -12,27 +12,15 @@ import { GameUpdate } from '@/types';
 
 type NotesProps = {
 	gameData: GameUpdate;
+	show: boolean;
 };
 
-export default function Notes({ gameData: { dmID, cards, settings } }: NotesProps) {
+export default function Notes({ gameData: { dmID, cards, settings }, show }: NotesProps) {
 	const isDM = !!dmID;
 
 	const [open, setOpen] = useState(false);
 
-	const gameDummy = {
-		dmID: '',
-		spectatorID: '',
-		cards: [],
-		settings: {
-			positionBack: false,
-			positionFront: false,
-			prophecy: false,
-			notes: false,
-			cardStyle: 'color',
-		},
-	};
-
-	const notes = useMemo(
+	const notes: (string[] | undefined)[] = useMemo(
 		() =>
 			Array.from({ length: 9 })
 				.map((_cell: unknown, index: number) => cards[cardMap[index]])
@@ -47,39 +35,44 @@ export default function Notes({ gameData: { dmID, cards, settings } }: NotesProp
 		[settings],
 	);
 
-	return isDM || settings.notes ? (
-		<div className="fixed bottom-4 right-4 z-50">
-			{!open && (
-				<button
-					className="p-2 text-gray-100 hover:text-gray-300 cursor-pointer"
-					onClick={() => setOpen((prev) => !prev)}
-				>
-					<ScrollText className="w-5 h-5" />
-				</button>
-			)}
+	const showNotes = show && open && (isDM || settings.notes);
 
-			{open && (
-				<Scrim onClick={() => setOpen((prev) => !prev)}>
-					<div className="fixed bottom-4 right-4 w-[33vw] h-[67vh] text-gray-100 bg-gray-800 shadow-lg rounded-lg border border-gray-500 space-y-2">
-						<CopyButton
-							copy={notes.map((note) => note!.join('\n')).join('\n\n')}
-							className="absolute top-2 right-2 p-2 bg-black/30 hover:bg-black/50 rounded-full text-gray-200 hover:text-white"
-						/>
-						<div className="h-full overflow-scroll p-6">
-							{notes.map((note, index) => (
-								<div key={index}>
-									<div className="flex flex-col gap-2">
-										{note!.map((blurb, index) => (
-											<p key={index}>{blurb}</p>
-										))}
-									</div>
-									{index < notes.length - 1 && <hr className="my-3 border-gray-300" />}
+	return (
+		<div
+			className={`fixed bottom-4 right-4 z-50 transition-all duration-250 ${show ? 'pointer-events-auto opacity-100' : 'pointer-events-none opacity-0'}`}
+		>
+			<button
+				className={`p-2 transition-all duration-250 text-gray-300 hover:text-white cursor-pointer ${showNotes ? 'pointer-events-none opacity-0' : 'pointer-events-auto opacity-100'}`}
+				onClick={() => setOpen((prev) => !prev)}
+			>
+				<ScrollText className="w-5 h-5" />
+			</button>
+
+			<Scrim
+				onClick={() => setOpen((prev) => !prev)}
+				className={`transition-all duration-250 ${showNotes ? 'pointer-events-auto opacity-100' : 'pointer-events-none opacity-0'}`}
+			>
+				<div
+					className={`fixed bottom-4 right-4 transition-all duration-250 text-gray-100 bg-gray-800 shadow-lg rounded-lg border border-gray-500 space-y-2 ${showNotes ? 'w-[33vw] h-[67vh]' : 'w-0 h-0'}`}
+				>
+					<CopyButton
+						copy={notes.map((note) => note!.join('\n')).join('\n\n')}
+						className="absolute top-2 right-2 p-2 transition-all duration-250 bg-black/20 hover:bg-black/40 rounded-full text-gray-300 hover:text-white"
+					/>
+					<div className="h-full overflow-scroll p-6 transition-all delay-200 duration-50 ${showNotes ? 'opacity-100' : 'opacity-0'}">
+						{notes.map((note, index) => (
+							<div key={index}>
+								<div className="flex flex-col gap-2">
+									{note!.map((blurb, index) => (
+										<p key={index}>{blurb}</p>
+									))}
 								</div>
-							))}
-						</div>
+								{index < notes.length - 1 && <hr className="my-3 border-gray-300" />}
+							</div>
+						))}
 					</div>
-				</Scrim>
-			)}
+				</div>
+			</Scrim>
 		</div>
-	) : null;
+	);
 }
