@@ -32,7 +32,7 @@ export default function Notes({ gameData: { dmID, cards, settings }, show }: Not
 						cards[Object.keys(cardMap).find((key) => cardMap[key] === index) || 0],
 				)
 				.filter((truthy) => truthy),
-		[settings],
+		[cards, isDM, settings],
 	);
 
 	const showNotes = show && open && (isDM || settings.notes);
@@ -49,7 +49,7 @@ export default function Notes({ gameData: { dmID, cards, settings }, show }: Not
 			</button>
 
 			<Scrim
-				onClick={() => setOpen((prev) => !prev)}
+				clickAction={() => setOpen((prev) => !prev)}
 				className={`transition-all duration-250 ${showNotes ? 'pointer-events-auto opacity-100' : 'pointer-events-none opacity-0'}`}
 			>
 				<div

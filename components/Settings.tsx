@@ -105,7 +105,7 @@ export default function Settings({ gameData, changeAction }: SettingsProps) {
 	return (
 		<div className={`fixed top-4 right-4 z-25 ${cinzel.className}`}>
 			<Scrim
-				onClick={() => setOpen((prev) => !prev)}
+				clickAction={() => setOpen((prev) => !prev)}
 				className={`transition-all duration-250 ${open ? 'pointer-events-auto opacity-100' : 'pointer-events-none opacity-0'}`}
 			>
 				<div

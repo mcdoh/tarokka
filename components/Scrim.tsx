@@ -1,16 +1,16 @@
 'use client';
 
 type ScrimProps = {
-	children?: React.ReactNode;
-	onClick?: (event: React.MouseEvent<HTMLDivElement>) => void;
+	children: React.ReactNode;
+	clickAction: (event: React.MouseEvent<HTMLDivElement>) => void;
 	show?: boolean;
 	className?: string;
 };
 
-export default function Scrim({ children, onClick, show = true, className = '' }: ScrimProps) {
+export default function Scrim({ children, clickAction, show = true, className = '' }: ScrimProps) {
 	const handleClick = (event: React.MouseEvent<HTMLDivElement>) => {
 		if (event.target === event.currentTarget) {
-			onClick && onClick(event);
+			clickAction(event);
 		}
 	};
 	if (!show) return null;
