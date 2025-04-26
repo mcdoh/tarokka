@@ -14,12 +14,12 @@ You can see it live at:
 - 🔮 **Faithful to the Tarokka Deck**: Supports all cards and positions used by Madam Eva's reading.
   - 💬 Dynamic prophecy rendering based on card and position
   - 🎨 Multiple card styles
-- 🧙 **Separate DM and Spectator Views**:
+- 🧙 Separate DM and Spectator Views
   - ⚙️ DM can toggle what information is visible to players.
-  - Every action (flipping cards, settings changes) is broadcast live to connected users.
+  - 🃏Every action (flipping cards, settings changes) is broadcast live to connected users.
 - 🌐 Fully browser-based — no accounts or installs
 - 📱 Mobile-friendly UI
-- 🔁 **WebSocket-Powered Real-Time Sync**:
+- 🔁 WebSocket-Powered Real-Time Sync
 
 ---
 
