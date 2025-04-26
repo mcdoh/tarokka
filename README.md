@@ -1,4 +1,3 @@
-````
 # 🃏 Tarokka
 
 **Tarokka** is a real-time Tarokka card reading app for _Dungeons & Dragons: Curse of Strahd_. It simulates Madam Eva’s fortune-telling, revealing a hero’s fate and Strahd’s secrets, and is built to deliver an authentic, immersive experience for DMs and players alike.
@@ -33,4 +32,4 @@ git clone https://github.com/mcdoh/tarokka.git
 cd tarokka
 npm install
 npm run dev
-````
+```
