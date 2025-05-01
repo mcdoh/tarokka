@@ -1,7 +1,7 @@
 import Deck from '@/lib/TarokkaDeck';
 import generateID from '@/tools/simpleID';
 import parseMilliseconds from '@/tools/parseMilliseconds';
-import { MINUTE, HOUR, DAY } from '@/constants/time';
+import { HOUR, DAY } from '@/constants/time';
 import { GameState, GameUpdate, Settings } from '@/types';
 
 const deck = new Deck();
@@ -50,7 +50,7 @@ export default class GameStore {
 		this.spectators = new Map();
 		this.players = new Map();
 
-		setInterval(() => this.log(), 15 * MINUTE);
+		setInterval(() => this.log(), HOUR);
 		setInterval(() => this.cleanUp(), HOUR);
 
 		setTimeout(() => this.wrapUp(), tilMidnight());
@@ -174,7 +174,6 @@ export default class GameStore {
 		console.log(uptimeLog);
 		console.log(`Games: ${this.dms.size}`);
 		console.log(`Players: ${this.players.size}`);
-		console.log('-'.repeat(uptimeLog.length));
 	}
 
 	wrapUp() {
@@ -186,7 +185,6 @@ export default class GameStore {
 		console.log(`Created: ${this.totalCreated}`);
 		console.log(`Expired: ${this.totalExpired}`);
 		console.log(`Unused: ${this.totalUnused}`);
-		console.log('='.repeat(uptimeLog.length));
 
 		this.totalCreated = 0;
 		this.totalExpired = 0;
