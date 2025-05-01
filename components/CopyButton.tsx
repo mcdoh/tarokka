@@ -1,13 +1,14 @@
 'use client';
 
-import { useState } from 'react';
-import { Copy as CopyIcon, Check as CheckIcon } from 'lucide-react';
+import { ForwardRefExoticComponent, RefAttributes, useState } from 'react';
+import { LucideProps, Copy as CopyIcon, Check as CheckIcon } from 'lucide-react';
 
 import ToolTip from '@/components/ToolTip';
 
 type CopyButtonProps = {
 	title?: string;
 	copy: string;
+	Icon?: ForwardRefExoticComponent<Omit<LucideProps, 'ref'> & RefAttributes<SVGSVGElement>>;
 	tooltip?: string | string[];
 	className?: string;
 };
@@ -15,6 +16,7 @@ type CopyButtonProps = {
 export default function CopyButton({
 	title,
 	copy,
+	Icon = CopyIcon,
 	tooltip = ['Copy', 'Copied'],
 	className,
 }: CopyButtonProps) {
@@ -44,7 +46,7 @@ export default function CopyButton({
 					{copied ? (
 						<CheckIcon className="ml-auto" size={16} />
 					) : (
-						<CopyIcon className="ml-auto" size={16} />
+						<Icon className="ml-auto" size={16} />
 					)}
 				</div>
 			</ToolTip>

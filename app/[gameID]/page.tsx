@@ -3,11 +3,14 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'next/navigation';
 import { socket } from '@/socket';
+import { Eye } from 'lucide-react';
 
-import Settings from '@/components/Settings';
 import Card from '@/components/Card';
+import CopyButton from '@/components/CopyButton';
 import Notes from '@/components/Notes';
 import NotFound from '@/components/NotFound';
+import Settings from '@/components/Settings';
+
 import { cardMap, layout } from '@/constants/tarokka';
 
 import type { GameUpdate, ClientUpdate } from '@/types';
@@ -88,6 +91,15 @@ export default function GamePage() {
 		<NotFound />
 	) : cards ? (
 		<main className="min-h-screen flex flex-col items-center justify-center gap-4 bg-[url('/img/table3.png')] bg-cover bg-center">
+			{isDM && (
+				<CopyButton
+					copy={`${location.origin}/${gameData.spectatorID}`}
+					tooltip={`Spectator link: ${location.origin}/${gameData.spectatorID}`}
+					Icon={Eye}
+					className={`fixed top-4 left-4 p-2 z-25 transition-all duration-250 text-yellow-400 hover:text-yellow-300 cursor-pointer`}
+				/>
+			)}
+
 			{isDM && <Settings gameData={gameData} changeAction={handleSettings} />}
 			<div className="grid grid-cols-3 grid-rows-3 gap-8 w-fit mx-auto">
 				{Array.from({ length: 9 })
