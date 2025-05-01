@@ -34,10 +34,10 @@ export default class GameStore {
 	private totalExpired: number;
 	private totalUnused: number;
 
-	private startUps: Set<string>;
-	private dms: Map<string, GameState>;
-	private spectators: Map<string, GameState>;
-	private players: Map<string, string>;
+	private startUps: Set<string>; // homepage socket IDs
+	private dms: Map<string, GameState>; // DM socket ID -> game
+	private spectators: Map<string, GameState>; // spectator socket ID -> game
+	private players: Map<string, GameState>; // socket ID -> game
 
 	constructor() {
 		this.startTime = Date.now();
@@ -106,14 +106,12 @@ export default class GameStore {
 
 		game.players.add(playerID);
 		game.lastUpdated = Date.now();
-		this.players.set(playerID, gameID);
+		this.players.set(playerID, game);
 
 		return this.gameUpdate(game);
 	}
 
-	leaveGame(gameID: string, playerID: string): GameState {
-		const game = this.getGame(gameID);
-
+	leaveGame(game: GameState, playerID: string): GameState {
 		game.players.delete(playerID);
 		game.lastUpdated = Date.now();
 
@@ -160,12 +158,12 @@ export default class GameStore {
 
 			return null;
 		} else {
-			const gameID = this.players.get(playerID);
+			const game = this.players.get(playerID);
 
-			if (!gameID) throw new Error(`Player ${playerID} not found`);
+			if (!game) throw new Error(`Player ${playerID} not found`);
 
 			this.players.delete(playerID);
-			return this.leaveGame(gameID, playerID);
+			return this.leaveGame(game, playerID);
 		}
 	}
 
@@ -208,7 +206,11 @@ export default class GameStore {
 		this.totalExpired += expired.length;
 		this.totalUnused += unused.length;
 
-		expired.forEach((game) => this.deleteGame(game));
+		expired.forEach((game) => {
+			game.players.forEach((playerID) => this.players.delete(playerID));
+			this.deleteGame(game);
+		});
+
 		unused.forEach((game) => this.deleteGame(game));
 	}
 
