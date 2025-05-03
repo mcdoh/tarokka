@@ -53,7 +53,7 @@ export default function Notes({ gameData: { dmID, cards, settings }, show }: Not
 				className={`transition-all duration-250 ${showNotes ? 'pointer-events-auto opacity-100' : 'pointer-events-none opacity-0'}`}
 			>
 				<div
-					className={`fixed bottom-4 right-4 transition-all duration-250 bg-slate-800 border border-yellow-400 rounded-lg space-y-2 ${showNotes ? 'w-[33vw] h-[67vh]' : 'w-0 h-0'}`}
+					className={`fixed bottom-4 right-4 transition-all duration-250 bg-slate-800 border border-yellow-400 rounded-lg space-y-2 ${showNotes ? 'sm:w-[33vw] sm:h-[67vh] w-[80vw] h-[80vh]' : 'w-0 h-0'}`}
 				>
 					<CopyButton
 						copy={notes.map((note) => note!.join('\n')).join('\n\n')}

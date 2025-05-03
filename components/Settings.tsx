@@ -4,7 +4,9 @@ import { useState } from 'react';
 import { Settings as Gear } from 'lucide-react';
 import { Cinzel_Decorative } from 'next/font/google';
 
+import BuyMeACoffee from '@/components/BuyMeACoffee';
 import CopyButton from '@/components/CopyButton';
+import GitHubButton from '@/components/GitHubButton';
 import Scrim from '@/components/Scrim';
 import Switch from '@/components/Switch';
 import { CardStyle, GameUpdate } from '@/types';
@@ -114,6 +116,10 @@ export default function Settings({ gameData, changeAction }: SettingsProps) {
 					<Links />
 					<Permissions />
 					<CardStyle />
+					<span className="w-full flex flex-row justify-evenly">
+						<GitHubButton className="h-[35px] w-[125px]" />
+						<BuyMeACoffee className="h-[35px] w-[125px]" />
+					</span>
 				</div>
 			</Scrim>
 			<button

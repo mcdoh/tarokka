@@ -2,16 +2,18 @@
 
 **Tarokka** is a real-time Tarokka card reading app for _Dungeons & Dragons: Curse of Strahd_. It simulates Madam Eva’s fortune-telling, revealing a hero’s fate and Strahd’s secrets, and is built to deliver an authentic, immersive experience for DMs and players alike.
 
-![screenshot](public/screenshot.png)
+To be honest, I’d say this is overkill for what is a relatively small aspect of _Curse of Strahd_ but I had fun making it. It’s a [Next.js](https://nextjs.org/) app running a custom server in order to employ [Socket.IO](https://socket.io/). When a new session is created the DM (dungeon master) is presented a game with the cards shuffled and laid out on the table. There is a link available for sharing the session to any spectators. The DM has access to settings that allow for limiting what info spectators have access to (card purpose, prophecy, notes) and the style of cards used.
+
+![screenshot](public/img/screenshot.png)
 
 You can see it live at:
-👉 [https://tarokka.mcmorgans.us](https://tarokka.mcmorgans.us)
+👉 [https://tarokka.app](https://tarokka.app)
 
 ---
 
 ## ✨ Features
 
-- 🔮 **Faithful to the Tarokka Deck**: Supports all cards and positions used by Madam Eva's reading.
+- 🔮 **Faithful to the Tarokka Deck**: Supports all cards and positions used by Madam Eva’s reading.
   - 💬 Dynamic prophecy rendering based on card and position
   - 🎨 Multiple card styles
 - 🧙 Separate DM and Spectator Views
