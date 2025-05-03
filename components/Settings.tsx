@@ -75,18 +75,18 @@ export default function Settings({ gameData, changeAction }: SettingsProps) {
 	);
 
 	const CardStyle = () => (
-		<fieldset className="flex flex-col">
-			<div className="text-xs mb-1">Card style:</div>
+		<fieldset className="flex flex-col w-full">
+			<div className="text-xs my-1">Card style:</div>
 			<div className="inline-flex overflow-hidden rounded-md w-full">
 				{cardStyleOptions.map((option, index) => (
 					<label
 						key={option}
-						className={`cursor-pointer px-4 py-2 text-sm font-medium transition
+						className={`flex justify-center items-center cursor-pointer w-full px-4 py-2 text-sm font-medium transition
                     ${gameData.settings.cardStyle === option ? 'bg-slate-700 text-yellow-300 font-extrabold' : 'bg-slate-800 hover:bg-slate-700'}
                     ${index === 0 ? 'rounded-l-md' : ''}
                     ${index === cardStyleOptions.length - 1 ? 'rounded-r-md' : ''}
                     ${index !== 0 && 'border-l border-gray-600'}
-                    border border-yellow-500 hover:text-yellow-300
+                    border border-yellow-500 hover:text-yellow-300 hover:drop-shadow-[0_0_3px_#ffd700]
                   `}
 					>
 						<input
@@ -111,7 +111,7 @@ export default function Settings({ gameData, changeAction }: SettingsProps) {
 				className={`transition-all duration-250 ${open ? 'pointer-events-auto opacity-100' : 'pointer-events-none opacity-0'}`}
 			>
 				<div
-					className={`fixed top-4 right-4 flex flex-col items-center justify-center bg-slate-800 text-yellow-400 rounded-lg border border-yellow-400 p-6 space-y-2 transition-all duration-250 ${open ? 'opacity-100 w-[350px] h-[300px]' : 'opacity-0 w-0 h-0'}`}
+					className={`fixed top-4 right-4 flex flex-col items-center justify-evenly bg-slate-800 text-yellow-400 rounded-lg border border-yellow-400 py-3 px-4 transition-all duration-250 ${open ? 'opacity-100 w-[350px] h-[350px]' : 'opacity-0 w-0 h-0'}`}
 				>
 					<Links />
 					<Permissions />
