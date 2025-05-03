@@ -96,7 +96,8 @@ export default function GamePage() {
 					copy={`${location.origin}/${gameData.spectatorID}`}
 					tooltip={`Spectator link: ${location.origin}/${gameData.spectatorID}`}
 					Icon={Eye}
-					className={`fixed top-4 left-4 p-2 z-25 transition-all duration-250 text-yellow-400 hover:text-yellow-300 cursor-pointer`}
+					className={`fixed top-3 left-3 p-2 z-25 transition-all duration-250 text-yellow-400 hover:text-yellow-300 hover:drop-shadow-[0_0_3px_#ffd700] cursor-pointer`}
+					size={24}
 				/>
 			)}
 

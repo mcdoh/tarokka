@@ -123,7 +123,7 @@ export default function Settings({ gameData, changeAction }: SettingsProps) {
 				</div>
 			</Scrim>
 			<button
-				className={`p-2 transition-all duration-250 text-yellow-400 hover:text-yellow-300 cursor-pointer ${open ? 'pointer-events-none opacity-0' : 'pointer-events-auto opacity-100'}`}
+				className={`p-2 transition-all duration-250 text-yellow-400 hover:text-yellow-300 hover:drop-shadow-[0_0_3px_#ffd700] cursor-pointer ${open ? 'pointer-events-none opacity-0' : 'pointer-events-auto opacity-100'}`}
 				onClick={() => setOpen((prev) => !prev)}
 			>
 				<Gear className="w-5 h-5" />

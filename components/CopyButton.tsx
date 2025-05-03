@@ -11,6 +11,7 @@ type CopyButtonProps = {
 	Icon?: ForwardRefExoticComponent<Omit<LucideProps, 'ref'> & RefAttributes<SVGSVGElement>>;
 	tooltip?: string | string[];
 	className?: string;
+	size?: number;
 };
 
 export default function CopyButton({
@@ -19,6 +20,7 @@ export default function CopyButton({
 	Icon = CopyIcon,
 	tooltip = ['Copy', 'Copied'],
 	className,
+	size = 16,
 }: CopyButtonProps) {
 	const [copied, setCopied] = useState(false);
 
@@ -44,9 +46,9 @@ export default function CopyButton({
 				<div className="flex items-center gap-2 w-full text-sm font-medium">
 					{title}
 					{copied ? (
-						<CheckIcon className="ml-auto" size={16} />
+						<CheckIcon className="ml-auto" size={size} />
 					) : (
-						<Icon className="ml-auto" size={16} />
+						<Icon className="ml-auto" size={size} />
 					)}
 				</div>
 			</ToolTip>

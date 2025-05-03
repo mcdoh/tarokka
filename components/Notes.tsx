@@ -42,7 +42,7 @@ export default function Notes({ gameData: { dmID, cards, settings }, show }: Not
 			className={`fixed bottom-4 right-4 z-25 transition-all duration-250 ${show ? 'pointer-events-auto opacity-100' : 'pointer-events-none opacity-0'}`}
 		>
 			<button
-				className={`text-yellow-400 hover:text-yellow-300 p-2 transition-all duration-250 cursor-pointer ${showNotes ? 'pointer-events-none opacity-0' : 'pointer-events-auto opacity-100'}`}
+				className={`text-yellow-400 hover:text-yellow-300 hover:drop-shadow-[0_0_3px_#ffd700] p-2 transition-all duration-250 cursor-pointer ${showNotes ? 'pointer-events-none opacity-0' : 'pointer-events-auto opacity-100'}`}
 				onClick={() => setOpen((prev) => !prev)}
 			>
 				<ScrollText className="w-5 h-5" />
