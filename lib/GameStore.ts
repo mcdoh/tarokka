@@ -213,7 +213,7 @@ export default class GameStore {
 	}
 
 	deleteGame(game: GameState): void {
-		console.log(Date.now(), 'DELETE', game);
+		console.log(Date.now(), 'DELETE', game.dmID, game.spectatorID);
 
 		this.dms.delete(game.dmID);
 		this.spectators.delete(game.spectatorID);
