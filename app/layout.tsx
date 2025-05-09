@@ -23,6 +23,7 @@ const cinzel = Cinzel_Decorative({
 export const metadata: Metadata = {
 	title: 'Tarokka',
 	description: 'Fortune telling for D&D’s Curse of Strahd',
+	metadataBase: new URL('https://tarokka.app'),
 	appleWebApp: {
 		title: 'Tarokka',
 		statusBarStyle: 'black-translucent',
