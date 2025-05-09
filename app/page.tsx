@@ -19,7 +19,7 @@ export default function Home() {
 		<main className="min-h-screen flex items-center justify-center bg-[url('/img/table3.png')] bg-cover bg-center">
 			<button
 				onClick={handleCreateGame}
-				className="bg-slate-800 hover:bg-slate-700 text-yellow-400 hover:text-yellow-300 text-lg px-6 py-3 rounded-lg shadow transition-all duration-250 cursor-pointer"
+				className="bg-slate-800 hover:bg-slate-700 text-yellow-400 border border-yellow-500/25 hover:drop-shadow-[0_0_3px_rgba(255,215,0,0.5)] hover:text-yellow-300 text-lg px-6 py-3 rounded-lg shadow transition-all duration-250 cursor-pointer"
 			>
 				Create New Game
 			</button>
