@@ -29,6 +29,7 @@ export interface TarokkaBase {
 	aria: string;
 	back: boolean;
 	suit: 'Coins' | 'Glyphs' | 'High Deck' | 'Stars' | 'Swords' | null;
+	extension?: string;
 }
 
 export interface TarokkaGameBase extends TarokkaBase {

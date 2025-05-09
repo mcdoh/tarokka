@@ -9,6 +9,7 @@ const tarokkaCards: TarokkaCard[] = [
 		aria: 'Back of card',
 		description: 'Back of card',
 		back: true,
+		extension: '.png',
 	},
 	{
 		id: 'swashbuckler',

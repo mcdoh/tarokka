@@ -54,14 +54,14 @@ export default function Card({ dm, card, position, settings, flipAction }: CardP
 						<img
 							src={getURL(cardBack as TarokkaGameCard, settings)}
 							alt="Card Back"
-							className="rounded-lg border border-yellow-500 hover:drop-shadow-[0_0_2px_#ffd700]"
+							className={`rounded-lg ${settings.cardStyle === 'grayscale' ? 'border border-yellow-500/25 hover:drop-shadow-[0_0_3px_#ffd700/50]' : ''}`}
 						/>
 					</div>
 					<div className="absolute group inset-0 backface-hidden rotate-y-180">
 						<img
 							src={getURL(card, settings)}
 							alt={aria}
-							className="rounded-lg border border-yellow-500 hover:drop-shadow-[0_0_2px_#ffd700]"
+							className="rounded-lg border border-yellow-500/25 hover:drop-shadow-[0_0_3px_#ffd700/50]"
 						/>
 					</div>
 				</div>
