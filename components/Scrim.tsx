@@ -13,6 +13,7 @@ export default function Scrim({ children, clickAction, show = true, className = 
 			clickAction(event);
 		}
 	};
+
 	if (!show) return null;
 
 	return (

@@ -15,8 +15,8 @@ type TooltipProps = {
 export default function Tooltip({
 	children,
 	content,
-	delay = 500,
-	mobileDelay = 500,
+	delay = 250,
+	mobileDelay = 250,
 	offsetX = 20,
 	offsetY = 20,
 	edgeBuffer = 10,

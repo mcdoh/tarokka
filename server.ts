@@ -79,6 +79,36 @@ app.prepare().then(() => {
 			}
 		});
 
+		socket.on('redraw', ({ gameID, cardIndex }: ClientUpdate) => {
+			try {
+				//console.log(Date.now(), 'Redraw', { gameID, cardIndex });
+
+				const gameUpdate = gameStore.redraw(gameID, cardIndex);
+
+				broadcast('game-update', gameUpdate);
+			} catch (e) {
+				const error = e instanceof Error ? e.message : e;
+
+				console.error(Date.now(), 'Error[redraw]', error);
+				socket.emit('redraw-error', error);
+			}
+		});
+
+		socket.on('select', ({ gameID, cardIndex, cardID = '' }: ClientUpdate) => {
+			try {
+				//console.log(Date.now(), 'select', { gameID, cardIndex });
+
+				const gameUpdate = gameStore.select(gameID, cardIndex, cardID);
+
+				broadcast('game-update', gameUpdate);
+			} catch (e) {
+				const error = e instanceof Error ? e.message : e;
+
+				console.error(Date.now(), 'Error[select]', error);
+				socket.emit('select-error', error);
+			}
+		});
+
 		socket.on('settings', ({ gameID, gameData }: { gameID: string; gameData: GameUpdate }) => {
 			try {
 				const gameUpdate = gameStore.updateSettings(gameID, gameData.settings);

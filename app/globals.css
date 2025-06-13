@@ -40,3 +40,21 @@ body {
 .rotate-y-180 {
 	transform: rotateY(180deg);
 }
+
+.see-through {
+	mask-image: radial-gradient(circle at center, rgba(0, 0, 0, 0) 25%, rgba(0, 0, 0, 1) 75%);
+	mask-size: cover;
+	mask-repeat: no-repeat;
+	-webkit-mask-image: radial-gradient(circle at center, rgba(0, 0, 0, 0) 25%, rgba(0, 0, 0, 1) 75%);
+	-webkit-mask-size: cover;
+	-webkit-mask-repeat: no-repeat;
+}
+
+.scrollbar-hide {
+	scrollbar-width: none;
+	-ms-overflow-style: none;
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+	display: none;
+}

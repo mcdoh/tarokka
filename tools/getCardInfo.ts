@@ -11,7 +11,7 @@ export default function getTooltip(
 
 	let text: string[] = [];
 
-	if (flipped) {
+	if (dm || flipped) {
 		if (dm || settings.positionFront) text.push(position.text);
 
 		if (dm) text.push(`${cardName}: ${description}`);
@@ -33,11 +33,9 @@ export default function getTooltip(
 
 		// Low deck: Tome, Ravenkind, or Sunsword
 		if (isLowCard(card)) {
-			if (dm) text.push(card.prophecy.dmText);
 			if (dm || settings.prophecy) text.push(card.prophecy.playerText);
+			if (dm) text.push(card.prophecy.dmText);
 		}
-	} else {
-		if (dm || settings.positionBack) text.push(position.text);
 	}
 
 	return text;

@@ -10,16 +10,18 @@ import CopyButton from '@/components/CopyButton';
 import Notes from '@/components/Notes';
 import NotFound from '@/components/NotFound';
 import Settings from '@/components/Settings';
+import CardSelect from '@/components/CardSelect';
 
 import { cardMap, layout } from '@/constants/tarokka';
 
-import type { GameUpdate, ClientUpdate } from '@/types';
+import type { Deck, GameUpdate } from '@/types';
 
 export default function GamePage() {
 	const { gameID: gameIDParam } = useParams();
 
 	const [gameID, setGameID] = useState('');
 	const [noGame, setNoGame] = useState(false);
+	const [selectCard, setSelectCard] = useState(-1);
 	const [gameData, setGameData] = useState<GameUpdate>({
 		dmID: '',
 		spectatorID: '',
@@ -35,6 +37,7 @@ export default function GamePage() {
 
 	const { dmID, cards, settings } = gameData;
 	const isDM = !!dmID;
+	const selectDeck: Deck | null = selectCard >= 0 ? cards[selectCard].deck : null;
 
 	useEffect(() => {
 		if (gameIDParam) {
@@ -70,12 +73,27 @@ export default function GamePage() {
 	}, [gameID]);
 
 	const flipCard = (cardIndex: number) => {
-		const flip: ClientUpdate = {
+		socket.emit('flip-card', {
 			gameID,
 			cardIndex,
-		};
+		});
+	};
 
-		socket.emit('flip-card', flip);
+	const redraw = (cardIndex: number) => {
+		socket.emit('redraw', {
+			gameID,
+			cardIndex,
+		});
+	};
+
+	const select = (cardIndex: number, cardID: string) => {
+		setSelectCard(-1);
+
+		socket.emit('select', {
+			gameID,
+			cardIndex,
+			cardID,
+		});
 	};
 
 	const handleSettings = (gameData: GameUpdate) => {
@@ -114,12 +132,21 @@ export default function GamePage() {
 									position={layout[cardMap[index]]}
 									settings={settings}
 									flipAction={() => flipCard(cardMap[index])}
+									redrawAction={() => redraw(cardMap[index])}
+									selectAction={() => setSelectCard(cardMap[index])}
 								/>
 							)}
 						</div>
 					))}
 			</div>
 			<Notes gameData={gameData} show={cards.every(({ flipped }) => flipped)} />
+			<CardSelect
+				show={selectDeck}
+				hand={cards}
+				settings={settings}
+				closeAction={() => setSelectCard(-1)}
+				selectAction={(cardID) => select(selectCard, cardID)}
+			/>
 		</main>
 	) : null;
 }

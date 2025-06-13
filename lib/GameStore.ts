@@ -130,6 +130,33 @@ export default class GameStore {
 		return this.gameUpdate(game);
 	}
 
+	redraw(gameID: string, cardIndex: number): GameUpdate {
+		const game = this.getGame(gameID);
+		const card = game.cards[cardIndex];
+
+		if (!card) throw new Error(`Card ${cardIndex} not found`);
+
+		game.cards[cardIndex] =
+			card.suit === 'High Deck' ? deck.drawHigh(game.cards) : deck.drawLow(game.cards);
+		game.lastUpdated = Date.now();
+
+		return this.gameUpdate(game);
+	}
+
+	select(gameID: string, cardIndex: number, cardID: string): GameUpdate {
+		const game = this.getGame(gameID);
+		const card = game.cards[cardIndex];
+		const replacement = deck.select(cardID);
+
+		if (!card) throw new Error(`Card ${cardIndex} not found`);
+		if (!replacement) throw new Error(`Card ${cardID} not found`);
+
+		game.cards[cardIndex] = replacement;
+		game.lastUpdated = Date.now();
+
+		return this.gameUpdate(game);
+	}
+
 	updateSettings(gameID: string, settings: Settings) {
 		const game = this.getGame(gameID);
 

@@ -5,6 +5,7 @@ const tarokkaCards: TarokkaCard[] = [
 		id: 'back',
 		name: 'Card Back',
 		card: 'Back of card',
+		deck: 'back',
 		suit: null,
 		aria: 'Back of card',
 		description: 'Back of card',
@@ -15,6 +16,7 @@ const tarokkaCards: TarokkaCard[] = [
 		id: 'swashbuckler',
 		name: 'Swashbuckler',
 		card: 'One of Coins',
+		deck: 'common',
 		suit: 'Coins',
 		aria: 'Coins 01 Swashbuckler',
 		description: 'Those who like money yet give it up freely; likable rogues and rapscallions',
@@ -31,6 +33,7 @@ const tarokkaCards: TarokkaCard[] = [
 		id: 'philanthropist',
 		name: 'Philanthropist',
 		card: 'Two of Coins',
+		deck: 'common',
 		suit: 'Coins',
 		aria: 'Coins 02 Philanthropist',
 		description:
@@ -48,6 +51,7 @@ const tarokkaCards: TarokkaCard[] = [
 		id: 'trader',
 		name: 'Trader',
 		card: 'Three of Coins',
+		deck: 'common',
 		suit: 'Coins',
 		aria: 'Coins 03 Trader',
 		description: 'Commerce; smuggling and black markets; fair and equitable trades',
@@ -64,6 +68,7 @@ const tarokkaCards: TarokkaCard[] = [
 		id: 'merchant',
 		name: 'Merchant',
 		card: 'Four of Coins',
+		deck: 'common',
 		suit: 'Coins',
 		aria: 'Coins 04 Merchant',
 		description:
@@ -80,6 +85,7 @@ const tarokkaCards: TarokkaCard[] = [
 		id: 'guild-member',
 		name: 'Guild Member',
 		card: 'Five of Coins',
+		deck: 'common',
 		suit: 'Coins',
 		aria: 'Coins 05 Guild Member',
 		description: "Like-minded individuals joined together in a common goal; pride in one's work",
@@ -95,6 +101,7 @@ const tarokkaCards: TarokkaCard[] = [
 		id: 'beggar',
 		name: 'Beggar',
 		card: 'Six of Coins',
+		deck: 'common',
 		suit: 'Coins',
 		aria: 'Coins 06 Beggar',
 		description: 'Sudden change in economic status or fortune',
@@ -111,6 +118,7 @@ const tarokkaCards: TarokkaCard[] = [
 		id: 'thief',
 		name: 'Thief',
 		card: 'Seven of Coins',
+		deck: 'common',
 		suit: 'Coins',
 		aria: 'Coins 07 Thief',
 		description:
@@ -128,6 +136,7 @@ const tarokkaCards: TarokkaCard[] = [
 		id: 'tax-collector',
 		name: 'Tax Collector',
 		card: 'Eight of Coins',
+		deck: 'common',
 		suit: 'Coins',
 		aria: 'Coins 08 Tax Collector',
 		description: 'Corruption; honesty in an otherwise corrupt government or organization',
@@ -145,6 +154,7 @@ const tarokkaCards: TarokkaCard[] = [
 		id: 'miser',
 		name: 'Miser',
 		card: 'Nine of Coins',
+		deck: 'common',
 		suit: 'Coins',
 		aria: 'Coins 09 Miser',
 		description:
@@ -161,6 +171,7 @@ const tarokkaCards: TarokkaCard[] = [
 		id: 'rogue',
 		name: 'Rogue',
 		card: 'Master of Coins',
+		deck: 'common',
 		suit: 'Coins',
 		aria: 'Coins 10 Rogue',
 		description:
@@ -177,6 +188,7 @@ const tarokkaCards: TarokkaCard[] = [
 		id: 'monk',
 		name: 'Monk',
 		card: 'One of Glyphs',
+		deck: 'common',
 		suit: 'Glyphs',
 		aria: 'Glyphs 01 Monk',
 		description:
@@ -194,6 +206,7 @@ const tarokkaCards: TarokkaCard[] = [
 		id: 'missionary',
 		name: 'Missionary',
 		card: 'Two of Glyphs',
+		deck: 'common',
 		suit: 'Glyphs',
 		aria: 'Glyphs 02 Missionary',
 		description:
@@ -212,6 +225,7 @@ const tarokkaCards: TarokkaCard[] = [
 		id: 'healer',
 		name: 'Healer',
 		card: 'Three of Glyphs',
+		deck: 'common',
 		suit: 'Glyphs',
 		aria: 'Glyphs 03 Healer',
 		description:
@@ -229,6 +243,7 @@ const tarokkaCards: TarokkaCard[] = [
 		id: 'shepherd',
 		name: 'Shepherd',
 		card: 'Four of Glyphs',
+		deck: 'common',
 		suit: 'Glyphs',
 		aria: 'Glyphs 04 Shepherd',
 		description:
@@ -246,6 +261,7 @@ const tarokkaCards: TarokkaCard[] = [
 		id: 'druid',
 		name: 'Druid',
 		card: 'Five of Glyphs',
+		deck: 'common',
 		suit: 'Glyphs',
 		aria: 'Glyphs 05 Druid',
 		description:
@@ -264,6 +280,7 @@ const tarokkaCards: TarokkaCard[] = [
 		id: 'anarchist',
 		name: 'Anarchist',
 		card: 'Six of Glyphs',
+		deck: 'common',
 		suit: 'Glyphs',
 		aria: 'Glyphs 06 Anarchist',
 		description: 'A fundamental change brought on by one whose beliefs are being put to the test',
@@ -280,6 +297,7 @@ const tarokkaCards: TarokkaCard[] = [
 		id: 'charlatan',
 		name: 'Charlatan',
 		card: 'Seven of Glyphs',
+		deck: 'common',
 		suit: 'Glyphs',
 		aria: 'Glyphs 07 Charlatan',
 		description: 'Liars; those who profess to believe one thing but actually believe another',
@@ -295,6 +313,7 @@ const tarokkaCards: TarokkaCard[] = [
 		id: 'bishop',
 		name: 'Bishop',
 		card: 'Eight of Glyphs',
+		deck: 'common',
 		suit: 'Glyphs',
 		aria: 'Glyphs 08 Bishop',
 		description: 'Strict adherence to a code or a belief; those who plot, plan, and scheme',
@@ -311,6 +330,7 @@ const tarokkaCards: TarokkaCard[] = [
 		id: 'traitor',
 		name: 'Traitor',
 		card: 'Nine of Glyphs',
+		deck: 'common',
 		suit: 'Glyphs',
 		aria: 'Glyphs 09 Traitor',
 		description: 'Betrayal by someone close and trusted; a weakening or loss of faith',
@@ -328,6 +348,7 @@ const tarokkaCards: TarokkaCard[] = [
 		id: 'priest',
 		name: 'Priest',
 		card: 'Master of Glyphs',
+		deck: 'common',
 		suit: 'Glyphs',
 		aria: 'Glyphs 10 Priest',
 		description: 'Enlightenment; those who follow a deity, a system of values, or a higher purpose',
@@ -344,6 +365,7 @@ const tarokkaCards: TarokkaCard[] = [
 		id: 'transmuter',
 		name: 'Transmuter',
 		card: 'One of Stars',
+		deck: 'common',
 		suit: 'Stars',
 		aria: 'Stars 01 Transmuter',
 		description:
@@ -360,6 +382,7 @@ const tarokkaCards: TarokkaCard[] = [
 		id: 'diviner',
 		name: 'Diviner',
 		card: 'Two of Stars',
+		deck: 'common',
 		suit: 'Stars',
 		aria: 'Stars 02 Diviner',
 		description:
@@ -377,6 +400,7 @@ const tarokkaCards: TarokkaCard[] = [
 		id: 'enchanter',
 		name: 'Enchanter',
 		card: 'Three of Stars',
+		deck: 'common',
 		suit: 'Stars',
 		aria: 'Stars 03 Enchanter',
 		description: 'Inner turmoil that comes from confusion, fear of failure, or false information',
@@ -394,6 +418,7 @@ const tarokkaCards: TarokkaCard[] = [
 		id: 'abjurer',
 		name: 'Abjurer',
 		card: 'Four of Stars',
+		deck: 'common',
 		suit: 'Stars',
 		aria: 'Stars 04 Abjurer',
 		description:
@@ -411,6 +436,7 @@ const tarokkaCards: TarokkaCard[] = [
 		id: 'elementalist',
 		name: 'Elementalist',
 		card: 'Five of Stars',
+		deck: 'common',
 		suit: 'Stars',
 		aria: 'Stars 05 Elementalist',
 		description:
@@ -429,6 +455,7 @@ const tarokkaCards: TarokkaCard[] = [
 		id: 'evoker',
 		name: 'Evoker',
 		card: 'Six of Stars',
+		deck: 'common',
 		suit: 'Stars',
 		aria: 'Stars 06 Evoker',
 		description:
@@ -446,6 +473,7 @@ const tarokkaCards: TarokkaCard[] = [
 		id: 'illusionist',
 		name: 'Illusionist',
 		card: 'Seven of Stars',
+		deck: 'common',
 		suit: 'Stars',
 		aria: 'Stars 07 Illusionist',
 		description:
@@ -463,6 +491,7 @@ const tarokkaCards: TarokkaCard[] = [
 		id: 'necromancer',
 		name: 'Necromancer',
 		card: 'Eight of Stars',
+		deck: 'common',
 		suit: 'Stars',
 		aria: 'Stars 08 Necromancer',
 		description: 'Unnatural events and unhealthy obsessions; those who follow a destructive path',
@@ -478,6 +507,7 @@ const tarokkaCards: TarokkaCard[] = [
 		id: 'conjurer',
 		name: 'Conjurer',
 		card: 'Nine of Stars',
+		deck: 'common',
 		suit: 'Stars',
 		aria: 'Stars 09 Conjurer',
 		description:
@@ -495,6 +525,7 @@ const tarokkaCards: TarokkaCard[] = [
 		id: 'wizard',
 		name: 'Wizard',
 		card: 'Master of Stars',
+		deck: 'common',
 		suit: 'Stars',
 		aria: 'Stars 10 Wizard',
 		description:
@@ -512,6 +543,7 @@ const tarokkaCards: TarokkaCard[] = [
 		id: 'avenger',
 		name: 'Avenger',
 		card: 'One of Swords',
+		deck: 'common',
 		suit: 'Swords',
 		aria: 'Swords 01 Avenger',
 		description:
@@ -529,6 +561,7 @@ const tarokkaCards: TarokkaCard[] = [
 		id: 'paladin',
 		name: 'Paladin',
 		card: 'Two of Swords',
+		deck: 'common',
 		suit: 'Swords',
 		aria: 'Swords 02 Paladin',
 		description: 'Just and noble warriors; those who live by a code of honor and integrity',
@@ -545,6 +578,7 @@ const tarokkaCards: TarokkaCard[] = [
 		id: 'soldier',
 		name: 'Soldier',
 		card: 'Three of Swords',
+		deck: 'common',
 		suit: 'Swords',
 		aria: 'Swords 03 Soldier',
 		description: 'War and sacrifice; the stamina to endure great hardship',
@@ -561,6 +595,7 @@ const tarokkaCards: TarokkaCard[] = [
 		id: 'mercenary',
 		name: 'Mercenary',
 		card: 'Four of Swords',
+		deck: 'common',
 		suit: 'Swords',
 		aria: 'Swords 04 Mercenary',
 		description: 'Inner strength and fortitude; those who fight for power or wealth',
@@ -576,6 +611,7 @@ const tarokkaCards: TarokkaCard[] = [
 		id: 'myrmidon',
 		name: 'Myrmidon',
 		card: 'Five of Swords',
+		deck: 'common',
 		suit: 'Swords',
 		aria: 'Swords 05 Myrmidon',
 		description:
@@ -594,6 +630,7 @@ const tarokkaCards: TarokkaCard[] = [
 		id: 'berserker',
 		name: 'Berserker',
 		card: 'Six of Swords',
+		deck: 'common',
 		suit: 'Swords',
 		aria: 'Swords 06 Berserker',
 		description: 'The brutal and barbaric side of warfare; bloodlust; those with a bestial nature',
@@ -611,6 +648,7 @@ const tarokkaCards: TarokkaCard[] = [
 		id: 'hooded-one',
 		name: 'Hooded One',
 		card: 'Seven of Swords',
+		deck: 'common',
 		suit: 'Swords',
 		aria: 'Swords 07 Hooded One',
 		description: 'Bigotry, intolerance, and xenophobia; a mysterious presence or newcomer',
@@ -628,6 +666,7 @@ const tarokkaCards: TarokkaCard[] = [
 		id: 'dictator',
 		name: 'Dictator',
 		card: 'Eight of Swords',
+		deck: 'common',
 		suit: 'Swords',
 		aria: 'Swords 08 Dictator',
 		description:
@@ -644,6 +683,7 @@ const tarokkaCards: TarokkaCard[] = [
 		id: 'torturer',
 		name: 'Torturer',
 		card: 'Nine of Swords',
+		deck: 'common',
 		suit: 'Swords',
 		aria: 'Swords 09 Torturer',
 		description:
@@ -662,6 +702,7 @@ const tarokkaCards: TarokkaCard[] = [
 		id: 'warrior',
 		name: 'Warrior',
 		card: 'Master of Swords',
+		deck: 'common',
 		suit: 'Swords',
 		aria: 'Swords 10 Warrior',
 		description:
@@ -679,6 +720,7 @@ const tarokkaCards: TarokkaCard[] = [
 		id: 'artifact',
 		name: 'Artifact',
 		card: 'The Artifact',
+		deck: 'high',
 		suit: 'High Deck',
 		aria: 'High Deck Artifact',
 		description:
@@ -703,6 +745,7 @@ const tarokkaCards: TarokkaCard[] = [
 		id: 'beast',
 		name: 'Beast',
 		card: 'The Beast',
+		deck: 'high',
 		suit: 'High Deck',
 		aria: 'High Deck Beast',
 		description:
@@ -728,6 +771,7 @@ const tarokkaCards: TarokkaCard[] = [
 		id: 'broken-one',
 		name: 'Broken One',
 		card: 'The Broken One',
+		deck: 'high',
 		suit: 'High Deck',
 		aria: 'High Deck Broken One',
 		description:
@@ -759,6 +803,7 @@ const tarokkaCards: TarokkaCard[] = [
 		id: 'darklord',
 		name: 'Darklord',
 		card: 'The Darklord',
+		deck: 'high',
 		suit: 'High Deck',
 		aria: 'High Deck Darklord',
 		description:
@@ -782,6 +827,7 @@ const tarokkaCards: TarokkaCard[] = [
 		id: 'donjon',
 		name: 'Donjon',
 		card: 'The Donjon',
+		deck: 'high',
 		suit: 'High Deck',
 		aria: 'High Deck Donjon',
 		description:
@@ -814,6 +860,7 @@ const tarokkaCards: TarokkaCard[] = [
 		id: 'executioner',
 		name: 'Executioner',
 		card: 'The Executioner',
+		deck: 'high',
 		suit: 'High Deck',
 		aria: 'High Deck Executioner',
 		description:
@@ -840,6 +887,7 @@ const tarokkaCards: TarokkaCard[] = [
 		id: 'ghost',
 		name: 'Ghost',
 		card: 'The Ghost',
+		deck: 'high',
 		suit: 'High Deck',
 		aria: 'High Deck Ghost',
 		description:
@@ -873,6 +921,7 @@ const tarokkaCards: TarokkaCard[] = [
 		id: 'horseman',
 		name: 'Horseman',
 		card: 'The Horseman',
+		deck: 'high',
 		suit: 'High Deck',
 		aria: 'High Deck Horseman',
 		description:
@@ -905,6 +954,7 @@ const tarokkaCards: TarokkaCard[] = [
 		id: 'innocent',
 		name: 'Innocent',
 		card: 'The Innocent',
+		deck: 'high',
 		suit: 'High Deck',
 		aria: 'High Deck Innocent',
 		description:
@@ -937,6 +987,7 @@ const tarokkaCards: TarokkaCard[] = [
 		id: 'marionette',
 		name: 'Marionette',
 		card: 'The Marionette',
+		deck: 'high',
 		suit: 'High Deck',
 		aria: 'High Deck Marionette',
 		description:
@@ -968,6 +1019,7 @@ const tarokkaCards: TarokkaCard[] = [
 		id: 'mists',
 		name: 'Mists',
 		card: 'The Mists',
+		deck: 'high',
 		suit: 'High Deck',
 		aria: 'High Deck Mists',
 		description:
@@ -994,6 +1046,7 @@ const tarokkaCards: TarokkaCard[] = [
 		id: 'raven',
 		name: 'Raven',
 		card: 'The Raven',
+		deck: 'high',
 		suit: 'High Deck',
 		aria: 'High Deck Raven',
 		description:
@@ -1020,6 +1073,7 @@ const tarokkaCards: TarokkaCard[] = [
 		id: 'seer',
 		name: 'Seer',
 		card: 'The Seer',
+		deck: 'high',
 		suit: 'High Deck',
 		aria: 'High Deck Seer',
 		description:
@@ -1046,6 +1100,7 @@ const tarokkaCards: TarokkaCard[] = [
 		id: 'tempter',
 		name: 'Tempter',
 		card: 'The Tempter',
+		deck: 'high',
 		suit: 'High Deck',
 		aria: 'High Deck Tempter',
 		description:

@@ -1,5 +1,8 @@
 export type CardStyle = 'standard' | 'color' | 'grayscale';
 
+// all = both + back
+export type Deck = 'high' | 'common' | 'both' | 'back' | 'all';
+
 export interface Settings {
 	positionBack: boolean;
 	positionFront: boolean;
@@ -28,6 +31,7 @@ export interface TarokkaBase {
 	description: string;
 	aria: string;
 	back: boolean;
+	deck: Deck;
 	suit: 'Coins' | 'Glyphs' | 'High Deck' | 'Stars' | 'Swords' | null;
 	extension?: string;
 }
@@ -90,6 +94,7 @@ export interface GameUpdate {
 export interface ClientUpdate {
 	gameID: string;
 	cardIndex: number;
+	cardID?: string;
 }
 
 export interface Layout {
