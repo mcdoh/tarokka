@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import TiltCard from '@/components/TiltCard';
 import ToolTip from '@/components/ToolTip';
 import StackTheDeck from '@/components/StackTheDeck';
 import tarokkaCards from '@/constants/tarokkaCards';
@@ -57,8 +58,8 @@ export default function Card({
 
 	return (
 		<ToolTip content={tooltip || getTooltip()}>
-			<div
-				className={`relative h-[21vh] w-[15vh] perspective transition-transform duration-200 hover:scale-150 z-0 hover:z-10 ${dm ? 'cursor-pointer' : ''} `}
+			<TiltCard
+				className={`h-[21vh] w-[15vh] relative perspective transition-transform duration-200 z-0 hover:z-10 hover:scale-150 ${dm ? 'cursor-pointer' : ''} `}
 				onClick={handleClick}
 			>
 				<div
@@ -96,7 +97,7 @@ export default function Card({
 						/>
 					</div>
 				</div>
-			</div>
+			</TiltCard>
 		</ToolTip>
 	);
 }
