@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { useParams } from 'next/navigation';
-import { socket } from '@/socket';
+import useSocket from '@/hooks/useSocket';
 import { Eye } from 'lucide-react';
 
 import Card from '@/components/Card';
@@ -39,65 +39,18 @@ export default function GamePage() {
 	const isDM = !!dmID;
 	const selectDeck: Deck | null = selectCard >= 0 ? cards[selectCard].deck : null;
 
+	const socket = useSocket({ gameID, setGameData, setNoGame });
+
 	useEffect(() => {
 		if (gameIDParam) {
 			setGameID(Array.isArray(gameIDParam) ? gameIDParam[0] : gameIDParam);
 		}
 	}, [gameIDParam]);
 
-	useEffect(() => {
-		if (gameID) {
-			socket.emit('join', gameID);
-
-			socket.on('init', (data: GameUpdate) => {
-				setGameData(data);
-			});
-
-			socket.on('game-update', (data: GameUpdate) => {
-				setGameData(data);
-			});
-
-			socket.on('join-error', (error) => {
-				console.error('Error:', error);
-				setNoGame(true);
-			});
-
-			socket.on('flip-error', (error) => {
-				console.error('Error:', error);
-			});
-		}
-
-		return () => {
-			socket.removeAllListeners();
-		};
-	}, [gameID]);
-
-	const flipCard = (cardIndex: number) => {
-		socket.emit('flip-card', {
-			gameID,
-			cardIndex,
-		});
-	};
-
-	const redraw = (cardIndex: number) => {
-		socket.emit('redraw', {
-			gameID,
-			cardIndex,
-		});
-	};
-
 	const select = (cardIndex: number, cardID: string) => {
 		setSelectCard(-1);
 
-		socket.emit('select', {
-			gameID,
-			cardIndex,
-			cardID,
-		});
-	};
-
-	const handleSettings = (gameData: GameUpdate) => {
-		socket.emit('settings', { gameID, gameData });
+		socket.select(cardIndex, cardID);
 	};
 
 	// map our five Tarokka cards to their proper locations in a 3x3 grid
@@ -119,7 +72,7 @@ export default function GamePage() {
 				/>
 			)}
 
-			{isDM && <Settings gameData={gameData} changeAction={handleSettings} />}
+			{isDM && <Settings gameData={gameData} changeAction={socket.handleSettings} />}
 			<div className="grid grid-cols-3 grid-rows-3 gap-8 w-fit mx-auto">
 				{Array.from({ length: 9 })
 					.map(arrangeCards)
@@ -131,8 +84,8 @@ export default function GamePage() {
 									card={card}
 									position={layout[cardMap[index]]}
 									settings={settings}
-									flipAction={() => flipCard(cardMap[index])}
-									redrawAction={() => redraw(cardMap[index])}
+									flipAction={() => socket.flipCard(cardMap[index])}
+									redrawAction={() => socket.redraw(cardMap[index])}
 									selectAction={() => setSelectCard(cardMap[index])}
 								/>
 							)}
