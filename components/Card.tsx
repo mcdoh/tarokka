@@ -5,6 +5,7 @@ import { useAppContext } from '@/app/AppContext';
 import TiltCard from '@/components/TiltCard';
 import ToolTip from '@/components/ToolTip';
 import StackTheDeck from '@/components/StackTheDeck';
+import Sheen from '@/components/Sheen';
 import getCardInfo from '@/tools/getCardInfo';
 import getURL from '@/tools/getURL';
 
@@ -84,6 +85,7 @@ export default function Card({ card, cardIndex }: CardProps) {
 								onHover={setTooltip}
 							/>
 						)}
+						<Sheen cardIndex={cardIndex} />
 					</div>
 					<div className="absolute inset-0 backface-hidden rotate-y-180">
 						<img
@@ -91,6 +93,7 @@ export default function Card({ card, cardIndex }: CardProps) {
 							alt={aria}
 							className="rounded-lg border border-yellow-500/25 hover:drop-shadow-[0_0_3px_#ffd700/50]"
 						/>
+						<Sheen cardIndex={cardIndex} />
 					</div>
 				</div>
 			</TiltCard>

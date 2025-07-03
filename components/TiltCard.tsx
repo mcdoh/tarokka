@@ -7,24 +7,6 @@ import type { Tilt } from '@/types';
 
 const ZERO_ROTATION = 'rotateX(0deg) rotateY(0deg)';
 
-const tiltSheen = (sheen: HTMLDivElement, tiltX: number, tiltY: number) => {
-	const rect = sheen.getBoundingClientRect();
-	const centerX = rect.width / 2;
-	const centerY = rect.height / 2;
-	const sheenX = centerX + (tiltY / -20) * centerX;
-	const sheenY = centerY + (tiltX / 20) * centerY;
-
-	sheen.style.opacity = '1';
-	sheen.style.backgroundImage = `
-			radial-gradient(
-				circle at
-				${sheenX}px ${sheenY}px,
-				#ffffff44,
-				#0000000f
-			)
-		`;
-};
-
 export default function TiltCard({
 	children,
 	cardIndex,
@@ -35,7 +17,6 @@ export default function TiltCard({
 	className?: string;
 }) {
 	const cardRef = useRef<HTMLDivElement>(null);
-	const sheenRef = useRef<HTMLDivElement>(null);
 	const [untilt, setUntilt] = useState(false);
 	const {
 		gameData,
@@ -46,8 +27,7 @@ export default function TiltCard({
 
 	useEffect(() => {
 		const card = cardRef.current;
-		const sheen = sheenRef.current;
-		if (!card || !sheen) return;
+		if (!card) return;
 
 		if (tilt) {
 			const rotateX = localTilts[cardIndex]?.rotateX || 0;
@@ -75,7 +55,6 @@ export default function TiltCard({
 				const y = totalY / count;
 
 				card.style.transform = `rotateX(${x}deg) rotateY(${y}deg)`;
-				tiltSheen(sheen, x, y);
 			} else {
 				setUntilt(true);
 			}
@@ -86,11 +65,9 @@ export default function TiltCard({
 
 	useEffect(() => {
 		const card = cardRef.current;
-		const sheen = sheenRef.current;
-		if (!card || !sheen || !untilt) return;
+		if (!card || !untilt) return;
 
 		card.style.transform = ZERO_ROTATION;
-		sheen.style.opacity = '0';
 	}, [untilt]);
 
 	const handleMouseMove = throttle((e: React.MouseEvent) => {
@@ -128,10 +105,6 @@ export default function TiltCard({
 				className={`h-full w-full transition-transform ${untilt ? 'duration-500' : 'duration-0'}`}
 			>
 				{children}
-				<div
-					ref={sheenRef}
-					className="pointer-events-none absolute inset-0 rounded-lg bg-gradient-to-tr from-transparent via-white/20 to-transparent mix-blend-screen opacity-0 transition-opacity duration-500"
-				/>
 			</div>
 		</div>
 	);
