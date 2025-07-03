@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import { Pirata_One, Eagle_Lake, Cinzel_Decorative } from 'next/font/google';
+import { AppProvider } from '@/app/AppContext';
 import './globals.css';
 
 const pirataOne = Pirata_One({
@@ -40,7 +41,9 @@ export default function RootLayout({
 			lang="en"
 			className={`${pirataOne.variable} ${eagleLake.variable} ${cinzel.variable} antialiased`}
 		>
-			<body className={`${eagleLake.className} antialiased`}>{children}</body>
+			<body className={`${eagleLake.className} antialiased`}>
+				<AppProvider>{children}</AppProvider>
+			</body>
 		</html>
 	);
 }

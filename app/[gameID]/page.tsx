@@ -1,105 +1,35 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useParams } from 'next/navigation';
-import useSocket from '@/hooks/useSocket';
-import { Eye } from 'lucide-react';
 
-import Card from '@/components/Card';
-import CopyButton from '@/components/CopyButton';
+import { useAppContext } from '@/app/AppContext';
+import CardSelect from '@/components/CardSelect';
 import Notes from '@/components/Notes';
 import NotFound from '@/components/NotFound';
-import Settings from '@/components/Settings';
-import CardSelect from '@/components/CardSelect';
-
-import { cardMap, layout } from '@/constants/tarokka';
-
-import type { Deck, GameUpdate } from '@/types';
+import Settings from '@/components/Settings/index';
+import { SpectatorLink } from '@/components/SpectatorLink';
+import TarokkaGrid from '@/components/TarokkaGrid';
 
 export default function GamePage() {
-	const { gameID: gameIDParam } = useParams();
-
-	const [gameID, setGameID] = useState('');
-	const [noGame, setNoGame] = useState(false);
-	const [selectCard, setSelectCard] = useState(-1);
-	const [gameData, setGameData] = useState<GameUpdate>({
-		dmID: '',
-		spectatorID: '',
-		cards: [],
-		settings: {
-			positionBack: false,
-			positionFront: false,
-			prophecy: false,
-			notes: false,
-			cardStyle: 'color',
-		},
-	});
-
-	const { dmID, cards, settings } = gameData;
-	const isDM = !!dmID;
-	const selectDeck: Deck | null = selectCard >= 0 ? cards[selectCard].deck : null;
-
-	const socket = useSocket({ gameID, setGameData, setNoGame });
+	const { noGame, setGameID } = useAppContext();
+	const { gameID } = useParams();
 
 	useEffect(() => {
-		if (gameIDParam) {
-			setGameID(Array.isArray(gameIDParam) ? gameIDParam[0] : gameIDParam);
+		if (gameID) {
+			setGameID(Array.isArray(gameID) ? gameID[0] : gameID);
 		}
-	}, [gameIDParam]);
-
-	const select = (cardIndex: number, cardID: string) => {
-		setSelectCard(-1);
-
-		socket.select(cardIndex, cardID);
-	};
-
-	// map our five Tarokka cards to their proper locations in a 3x3 grid
-	// common deck cards: left, top, and right
-	// high deck cards: bottom and center
-	const arrangeCards = (_cell: unknown, index: number) => cards[cardMap[index]];
+	}, [gameID]);
 
 	return noGame ? (
 		<NotFound />
-	) : cards ? (
+	) : (
 		<main className="min-h-screen flex flex-col items-center justify-center gap-4 bg-[url('/img/table3.png')] bg-cover bg-center">
-			{isDM && (
-				<CopyButton
-					copy={`${location.origin}/${gameData.spectatorID}`}
-					tooltip={`Spectator link: ${location.origin}/${gameData.spectatorID}`}
-					Icon={Eye}
-					className={`fixed top-3 left-3 p-2 z-25 transition-all duration-250 text-yellow-400 hover:text-yellow-300 hover:drop-shadow-[0_0_3px_#ffd700] cursor-pointer`}
-					size={24}
-				/>
-			)}
-
-			{isDM && <Settings gameData={gameData} changeAction={socket.handleSettings} />}
-			<div className="grid grid-cols-3 grid-rows-3 gap-8 w-fit mx-auto">
-				{Array.from({ length: 9 })
-					.map(arrangeCards)
-					.map((card, index) => (
-						<div key={index} className="aspect-[2/3]}">
-							{card && (
-								<Card
-									dm={isDM}
-									card={card}
-									position={layout[cardMap[index]]}
-									settings={settings}
-									flipAction={() => socket.flipCard(cardMap[index])}
-									redrawAction={() => socket.redraw(cardMap[index])}
-									selectAction={() => setSelectCard(cardMap[index])}
-								/>
-							)}
-						</div>
-					))}
-			</div>
-			<Notes gameData={gameData} show={cards.every(({ flipped }) => flipped)} />
-			<CardSelect
-				show={selectDeck}
-				hand={cards}
-				settings={settings}
-				closeAction={() => setSelectCard(-1)}
-				selectAction={(cardID) => select(selectCard, cardID)}
-			/>
+			<SpectatorLink />
+			<Settings />
+			<TarokkaGrid />
+			<Notes />
+			<CardSelect />
 		</main>
-	) : null;
+	);
 }

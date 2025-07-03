@@ -1,8 +1,9 @@
 import Deck from '@/lib/TarokkaDeck';
 import generateID from '@/tools/simpleID';
 import parseMilliseconds from '@/tools/parseMilliseconds';
-import { HOUR, DAY } from '@/constants/time';
-import { GameState, GameUpdate, Settings } from '@/types';
+
+import { HOUR, DAY, SETTINGS } from '@/constants';
+import { GameState, GameUpdate, Settings, Tilt } from '@/types';
 
 const deck = new Deck();
 
@@ -84,13 +85,8 @@ export default class GameStore {
 			players: new Set(),
 			cards: deck.getHand(),
 			lastUpdated: Date.now(),
-			settings: {
-				positionBack: true,
-				positionFront: true,
-				prophecy: true,
-				notes: true,
-				cardStyle: 'color',
-			},
+			settings: SETTINGS,
+			tilts: Array.from({ length: 5 }, () => []),
 		};
 
 		this.totalCreated++;
@@ -111,11 +107,15 @@ export default class GameStore {
 		return this.gameUpdate(game);
 	}
 
-	leaveGame(game: GameState, playerID: string): GameState {
+	leaveGame(playerID: string): GameUpdate {
+		const game = this.getGameByPlayerID(playerID);
+
+		this.players.delete(playerID);
 		game.players.delete(playerID);
+		this._clearTilts(game, playerID);
 		game.lastUpdated = Date.now();
 
-		return game;
+		return this.gameUpdate(game);
 	}
 
 	flipCard(gameID: string, cardIndex: number): GameUpdate {
@@ -157,6 +157,27 @@ export default class GameStore {
 		return this.gameUpdate(game);
 	}
 
+	tilt(playerID: string, cardIndex: number, { rotateX, rotateY }: Tilt) {
+		const game = this.getGameByPlayerID(playerID);
+		const cardTilts = game.tilts[cardIndex];
+
+		if (!cardTilts) throw new Error(`Card tilts ${cardIndex} not found`);
+
+		this._clearTilts(game, playerID);
+
+		if (rotateX && rotateY) {
+			game.tilts[cardIndex] = [...game.tilts[cardIndex], { playerID, rotateX, rotateY }];
+			game.lastUpdated = Date.now();
+		}
+
+		return this.gameUpdate(game);
+	}
+
+	_clearTilts(game: GameState, playerID: string) {
+		game.tilts = game.tilts.map((card) => card.filter((tilt) => tilt.playerID !== playerID));
+		game.lastUpdated = Date.now();
+	}
+
 	updateSettings(gameID: string, settings: Settings) {
 		const game = this.getGame(gameID);
 
@@ -173,24 +194,27 @@ export default class GameStore {
 		return game;
 	}
 
-	gameUpdate(game: GameState): GameUpdate {
-		const { dmID, spectatorID, cards, settings } = game;
+	getGameByPlayerID(playerID: string): GameState {
+		const game = this.players.get(playerID);
 
-		return { dmID, spectatorID, cards, settings };
+		if (!game) throw new Error(`Player ${playerID} not found`);
+
+		return game;
 	}
 
-	playerExit(playerID: string): GameState | null {
+	gameUpdate(game: GameState): GameUpdate {
+		const { dmID, spectatorID, cards, settings, tilts } = game;
+
+		return { dmID, spectatorID, cards, settings, tilts };
+	}
+
+	playerExit(playerID: string): GameUpdate | null {
 		if (this.startUps.has(playerID)) {
 			this.startUps.delete(playerID);
 
 			return null;
 		} else {
-			const game = this.players.get(playerID);
-
-			if (!game) throw new Error(`Player ${playerID} not found`);
-
-			this.players.delete(playerID);
-			return this.leaveGame(game, playerID);
+			return this.leaveGame(playerID);
 		}
 	}
 

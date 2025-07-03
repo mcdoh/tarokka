@@ -4,7 +4,9 @@ import { Server as SocketIOServer, type Socket } from 'socket.io';
 
 import GameStore from '@/lib/GameStore';
 import omit from '@/tools/omit';
-import type { ClientUpdate, GameUpdate } from '@/types';
+
+import { thirtyFPS } from '@/constants/time';
+import type { ClientUpdate, GameUpdate, Tilt } from '@/types';
 
 const dev = process.env.NODE_ENV !== 'production';
 const hostname = '0.0.0.0';
@@ -15,14 +17,34 @@ const handler = app.getRequestHandler();
 
 const gameStore = new GameStore();
 
+const timedReleases = {};
+
 app.prepare().then(() => {
 	const httpServer = createServer(handler);
-
 	const io = new SocketIOServer(httpServer);
 
 	const broadcast = (event: string, gameUpdate: GameUpdate) => {
 		io.to(gameUpdate.dmID).emit(event, gameUpdate);
 		io.to(gameUpdate.spectatorID).emit(event, omit(gameUpdate, 'dmID'));
+	};
+
+	const timedRelease = (event: string, gameUpdate: GameUpdate, threshold: number) => {
+		const now = Date.now();
+		const lastEvent = timedReleases[event];
+		clearTimeout(lastEvent?.to);
+
+		if (lastEvent?.embargo >= now) {
+			const embargo = lastEvent.embargo - now;
+
+			const to = setTimeout(() => {
+				broadcast(event, gameUpdate);
+			}, embargo);
+
+			timedReleases[event] = { embargo, to };
+		} else {
+			broadcast(event, gameUpdate);
+			timedReleases[event] = { embargo: now + threshold };
+		}
 	};
 
 	io.on('connection', (socket: Socket) => {
@@ -116,6 +138,16 @@ app.prepare().then(() => {
 			} catch (e) {
 				const error = e instanceof Error ? e.message : e;
 				console.error(Date.now(), 'Error[settings]', error);
+			}
+		});
+
+		socket.on('tilt', ({ cardIndex, tilt }: { cardIndex: number; tilt: Tilt }) => {
+			try {
+				const gameState = gameStore.tilt(socket.id, cardIndex, tilt);
+				timedRelease('game-update', gameState, thirtyFPS);
+			} catch (e) {
+				const error = e instanceof Error ? e.message : e;
+				console.error(Date.now(), 'Error[tilt]', error);
 			}
 		});
 

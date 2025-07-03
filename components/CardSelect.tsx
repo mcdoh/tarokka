@@ -1,41 +1,36 @@
 'use client';
 
 import { CircleX } from 'lucide-react';
+import { useAppContext } from '@/app/AppContext';
 import TarokkaDeck from '@/lib/TarokkaDeck';
 import getURL from '@/tools/getURL';
 
-import { Deck, Settings, TarokkaGameCard } from '@/types';
+import { Deck } from '@/types';
 
 const tarokkaDeck = new TarokkaDeck();
 
 type CardSelectProps = {
-	closeAction: () => void;
-	selectAction: (cardID: string) => void;
-	hand: TarokkaGameCard[];
-	settings: Settings;
-	show: Deck | null;
 	className?: string;
 };
 
-export default function CardSelect({
-	closeAction,
-	selectAction,
-	hand,
-	settings,
-	show,
-	className = '',
-}: CardSelectProps) {
+export default function CardSelect({ className = '' }: CardSelectProps) {
+	const { gameData, emitSelect, selectCardIndex, setSelectCardIndex } = useAppContext();
+	const { cards: hand, settings } = gameData;
+
 	const handIDs = hand.map(({ id }) => id);
+	const selectDeck: Deck | null = selectCardIndex >= 0 ? hand[selectCardIndex].deck : null;
+
+	const close = () => setSelectCardIndex(-1);
 
 	const handleClose = (event: React.MouseEvent<HTMLElement>) => {
 		if (event.target === event.currentTarget) {
-			closeAction();
+			close();
 		}
 	};
 
-	if (!show) return null;
+	if (!selectDeck) return null;
 
-	const cards = show === 'high' ? tarokkaDeck.getHigh() : tarokkaDeck.getLow();
+	const cards = selectDeck === 'high' ? tarokkaDeck.getHigh() : tarokkaDeck.getLow();
 
 	return (
 		<div
@@ -44,7 +39,7 @@ export default function CardSelect({
 		>
 			<button
 				className={`fixed top-4 right-4 p-2 transition-all duration-250 text-yellow-400 hover:text-yellow-300 hover:drop-shadow-[0_0_3px_#ffd700] cursor-pointer`}
-				onClick={closeAction}
+				onClick={close}
 			>
 				<CircleX className="w-6 h-6" />
 			</button>
@@ -58,7 +53,7 @@ export default function CardSelect({
 						<div
 							key={card.id}
 							className={`relative h-[21vh] w-[15vh] perspective transition-transform duration-200 hover:scale-150 z-0 hover:z-10`}
-							onClick={() => selectAction(card.id)}
+							onClick={() => emitSelect(card.id)}
 						>
 							<img
 								src={getURL(card, settings)}

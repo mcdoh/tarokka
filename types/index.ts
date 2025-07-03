@@ -4,11 +4,18 @@ export type CardStyle = 'standard' | 'color' | 'grayscale';
 export type Deck = 'high' | 'common' | 'both' | 'back' | 'all';
 
 export interface Settings {
+	cardStyle: CardStyle;
+	notes: boolean;
 	positionBack: boolean;
 	positionFront: boolean;
 	prophecy: boolean;
-	notes: boolean;
-	cardStyle: CardStyle;
+	tilt: boolean;
+	remoteTilt: boolean;
+}
+
+export interface LocalSettings {
+	tilt: boolean;
+	remoteTilt: boolean;
 }
 
 export interface StandardCard {
@@ -82,6 +89,7 @@ export interface GameState {
 	cards: TarokkaGameCard[];
 	lastUpdated: number;
 	settings: Settings;
+	tilts: Tilt[][];
 }
 
 export interface GameUpdate {
@@ -89,6 +97,7 @@ export interface GameUpdate {
 	spectatorID: string;
 	cards: TarokkaGameCard[];
 	settings: Settings;
+	tilts: Tilt[][];
 }
 
 export interface ClientUpdate {
@@ -102,4 +111,10 @@ export interface Layout {
 	deck: string;
 	name: string;
 	text: string;
+}
+
+export interface Tilt {
+	playerID?: string;
+	rotateX: number;
+	rotateY: number;
 }

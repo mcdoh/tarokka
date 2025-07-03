@@ -1,48 +1,43 @@
 'use client';
 
 import { useState } from 'react';
+import { useAppContext } from '@/app/AppContext';
 import TiltCard from '@/components/TiltCard';
 import ToolTip from '@/components/ToolTip';
 import StackTheDeck from '@/components/StackTheDeck';
-import tarokkaCards from '@/constants/tarokkaCards';
 import getCardInfo from '@/tools/getCardInfo';
 import getURL from '@/tools/getURL';
 
-import { Layout, Settings, TarokkaGameCard } from '@/types';
+import tarokkaCards from '@/constants/tarokkaCards';
+import { layout } from '@/constants/tarokka';
+
+import { TarokkaGameCard } from '@/types';
 
 const cardBack = tarokkaCards.find((card) => card.back)!;
 
 type CardProps = {
-	dm: boolean;
 	card: TarokkaGameCard;
-	position: Layout;
-	settings: Settings;
-	flipAction: () => void;
-	redrawAction: () => void;
-	selectAction: () => void;
+	cardIndex: number;
 };
 
-export default function Card({
-	dm,
-	card,
-	position,
-	settings,
-	flipAction,
-	redrawAction,
-	selectAction,
-}: CardProps) {
+export default function Card({ card, cardIndex }: CardProps) {
 	const [tooltip, setTooltip] = useState<React.ReactNode>(null);
+	const { emitFlip, gameData, emitRedraw, setSelectCardIndex } = useAppContext();
+
+	const { dmID, settings } = gameData;
+	const isDM = !!dmID;
 
 	const { aria, flipped } = card;
+	const position = layout[cardIndex];
 
 	const handleClick = () => {
-		if (dm) {
-			flipAction();
+		if (isDM) {
+			emitFlip(cardIndex);
 		}
 	};
 
 	const getTooltip = () => {
-		const text = getCardInfo(card, position, dm, settings);
+		const text = getCardInfo(card, position, isDM, settings);
 
 		return text.length ? (
 			<>
@@ -59,14 +54,15 @@ export default function Card({
 	return (
 		<ToolTip content={tooltip || getTooltip()}>
 			<TiltCard
-				className={`h-[21vh] w-[15vh] relative perspective transition-transform duration-200 z-0 hover:z-10 hover:scale-150 ${dm ? 'cursor-pointer' : ''} `}
-				onClick={handleClick}
+				className={`h-[21vh] w-[15vh] relative perspective transition-transform duration-200 z-0 hover:z-10 hover:scale-150 ${isDM ? 'cursor-pointer' : ''} `}
+				cardIndex={cardIndex}
 			>
 				<div
 					className={`absolute inset-0 transition-transform duration-500 transform-style-preserve-3d ${flipped ? 'rotate-y-180' : ''}`}
+					onClick={handleClick}
 				>
 					<div className="absolute inset-0 group backface-hidden">
-						{dm && (
+						{isDM && (
 							<>
 								<img src={getURL(card, settings)} alt={aria} className="absolute rounded-lg" />
 								<img
@@ -79,12 +75,12 @@ export default function Card({
 						<img
 							src={getURL(cardBack as TarokkaGameCard, settings)}
 							alt="Card Back"
-							className={`absolute rounded-lg ${dm ? 'transition duration-500 group-hover:opacity-0' : ''} ${settings.cardStyle === 'grayscale' ? 'border border-yellow-500/25 group-hover:drop-shadow-[0_0_3px_#ffd700/50]' : ''}`}
+							className={`absolute rounded-lg ${isDM ? 'transition duration-500 group-hover:opacity-0' : ''} ${settings.cardStyle === 'grayscale' ? 'border border-yellow-500/25 group-hover:drop-shadow-[0_0_3px_#ffd700/50]' : ''}`}
 						/>
-						{dm && !flipped && (
+						{isDM && !flipped && (
 							<StackTheDeck
-								onRedraw={redrawAction}
-								onSelect={() => selectAction()}
+								onRedraw={() => emitRedraw(cardIndex)}
+								onSelect={() => setSelectCardIndex(cardIndex)}
 								onHover={setTooltip}
 							/>
 						)}

@@ -3,20 +3,18 @@
 import { useMemo, useState } from 'react';
 import { ScrollText } from 'lucide-react';
 
+import { useAppContext } from '@/app/AppContext';
 import CopyButton from '@/components/CopyButton';
 import Scrim from '@/components/Scrim';
 import getCardInfo from '@/tools/getCardInfo';
 import { cardMap, layout } from '@/constants/tarokka';
 
-import { GameUpdate } from '@/types';
+export default function Notes() {
+	const { gameData } = useAppContext();
+	const { dmID, cards, settings } = gameData;
 
-type NotesProps = {
-	gameData: GameUpdate;
-	show: boolean;
-};
-
-export default function Notes({ gameData: { dmID, cards, settings }, show }: NotesProps) {
 	const isDM = !!dmID;
+	const show = cards.every(({ flipped }) => flipped);
 
 	const [open, setOpen] = useState(false);
 
