@@ -7,12 +7,12 @@ import type { GameUpdate, LocalSettings, Settings } from '@/types';
 
 export const SETTINGS: Settings = {
 	cardStyle: 'color',
-	notes: false,
-	positionBack: false,
-	positionFront: false,
-	prophecy: false,
+	notes: true,
+	positionBack: true,
+	positionFront: true,
+	prophecy: true,
 	tilt: true,
-	remoteTilt: false,
+	remoteTilt: true,
 };
 
 export const GAME_START: GameUpdate = {
