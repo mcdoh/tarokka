@@ -1,7 +1,7 @@
 'use client';
 
 import { useMemo, useState } from 'react';
-import { ScrollText } from 'lucide-react';
+import { CircleX, ScrollText } from 'lucide-react';
 
 import { useAppContext } from '@/app/AppContext';
 import CopyButton from '@/components/CopyButton';
@@ -51,13 +51,24 @@ export default function Notes() {
 				className={`transition-all duration-250 ${showNotes ? 'pointer-events-auto opacity-100' : 'pointer-events-none opacity-0'}`}
 			>
 				<div
-					className={`fixed bottom-4 right-4 transition-all duration-250 bg-slate-800 border border-yellow-400 rounded-lg space-y-2 ${showNotes ? 'sm:w-[33vw] sm:h-[67vh] w-[80vw] h-[80vh]' : 'w-0 h-0'}`}
+					className={`
+						fixed bottom-4 right-4
+						transition-all duration-250
+						bg-slate-800
+						border border-yellow-400 rounded-lg
+						${showNotes ? 'sm:w-[50vw] sm:h-[67vh] w-[80vw] h-[80vh]' : 'w-0 h-0'}
+					`}
 				>
 					<CopyButton
 						copy={notes.map((note) => note!.join('\n')).join('\n\n')}
-						className="text-yellow-400 hover:drop-shadow-[0_0_1px_#ffd700] absolute top-2 right-2 p-2 transition-all duration-250 bg-black/20 hover:bg-black/40 rounded-full cursor-pointer"
+						className={`
+							absolute top-2 right-2
+							cursor-pointer p-2
+							transition-all duration-250
+							text-yellow-400 hover:text-yellow-300 hover:drop-shadow-[0_0_3px_#ffd700]
+						`}
 					/>
-					<div className="text-yellow-400 h-full overflow-scroll p-6 transition-all delay-200 duration-50 ${showNotes ? 'opacity-100' : 'opacity-0'}">
+					<div className="text-yellow-400 h-full overflow-scroll p-8 transition-all delay-200 duration-50 ${showNotes ? 'opacity-100' : 'opacity-0'}">
 						{notes.map((note, index) => (
 							<div key={index}>
 								<div className="flex flex-col gap-2">
@@ -70,6 +81,17 @@ export default function Notes() {
 						))}
 					</div>
 				</div>
+				<button
+					className={`
+						fixed bottom-4 right-4
+						cursor-pointer p-2
+						transition-all duration-250
+						text-yellow-400 hover:text-yellow-300 hover:drop-shadow-[0_0_3px_#ffd700]
+					`}
+					onClick={() => setOpen((prev) => !prev)}
+				>
+					<CircleX className="w-5 h-5" />
+				</button>
 			</Scrim>
 		</div>
 	);
