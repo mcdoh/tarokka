@@ -157,7 +157,7 @@ export default class GameStore {
 		return this.gameUpdate(game);
 	}
 
-	tilt(playerID: string, cardIndex: number, { rotateX, rotateY }: Tilt) {
+	tilt(playerID: string, cardIndex: number, tilt: Tilt) {
 		const game = this.getGameByPlayerID(playerID);
 		const cardTilts = game.tilts[cardIndex];
 
@@ -165,8 +165,8 @@ export default class GameStore {
 
 		this._clearTilts(game, playerID);
 
-		if (rotateX && rotateY) {
-			game.tilts[cardIndex] = [...game.tilts[cardIndex], { playerID, rotateX, rotateY }];
+		if (tilt.rotateX && tilt.rotateY) {
+			game.tilts[cardIndex] = [...game.tilts[cardIndex], { ...tilt, playerID }];
 			game.lastUpdated = Date.now();
 		}
 

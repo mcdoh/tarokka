@@ -115,6 +115,8 @@ export interface Layout {
 
 export interface Tilt {
 	playerID?: string;
+	percentX: number;
+	percentY: number;
 	rotateX: number;
 	rotateY: number;
 }

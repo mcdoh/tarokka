@@ -82,9 +82,16 @@ export default function TiltCard({
 
 		const rotateX = ((y - centerY) / centerY) * -20;
 		const rotateY = ((x - centerX) / centerX) * 20;
+		const percentX = x / rect.width;
+		const percentY = y / rect.height;
 
 		const newTilt: Tilt[] = [];
-		newTilt[cardIndex] = { rotateX, rotateY };
+		newTilt[cardIndex] = {
+			percentX,
+			percentY,
+			rotateX,
+			rotateY,
+		};
 
 		setTilt(newTilt);
 	}, thirtyFPS);

@@ -1,12 +1,10 @@
 import { useEffect, useRef, useState } from 'react';
 import { useAppContext } from '@/app/AppContext';
 
-const tiltSheen = (sheen: HTMLDivElement, tiltX: number, tiltY: number) => {
+const tiltSheen = (sheen: HTMLDivElement, x: number, y: number) => {
 	const rect = sheen.getBoundingClientRect();
-	const centerX = rect.width / 2;
-	const centerY = rect.height / 2;
-	const sheenX = centerX + (tiltY / -20) * centerX;
-	const sheenY = centerY + (tiltX / 20) * centerY;
+	const sheenX = rect.width - x * rect.width;
+	const sheenY = rect.height - y * rect.height;
 
 	sheen.style.opacity = '1';
 	sheen.style.backgroundImage = `
@@ -33,31 +31,30 @@ export default function Sheen({ cardIndex, className }: { cardIndex: number; cla
 		if (!sheen) return;
 
 		if (tilt) {
-			const rotateX = localTilts[cardIndex]?.rotateX || 0;
-			const rotateY = localTilts[cardIndex]?.rotateY || 0;
+			const percentX = localTilts[cardIndex]?.percentX || -1;
+			const percentY = localTilts[cardIndex]?.percentY || -1;
 
-			const tilts = remoteTilt
-				? [...gameData.tilts[cardIndex], { rotateX, rotateY }]
-				: [{ rotateX, rotateY }];
+			const percentages = remoteTilt
+				? [...gameData.tilts[cardIndex], { percentX, percentY }]
+				: [{ percentX, percentY }];
 
-			const { totalX, totalY, count } = tilts
-				.filter(({ rotateX, rotateY }) => !!rotateX && !!rotateY)
+			const { totalX, totalY, count } = percentages
+				.filter(({ percentX, percentY }) => percentX >= 0 && percentY >= 0)
 				.reduce(
-					({ totalX, totalY, count }, { rotateX, rotateY }) => ({
-						totalX: totalX + rotateX,
-						totalY: totalY + rotateY,
+					({ totalX, totalY, count }, { percentX, percentY }) => ({
+						totalX: totalX + percentX,
+						totalY: totalY + percentY,
 						count: ++count,
 					}),
 					{ totalX: 0, totalY: 0, count: 0 },
 				);
 
-			if (count && (totalX || totalY)) {
-				setUntilt(false);
-
+			if (count && totalX >= 0 && totalY >= 0) {
 				const x = totalX / count;
 				const y = totalY / count;
 
 				tiltSheen(sheen, x, y);
+				setUntilt(false);
 			} else {
 				setUntilt(true);
 			}
