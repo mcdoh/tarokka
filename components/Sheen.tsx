@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { useAppContext } from '@/app/AppContext';
+import { validTilt } from '@/tools';
 
 const tiltSheen = (sheen: HTMLDivElement, x: number, y: number) => {
 	const rect = sheen.getBoundingClientRect();
@@ -20,48 +21,21 @@ const tiltSheen = (sheen: HTMLDivElement, x: number, y: number) => {
 export default function Sheen({ cardIndex, className }: { cardIndex: number; className?: string }) {
 	const sheenRef = useRef<HTMLDivElement>(null);
 	const [untilt, setUntilt] = useState(false);
-	const {
-		gameData,
-		settings: { tilt, remoteTilt },
-		tilt: localTilts,
-	} = useAppContext();
+	const { tilts } = useAppContext();
 
 	useEffect(() => {
 		const sheen = sheenRef.current;
 		if (!sheen) return;
 
-		if (tilt) {
-			const percentX = localTilts[cardIndex]?.percentX || -1;
-			const percentY = localTilts[cardIndex]?.percentY || -1;
+		const tilt = tilts[cardIndex];
 
-			const percentages = remoteTilt
-				? [...gameData.tilts[cardIndex], { percentX, percentY }]
-				: [{ percentX, percentY }];
-
-			const { totalX, totalY, count } = percentages
-				.filter(({ percentX, percentY }) => percentX >= 0 && percentY >= 0)
-				.reduce(
-					({ totalX, totalY, count }, { percentX, percentY }) => ({
-						totalX: totalX + percentX,
-						totalY: totalY + percentY,
-						count: ++count,
-					}),
-					{ totalX: 0, totalY: 0, count: 0 },
-				);
-
-			if (count && totalX >= 0 && totalY >= 0) {
-				const x = totalX / count;
-				const y = totalY / count;
-
-				tiltSheen(sheen, x, y);
-				setUntilt(false);
-			} else {
-				setUntilt(true);
-			}
+		if (validTilt(tilt)) {
+			setUntilt(false);
+			tiltSheen(sheen, tilt.percentX, tilt.percentY);
 		} else {
 			setUntilt(true);
 		}
-	}, [tilt, localTilts, gameData]);
+	}, [tilts]);
 
 	useEffect(() => {
 		const sheen = sheenRef.current;

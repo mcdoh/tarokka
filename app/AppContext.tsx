@@ -2,6 +2,7 @@
 
 import { createContext, useContext, useEffect, useState } from 'react';
 import useSocket from '@/hooks/useSocket';
+import { reduceTilts } from '@/tools';
 
 import { GAME_START, LOCAL_DEFAULTS } from '@/constants';
 import type { Dispatch, ReactNode, SetStateAction } from 'react';
@@ -15,7 +16,7 @@ export interface AppContext {
 	noGame: boolean;
 	selectCardIndex: number;
 	settings: Settings;
-	tilt: Tilt[];
+	tilts: Tilt[];
 	emitFlip: (cardIndex: number) => void;
 	emitSettings: (gameData: GameUpdate) => void;
 	emitRedraw: (cardIndex: number) => void;
@@ -23,7 +24,7 @@ export interface AppContext {
 	setGameID: (gameID: string) => void;
 	setLocalSettings: Dispatch<SetStateAction<LocalSettings>>;
 	setSelectCardIndex: (cardIndex: number) => void;
-	setTilt: (tilt: Tilt[]) => void;
+	setLocalTilt: (tilt: Tilt[]) => void;
 }
 
 export function AppProvider({ children }: { children: ReactNode }) {
@@ -32,7 +33,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
 	const [gameID, setGameID] = useState('');
 	const [noGame, setNoGame] = useState(false);
 	const [selectCardIndex, setSelectCardIndex] = useState(-1);
-	const [tilt, setTilt] = useState<Tilt[]>([]);
+	const [localTilt, setLocalTilt] = useState<Tilt[]>([]);
 
 	const { emitFlip, emitRedraw, emitSelect, emitSettings, emitTilt } = useSocket({
 		gameID,
@@ -42,17 +43,17 @@ export function AppProvider({ children }: { children: ReactNode }) {
 
 	useEffect(() => {
 		if (localSettings.remoteTilt) {
-			const cardIndex = tilt.findIndex((tilt) => !!tilt);
+			const cardIndex = localTilt.findIndex((tilt) => !!tilt);
 
-			if (tilt[cardIndex]) {
-				emitTilt(cardIndex, tilt[cardIndex]);
+			if (localTilt[cardIndex]) {
+				emitTilt(cardIndex, localTilt[cardIndex]);
 			} else {
 				// cardIndex does not matter
 				// all tilts for this user will be cleared
-				emitTilt(0, { rotateX: 0, rotateY: 0 });
+				emitTilt(0, { percentX: -1, percentY: -1, rotateX: 0, rotateY: 0 });
 			}
 		}
-	}, [tilt, localSettings]);
+	}, [localTilt, localSettings]);
 
 	const handleSelect = (cardID: string) => {
 		setSelectCardIndex(-1);
@@ -69,7 +70,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
 		noGame,
 		selectCardIndex,
 		settings: { ...gameData.settings, ...localSettings },
-		tilt,
+		tilts: reduceTilts(gameData, localTilt),
 		emitFlip,
 		emitSettings,
 		emitRedraw,
@@ -77,7 +78,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
 		setGameID,
 		setLocalSettings,
 		setSelectCardIndex,
-		setTilt,
+		setLocalTilt,
 	};
 
 	return <AppContext.Provider value={appInterface}>{children}</AppContext.Provider>;

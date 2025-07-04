@@ -1,4 +1,4 @@
-export default function throttle(func: Function, threshold: number) {
+export function throttle(func: Function, threshold: number) {
 	let lastCall = 0;
 
 	return (...args: any[]) => {

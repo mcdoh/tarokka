@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { useAppContext } from '@/app/AppContext';
-import throttle from '@/tools/throttle';
+import { throttle, validTilt } from '@/tools';
 
 import { thirtyFPS } from '@/constants/time';
 import type { Tilt } from '@/types';
@@ -18,50 +18,21 @@ export default function TiltCard({
 }) {
 	const cardRef = useRef<HTMLDivElement>(null);
 	const [untilt, setUntilt] = useState(false);
-	const {
-		gameData,
-		settings: { tilt, remoteTilt },
-		setTilt,
-		tilt: localTilts,
-	} = useAppContext();
+	const { settings, tilts, setLocalTilt } = useAppContext();
 
 	useEffect(() => {
 		const card = cardRef.current;
 		if (!card) return;
 
-		if (tilt) {
-			const rotateX = localTilts[cardIndex]?.rotateX || 0;
-			const rotateY = localTilts[cardIndex]?.rotateY || 0;
+		const tilt = tilts[cardIndex];
 
-			const tilts = remoteTilt
-				? [...gameData.tilts[cardIndex], { rotateX, rotateY }]
-				: [{ rotateX, rotateY }];
-
-			const { totalX, totalY, count } = tilts
-				.filter(({ rotateX, rotateY }) => !!rotateX && !!rotateY)
-				.reduce(
-					({ totalX, totalY, count }, { rotateX, rotateY }) => ({
-						totalX: totalX + rotateX,
-						totalY: totalY + rotateY,
-						count: ++count,
-					}),
-					{ totalX: 0, totalY: 0, count: 0 },
-				);
-
-			if (count && (totalX || totalY)) {
-				setUntilt(false);
-
-				const x = totalX / count;
-				const y = totalY / count;
-
-				card.style.transform = `rotateX(${x}deg) rotateY(${y}deg)`;
-			} else {
-				setUntilt(true);
-			}
-		} else if (card.style.transform !== ZERO_ROTATION) {
+		if (validTilt(tilt)) {
+			setUntilt(false);
+			card.style.transform = `rotateX(${tilt.rotateX}deg) rotateY(${tilt.rotateY}deg)`;
+		} else {
 			setUntilt(true);
 		}
-	}, [tilt, localTilts, gameData]);
+	}, [tilts]);
 
 	useEffect(() => {
 		const card = cardRef.current;
@@ -93,17 +64,17 @@ export default function TiltCard({
 			rotateY,
 		};
 
-		setTilt(newTilt);
+		setLocalTilt(newTilt);
 	}, thirtyFPS);
 
 	const handleMouseLeave = () => {
-		setTilt([]);
+		setLocalTilt([]);
 	};
 
 	return (
 		<div
 			className={`group ${className}`}
-			onMouseMove={tilt ? handleMouseMove : undefined}
+			onMouseMove={settings.tilt ? handleMouseMove : undefined}
 			onMouseLeave={handleMouseLeave}
 		>
 			<div
