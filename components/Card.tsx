@@ -6,8 +6,7 @@ import TiltCard from '@/components/TiltCard';
 import ToolTip from '@/components/ToolTip';
 import StackTheDeck from '@/components/StackTheDeck';
 import Sheen from '@/components/Sheen';
-import getCardInfo from '@/tools/getCardInfo';
-import getURL from '@/tools/getURL';
+import { getCardInfo, getURL } from '@/tools';
 
 import tarokkaCards from '@/constants/tarokkaCards';
 import { layout } from '@/constants/tarokka';

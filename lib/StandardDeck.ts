@@ -1,4 +1,4 @@
-import getRandomItems from '@/tools/getRandomItems';
+import { getRandomItems } from '@/tools';
 import cards from '@/constants/standardCards';
 import type { StandardCard } from '@/types';
 

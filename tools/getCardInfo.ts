@@ -1,12 +1,12 @@
-import { isHighCard, isLowCard } from '@/tools/cardTypes';
+import { isHighCard, isLowCard } from '@/tools';
 import { Layout, Settings, TarokkaGameCard } from '@/types';
 
-export default function getTooltip(
+export const getCardInfo = (
 	card: TarokkaGameCard,
 	position: Layout,
 	dm: boolean,
 	settings: Settings,
-) {
+) => {
 	const { card: cardName, description, flipped } = card;
 
 	let text: string[] = [];
@@ -39,4 +39,4 @@ export default function getTooltip(
 	}
 
 	return text;
-}
+};

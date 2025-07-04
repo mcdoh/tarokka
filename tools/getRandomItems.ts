@@ -1,4 +1,4 @@
-export default function getRandomItems<T>(items: T[], count: number): T[] {
+export const getRandomItems = <T>(items: T[], count: number): T[] => {
 	const shuffled = [...items];
 
 	// Fisher-Yates shuffle
@@ -8,4 +8,4 @@ export default function getRandomItems<T>(items: T[], count: number): T[] {
 	}
 
 	return count > shuffled.length ? shuffled : shuffled.slice(0, count);
-}
+};

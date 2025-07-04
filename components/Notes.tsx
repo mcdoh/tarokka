@@ -6,7 +6,7 @@ import { CircleX, ScrollText } from 'lucide-react';
 import { useAppContext } from '@/app/AppContext';
 import CopyButton from '@/components/CopyButton';
 import Scrim from '@/components/Scrim';
-import getCardInfo from '@/tools/getCardInfo';
+import { getCardInfo } from '@/tools';
 import { cardMap, layout } from '@/constants/tarokka';
 
 export default function Notes() {

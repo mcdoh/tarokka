@@ -3,7 +3,7 @@ import { createServer } from 'http';
 import { Server as SocketIOServer, type Socket } from 'socket.io';
 
 import GameStore from '@/lib/GameStore';
-import omit from '@/tools/omit';
+import { omit } from '@/tools';
 
 import { thirtyFPS } from '@/constants/time';
 import type { ClientUpdate, GameUpdate, Tilt } from '@/types';

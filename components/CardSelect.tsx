@@ -3,7 +3,7 @@
 import { CircleX } from 'lucide-react';
 import { useAppContext } from '@/app/AppContext';
 import TarokkaDeck from '@/lib/TarokkaDeck';
-import getURL from '@/tools/getURL';
+import { getURL } from '@/tools';
 
 import { Deck } from '@/types';
 

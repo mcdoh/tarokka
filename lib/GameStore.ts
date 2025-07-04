@@ -1,6 +1,5 @@
 import Deck from '@/lib/TarokkaDeck';
-import generateID from '@/tools/simpleID';
-import parseMilliseconds from '@/tools/parseMilliseconds';
+import { generateID, parseMilliseconds } from '@/tools';
 
 import { HOUR, DAY, SETTINGS } from '@/constants';
 import { GameState, GameUpdate, Settings, Tilt } from '@/types';

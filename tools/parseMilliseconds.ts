@@ -7,7 +7,7 @@ export interface ParsedMilliseconds {
 	seconds: number;
 }
 
-export default function parseMilliseconds(timestamp: number): ParsedMilliseconds {
+export const parseMilliseconds = (timestamp: number): ParsedMilliseconds => {
 	const days = Math.floor(timestamp / DAY);
 	timestamp %= DAY;
 
@@ -21,4 +21,4 @@ export default function parseMilliseconds(timestamp: number): ParsedMilliseconds
 	timestamp %= SECOND;
 
 	return { days, hours, minutes, seconds };
-}
+};
