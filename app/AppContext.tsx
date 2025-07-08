@@ -63,14 +63,15 @@ export function AppProvider({ children }: { children: ReactNode }) {
 
 	const { dmID } = gameData;
 	const isDM = !!dmID;
+	const settings = { ...gameData.settings, ...localSettings };
 
 	const appInterface = {
 		gameData,
 		isDM,
 		noGame,
 		selectCardIndex,
-		settings: { ...gameData.settings, ...localSettings },
-		tilts: reduceTilts(gameData, localTilt),
+		settings,
+		tilts: reduceTilts(gameData, localTilt, settings),
 		emitFlip,
 		emitSettings,
 		emitRedraw,

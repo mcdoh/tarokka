@@ -73,8 +73,6 @@ export default function TiltCard({
 	}, thirtyFPS);
 
 	const handleTouchMove = throttle((e: React.TouchEvent) => {
-		e.stopPropagation();
-
 		const card = cardRef.current;
 		const touch = e.touches[0];
 

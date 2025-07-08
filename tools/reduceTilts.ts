@@ -1,5 +1,5 @@
-import { log, validTilt } from '@/tools';
-import { GameUpdate, Tilt } from '@/types';
+import { validTilt } from '@/tools';
+import { GameUpdate, Settings, Tilt } from '@/types';
 
 const combineTilts = (tilts: Tilt[]) =>
 	tilts.reduce(
@@ -13,13 +13,15 @@ const combineTilts = (tilts: Tilt[]) =>
 		{ pX: 0, pY: 0, rX: 0, rY: 0, count: 0 },
 	);
 
-export function reduceTilts(gameData: GameUpdate, localTilt: Tilt[]): Tilt[] {
+export function reduceTilts(
+	gameData: GameUpdate,
+	localTilt: Tilt[],
+	{ tilt, remoteTilt }: Settings,
+): Tilt[] {
 	const remoteTilts = gameData.tilts;
-	const tiltEnabled = gameData.settings.tilt;
-	const remoteTiltEnabled = gameData.settings.remoteTilt;
 
-	if (!tiltEnabled) return [];
-	if (!remoteTiltEnabled) return Array.from({ length: 5 }, (_, i) => localTilt[i]);
+	if (!tilt) return [];
+	if (!remoteTilt) return localTilt;
 
 	return Array.from({ length: 5 }, (_, i) => (localTilt[i] ? [localTilt[i]] : []))
 		.map((cardTilts, cardIndex) => [...remoteTilts[cardIndex], ...cardTilts])
