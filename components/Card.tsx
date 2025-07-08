@@ -54,7 +54,7 @@ export default function Card({ card, cardIndex }: CardProps) {
 	return (
 		<ToolTip content={tooltip || getTooltip()}>
 			<TiltCard
-				className={`h-[21vh] w-[15vh] relative perspective transition-transform duration-200 z-0 hover:z-10 hover:scale-150 ${isDM ? 'cursor-pointer' : ''} `}
+				className={`h-[21vh] w-[15vh] max-w-[30vw] relative perspective transition-transform duration-200 z-0 hover:z-10 hover:scale-150 ${isDM ? 'cursor-pointer' : ''} `}
 				cardIndex={cardIndex}
 			>
 				<div

@@ -24,7 +24,7 @@ export default function GamePage() {
 	return noGame ? (
 		<NotFound />
 	) : (
-		<main className="min-h-screen flex flex-col items-center justify-center gap-4 bg-[url('/img/table3.png')] bg-cover bg-center">
+		<main className="h-dvh flex flex-col items-center justify-center gap-4 bg-[url('/img/table3.png')] bg-cover bg-center">
 			<SpectatorLink />
 			<Settings />
 			<TarokkaGrid />

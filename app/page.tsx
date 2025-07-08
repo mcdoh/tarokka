@@ -16,7 +16,7 @@ export default function Home() {
 	};
 
 	return (
-		<main className="min-h-screen flex justify-center items-center text-yellow-400 bg-[url('/img/table3.png')] bg-cover bg-center">
+		<main className="flex justify-center items-center h-dvh text-yellow-400 bg-[url('/img/table3.png')] bg-cover bg-center">
 			<div className="flex flex-col items-center gap-8 text-center">
 				<h1 className="text-5xl font-bold text-center text-primary">Tarokka</h1>
 				<p className="text-l text-center w-[350px] m-auto">

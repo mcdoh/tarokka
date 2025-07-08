@@ -15,7 +15,7 @@ export default function TarokkaGrid() {
 	const arrangeCards = (_cell: unknown, index: number) => cards[cardMap[index]];
 
 	return (
-		<div className="grid grid-cols-3 grid-rows-3 gap-8 w-fit mx-auto">
+		<div className="grid grid-cols-3 grid-rows-3 gap-2 sm:gap-4 md:gap-8 w-fit mx-auto">
 			{Array.from({ length: 9 })
 				.map(arrangeCards)
 				.map((card, index) => (

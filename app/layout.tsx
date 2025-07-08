@@ -25,8 +25,8 @@ export default function RootLayout({
 	children: React.ReactNode;
 }>) {
 	return (
-		<html lang="en" className={`${eagleLake.variable} antialiased`}>
-			<body className={`${eagleLake.className} antialiased`}>
+		<html lang="en" className={`${eagleLake.variable} antialiased overscroll-none`}>
+			<body className={`${eagleLake.className} antialiased h-dvh`}>
 				<AppProvider>{children}</AppProvider>
 			</body>
 		</html>
