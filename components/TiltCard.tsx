@@ -41,13 +41,14 @@ export default function TiltCard({
 		card.style.transform = ZERO_ROTATION;
 	}, [untilt]);
 
-	const handleMouseMove = throttle((e: React.MouseEvent) => {
+	const handleTilt = (x: number, y: number) => {
 		const card = cardRef.current;
 		if (!card) return;
 
 		const rect = card.getBoundingClientRect();
-		const x = e.clientX - rect.left;
-		const y = e.clientY - rect.top;
+		x -= rect.left;
+		y -= rect.top;
+
 		const centerX = rect.width / 2;
 		const centerY = rect.height / 2;
 
@@ -65,6 +66,29 @@ export default function TiltCard({
 		};
 
 		setLocalTilt(newTilt);
+	};
+
+	const handleMouseMove = throttle((e: React.MouseEvent) => {
+		handleTilt(e.clientX, e.clientY);
+	}, thirtyFPS);
+
+	const handleTouchMove = throttle((e: React.TouchEvent) => {
+		e.stopPropagation();
+
+		const card = cardRef.current;
+		const touch = e.touches[0];
+
+		if (card && touch) {
+			const rect = card.getBoundingClientRect();
+			const x = touch.clientX;
+			const y = touch.clientY;
+
+			if (x >= rect.left && x <= rect.right && y >= rect.top && y <= rect.bottom) {
+				handleTilt(x, y);
+			} else {
+				setLocalTilt([]);
+			}
+		}
 	}, thirtyFPS);
 
 	const handleMouseLeave = () => {
@@ -75,6 +99,8 @@ export default function TiltCard({
 		<div
 			className={`group ${className}`}
 			onMouseMove={settings.tilt ? handleMouseMove : undefined}
+			onTouchMove={settings.tilt ? handleTouchMove : undefined}
+			onTouchEnd={handleMouseLeave}
 			onMouseLeave={handleMouseLeave}
 		>
 			<div
