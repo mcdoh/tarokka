@@ -2,7 +2,6 @@
 
 import { useState } from 'react';
 import { CircleX, Settings as Gear } from 'lucide-react';
-import { Cinzel_Decorative } from 'next/font/google';
 
 import { useAppContext } from '@/app/AppContext';
 import Scrim from '@/components/Scrim';
@@ -12,18 +11,12 @@ import ExternalLinks from './ExternalLinks';
 import GameLinks from './GameLinks';
 import Permissions from './Permissions';
 
-const cinzel = Cinzel_Decorative({
-	variable: '--font-cinzel',
-	subsets: ['latin'],
-	weight: '400',
-});
-
 export default function Settings() {
 	const [open, setOpen] = useState(false);
 	const { isDM } = useAppContext();
 
 	return (
-		<div className={`fixed top-4 right-4 z-25 ${cinzel.className}`}>
+		<div className={`fixed top-4 right-4 z-25`}>
 			<Scrim
 				clickAction={() => setOpen((prev) => !prev)}
 				className={`transition-all duration-250 ${open ? 'pointer-events-auto opacity-100' : 'pointer-events-none opacity-0'}`}

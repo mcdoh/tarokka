@@ -29,7 +29,7 @@ export default function CardStyle({ className }: { className?: string }) {
 							flex justify-center
 							cursor-pointer
 							w-full px-3 py-2
-							text-xs font-medium
+							text-xs font-medium capitalize
 							border border-yellow-500
 							transition hover:text-yellow-300 hover:drop-shadow-[0_0_3px_#ffd700]
 							${settings.cardStyle === option ? 'bg-slate-700 text-yellow-300 font-extrabold' : 'bg-slate-800 hover:bg-slate-700'}
